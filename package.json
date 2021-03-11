@@ -1,0 +1,25 @@
+{
+  "name": "nuxt-jjn-h5",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt-ts",
+    "build": "nuxt-ts build",
+    "start": "nuxt-ts start",
+    "generate": "nuxt-ts generate"
+  },
+  "dependencies": {
+    "@nuxt/typescript-runtime": "^2.0.1",
+    "core-js": "^3.8.3",
+    "lib-flexible": "^0.3.2",
+    "nuxt": "^2.14.12",
+    "postcss-px2rem-exclude": "0.0.6",
+    "vant": "^2.12.9"
+  },
+  "devDependencies": {
+    "@nuxt/types": "^2.14.12",
+    "@nuxt/typescript-build": "^2.0.4",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^7.3.1"
+  }
+}
