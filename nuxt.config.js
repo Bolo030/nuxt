@@ -12,19 +12,19 @@ export default {
 
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: '/css/common.css' },
+      { rel: 'stylesheet', href: '/css/reset.css' }
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    '~assets/reset.scss',
-    '~assets/common.scss'
-  ],
+  css: [],
+
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {src:'~plugins/vant',ssr:true},
+    {src:'~plugins/vant',ssr:false},
     { src: '@/plugins/lib-flexible',ssr: false},
   ],
 
@@ -39,10 +39,38 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
+    'cookie-universal-nuxt'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    optimization: {
+      runtimeChunk: {
+        name: 'manifest'
+      },
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          libs: {
+            name: 'chunk-libs',
+            chunks: 'initial',
+            priority: -10,
+            reuseExistingChunk: false,
+            test: /node_modules\/(.*)\.js/
+          },
+          styles: {
+            name: 'chunk-styles',
+            test: /\.(scss|css)$/,
+            chunks: 'all',
+            minChunks: 1,
+            reuseExistingChunk: true,
+            enforce: true
+          }
+        }
+      }
+    },
+    extractCSS: true,
     postcss: {
       plugins: {
         'postcss-px2rem-exclude': {
@@ -52,5 +80,6 @@ export default {
         }
       }
     },
+
   }
 }
