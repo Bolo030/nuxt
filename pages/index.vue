@@ -418,10 +418,20 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
 export default {
-head(){
+ async asyncData({ app }){
+    let info=[];
+    info=await app.$api.getIndexList().then(res=>console.log(res,'resresers'))
+    return{
+      info
+    }
+  },
+  data(){
+   return{
+     info:[]
+   }
+  },
+  head(){
   return{
     title:'天猫淘宝网店出售_店铺入驻转让_专业网店交易平台-九九牛',
     meta:[
