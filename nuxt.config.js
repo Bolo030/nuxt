@@ -1,4 +1,9 @@
+import env from './env'
 export default {
+  env:{
+    baseUrl:env[process.env.NODE_ENV].BASE_API,
+    NODE_ENV: env[process.env.NODE_ENV].NODE_ENV
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: "nuxt-jjn-h5",
@@ -44,11 +49,6 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ["@nuxtjs/axios", "cookie-universal-nuxt"],
-  axios: {
-    // baseURL:'https://api.996110.com/api',
-    baseURL:'https://oa2.testing.996110.com.cn/api',
-    // baseURL:'https://api.testing.996110.com/api',
-  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

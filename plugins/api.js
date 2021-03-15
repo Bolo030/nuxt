@@ -25,6 +25,12 @@ export default ({ app: { $request } }, inject) => {
     getIndexList () {
       return $request.get('/index')
     },
+     /**
+     * 获取首页商品列表
+     */
+    getBoutique(params={}){
+      return $request.get('/boutique',params)
+  },
     /**
      * 搜索
      * @param {number} id_type - 0：综合、2：文章、9：标签、1：用户
