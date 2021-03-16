@@ -1,8 +1,6 @@
-import env from './env'
 export default {
   env:{
-    baseUrl:env[process.env.NODE_ENV].BASE_API,
-    NODE_ENV: env[process.env.NODE_ENV].NODE_ENV
+    NODE_ENV: process.env.NODE_ENV
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -34,7 +32,7 @@ export default {
     '~/plugins/axios.js',
     '~/plugins/request.js',
     '~/plugins/api.js',
-    { src: "~plugins/vant", ssr: false },
+    { src: "~plugins/vant", ssr: true },
     { src: "@/plugins/lib-flexible", ssr: false }
   ],
 

@@ -175,15 +175,15 @@
             class="bigSelection-bottom swiper-container "
             id="swiper3"
             :autoplay="3000"
-            indicator-color="white"
+            indicator-color="#F4632C"
           >
             <van-swipe-item
-              v-for="(item, index) in Math.ceil(info.great.length / 6)"
+              v-for="(item, index) in Math.ceil(info.great.length / 8)"
               :key="index"
             >
-              <div class="swiper-slide d-f d-f-between d-f-wrap">
+              <div class="swiper-slide d-f  d-f-wrap">
                 <img
-                  v-for="(v, i) in info.great"
+                  v-for="(v, i) in info.great.slice(index*8,8*(index+1))"
                   :key="i"
                   :src="v.thumb"
                   alt="九九牛网店交易平台，大牌精选"
@@ -248,16 +248,11 @@
         </div>
       </div>
       <!-- 店铺平台选择 -->
-      <div class="platformSelect d-f d-f-between">
-        <h4 class="font-size-32 font-weight">
-          推荐
-          <div class="active-line"></div>
+      <div class="platformSelect d-f d-f-between" >
+        <h4  v-for="(item,index) in platformList" :key="index" @click="choosePlatform(item.value)" :class="item.value==pType?'font-size-32 font-weight':'font-size-28'">
+          {{item.name}}
+          <div v-if="item.value==pType" class="active-line"></div>
         </h4>
-        <h4 class="font-size-28">天猫</h4>
-        <h4 class="font-size-28">淘宝</h4>
-        <h4 class="font-size-28">拼多多</h4>
-        <h4 class="font-size-28">京东</h4>
-        <h4 class="font-size-28">其他网店</h4>
       </div>
 
       <!-- 店铺列表区域 -->
@@ -495,7 +490,7 @@ export default {
       app.$api.getIndexList().then(res => (res.status === 1 ? res.data : {})),
       app.$api
         .getBoutique({
-          platform: "tm",
+          platform: "normal",
           limit: 6
         })
         .then(res => (res.status === 1 ? res.data.store : []))
@@ -522,7 +517,17 @@ export default {
         yx: "亚马逊",
         ym: "洋码头",
         qt: "其他"
-      }
+      },
+      platformList:[
+         { value:'normal',name:"推荐"},
+         { value:'tm',name:"天猫"},
+         { value:'tb',name:"淘宝"},
+         { value:'jd',name:"京东"},
+         { value:'pdd',name:"拼多多"},
+         { value:'qt',name:"其他"},
+      ],
+      pType:'normal',
+      list:[]
     };
   },
   head() {
@@ -543,6 +548,20 @@ export default {
         }
       ]
     };
+  },
+  methods:{
+    choosePlatform(v){
+      this.pType=v;
+      this.$api.getBoutique({
+          platform:this.pType,
+          limit: 6
+        })
+        .then(res => {
+          if(res.status==1){
+            this.list=res.data.store;
+          }
+        })
+    }
   }
 };
 </script>
@@ -648,7 +667,7 @@ main {
 
 .bigSelection {
   width: 100%;
-  padding: 2.6667vw 3.2vw;
+  padding: 2.6667vw 3.2vw 0;
   border-radius: 4.2667vw 4.2667vw 0 0;
   background-image: linear-gradient(0deg, #f4f4f4 0%, #ffffff 100%);
   box-sizing: border-box;
@@ -670,6 +689,7 @@ main {
 
 .bigSelection .bigSelection-bottom {
   padding-bottom: 4vw;
+  height: 400px;
 }
 
 .bigSelection .bigSelection-bottom .swiper-pagination {
@@ -690,8 +710,14 @@ main {
   background: #fff;
 }
 
-.bigSelection .bigSelection-bottom .my-bigSelection .swiper-slide {
+.bigSelection .bigSelection-bottom  .swiper-slide {
   height: 24.8vw;
+  img{
+    margin-right: 10px;
+  }
+  img:nth-child(4n+4){
+    margin-right: 0 ;
+  }
 }
 
 .bigSelection .bigSelection-bottom .my-bigSelection-active {
