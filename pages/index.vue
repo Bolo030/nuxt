@@ -454,7 +454,7 @@
     <!-- 底部tabbar -->
     <div id="tabbar">
       <div class="tabbar-box">
-        <!-- tabbar左边突出部分 -->
+        <!-- tabbar左边突出部分 -->   
         <div class="tabbar-important">
           <nuxt-link class="tabbar-item" to="/store">
             <img src="~assets/imgs/tabbar/ic_home_tab_maidian.png" />
@@ -471,7 +471,7 @@
             <img src="~assets/imgs/tabbar/ic_home_tab_maidian_b.png" />
             <span>卖店</span>
           </a>
-          <a class="tabbar-item" href="">
+          <a class="tabbar-item" href="/user">
             <img src="~assets/imgs/tabbar/ic_home_tab_geren_b.png" />
             <span>个人中心</span>
           </a>
