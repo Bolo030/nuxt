@@ -256,7 +256,7 @@
       </div>
 
       <!-- 店铺列表区域 -->
-      <div class="store-list" v-for="(item,index) in list" :key="index">
+     <!--  <div class="store-list" v-for="(item,index) in list" :key="index">
         <div class="list-platform bg-main-color">
           <div class="platform-title d-f">
             <img
@@ -302,9 +302,9 @@
             </ul>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- 店铺名称被隐私保护中 -->
-      <div class="store-list">
+     <!--  <div class="store-list">
         <div class="list-platform bg-main-color">
           <div class="platform-title d-f">
             <img
@@ -348,9 +348,9 @@
             </ul>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- 没有店铺名称 -->
-      <div class="store-list">
+     <!--  <div class="store-list">
         <div class="list-platform bg-main-color">
           <div class="platform-title">
             <img
@@ -366,9 +366,6 @@
             </h3>
           </div>
           <div class="platform-middle">
-            <!-- <p class="desc font-size-26 text-wraps">
-                        华南地区 女装+内衣旗舰店 三字中文商标 一 般纳税人，店铺干净，卖家诚心出售，欢迎咨询！
-                    </p> -->
             <div class="price-collect d-f d-f-between">
               <div class="price-left font-main-color">
                 <span class="font-size-20">店铺售价￥</span>
@@ -391,8 +388,8 @@
             </ul>
           </div>
         </div>
-      </div>
-
+      </div> -->
+      <store-list :storeList="list" />
       <!-- 公司介绍 -->
       <div class="company-profile">
         <div class="bg-box">
@@ -452,38 +449,13 @@
       </div>
     </main>
     <!-- 底部tabbar -->
-    <div id="tabbar">
-      <div class="tabbar-box">
-        <!-- tabbar左边突出部分 -->
-        <div class="tabbar-important">
-          <nuxt-link class="tabbar-item" to="/store">
-            <img src="~assets/imgs/tabbar/ic_home_tab_maidian.png" />
-            <span class="">买店</span>
-          </nuxt-link>
-        </div>
-        <!-- tabbar右边列表 -->
-        <div class="tabbar-list">
-          <nuxt-link class="tabbar-item active" to="/">
-            <img src="~assets/imgs/tabbar/ic_home_tab_home_a.png" />
-            <span>首页</span>
-          </nuxt-link>
-          <a class="tabbar-item" href="">
-            <img src="~assets/imgs/tabbar/ic_home_tab_maidian_b.png" />
-            <span>卖店</span>
-          </a>
-          <a class="tabbar-item" href="">
-            <img src="~assets/imgs/tabbar/ic_home_tab_geren_b.png" />
-            <span>个人中心</span>
-          </a>
-        </div>
-      </div>
-      <!-- 无意义占位符 -->
-      <div class="tabbar-occupy"></div>
-    </div>
+    <custom-tabbar />
   </div>
 </template>
 
 <script>
+import storeList from "~/components/common/store-list";
+import customTabbar from '~/components/common/custom-tabbar'
 export default {
   async asyncData({ app }) {
     let [info, list] = await Promise.all([
@@ -499,6 +471,10 @@ export default {
       info,
       list
     };
+  },
+  components:{
+    storeList,
+    customTabbar
   },
   data() {
     return {
