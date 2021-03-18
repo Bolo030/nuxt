@@ -5,9 +5,9 @@ export default ({ app: { $request } }, inject) => {
      * @param {string} password - 密码
      * @param {string} phoneNumber - 手机号码
      */
-    // loginAuth(data) {
-    //   return $request.post('/v2/auth/login', data)
-    // },
+   /*  loginAuth(data) {
+      return $request.post('/v2/auth/login', data)
+    }, */
     /**
      * 获取首页列表
      */

@@ -1,6 +1,6 @@
 export default {
   env:{
-    NODE_ENV: process.env.NODE_ENV
+    baseUrl: process.env.NODE_ENV=='pro'?'https://api.996110.com/api':'https://api.testing.996110.com/api'
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {

@@ -1,0 +1,255 @@
+<template>
+  <!-- 手机号登录 -->
+  <div class="login-box" style="display: block;" id="phoneLoginbox">
+    <div class="login-top-title d-f d-f-between">
+      <h3 class=" active">
+        {{ isLoginType ? "验证码登录" : "密码登录" }}
+      </h3>
+      <h3 class="" v-show="false">游客下单</h3>
+    </div>
+    <ul class="login-middle">
+      <li>
+        <img
+          src="~assets/imgs/phone_icon.png"
+          alt="九九牛网店交易平台，登录图标"
+          class="login-icon"
+        />
+        <input
+          type="tel"
+          placeholder="请输入你的手机号"
+          maxlength="11"
+          v-model="user.userPhone"
+          @change="demo"
+        />
+        <img
+          v-show="false"
+          src="~assets/imgs/icon_cancel.png"
+          alt="九九牛网店交易平台，取消图标"
+          class="img-cancel"
+        />
+      </li>
+      <li v-if="isLoginType">
+        <img
+          src="~assets/imgs/msg-code-icon.png"
+          alt="九九牛网店交易平台，登录图标"
+          class="login-icon"
+        />
+        <input
+          type="number"
+          placeholder="请输入你验证码"
+          maxlength="6"
+          v-model="user.userCode"
+        />
+        <span
+          class="getCode d-block font-size-22 font-main-color "
+          @click="getCodeMsg"
+          ref="getCode"
+          :class="{ active: isShowCode }"
+          >{{ isShowCode ? "重新获取" + countdown : "获取验证码" }}</span
+        >
+        <img
+          v-show="false"
+          src="~assets/imgs/icon_cancel.png"
+          alt="九九牛网店交易平台，取消图标"
+          class="img-cancel"
+          id="markImg"
+        />
+      </li>
+
+      <li v-else>
+        <img
+          src="~assets/imgs/ic_sign_in_password.png"
+          alt="九九牛网店交易平台，登录图标"
+          class="login-icon"
+        />
+        <input
+          type="password"
+          placeholder="请输入8~16位数字或字母密码"
+          maxlength="16"
+          minlength="8"
+          v-model="user.userPwd"
+        />
+        <img
+          src="~assets/imgs/icon_cancel.png"
+          alt="九九牛网店交易平台，取消图标"
+          class="img-cancel"
+        />
+      </li>
+      <li class="loginBtn font-main-color6 ">
+        <button class="font-size-32 active" @click="loginButton">登录</button>
+      </li>
+      <li class="font-size-24" v-if="isLoginType">
+        <span id="loginPwd" @click="switchLogin(false)">密码登录</span>
+      </li>
+      <li class="font-size-24 d-f d-f-between" v-else>
+        <span id="loginPhone" @click="switchLogin(true)">手机验证码登录</span>
+        <span class="font-main-color" id="forgetPwd">忘记密码？</span>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      isLoginType: true,
+      user: {
+        userPhone: "",
+        userCode: "",
+        userPwd: ""
+      },
+      isShowCode: false,
+      countdown: 60
+    };
+  },
+  asyncData(context) {
+    // called every time before loading the component
+
+    return { name: "World" };
+  },
+  methods: {
+    // 切换登录方式
+    switchLogin(value) {
+      this.isLoginType = value;
+    },
+    // 获取验证码
+    getCodeMsg() {
+      if(this.isShowCode) return
+      if (this.user.userPhone.length !== 0) {
+        this.isShowCode = true;
+        let timer = setInterval(() => {
+          if (this.countdown === 0) {
+            this.countdown = 60;
+            this.isShowCode = false;
+            clearInterval(timer);
+          } else {
+            this.countdown--;
+          }
+        }, 1000);
+      } else {
+        return alert('账号不能为空')
+      }
+    },
+    // 发送登录请求
+    loginButton() {
+      if (this.isLoginType) {
+        // 验证码登录
+        console.log(this.user.userPhone.length,this.user.userCode.length);
+        
+        if (this.user.userPhone.length !== 0 && this.user.userCode.length !== 0) {
+          // 具体业务逻辑
+        } else {
+          return alert("账号或验证码不能为空");
+        }
+      } else {
+        // 密码登录
+        if ( this.user.userPhone.length !== 0 && this.user.userPwd.length !== 0) {
+          // 具体业务逻辑
+        } else {
+          return alert("账号或密码不能为空");
+        }
+        console.log(2);
+      }
+    },
+    // 监听输入框变化
+    demo() {
+      console.log(1111111);
+      
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.login-box {
+  .login-top-title {
+    margin-top: 10px;
+    height: 134px;
+    h3 {
+      position: relative;
+      font-size: 30px;
+      font-weight: 700;
+      color: #999999;
+    }
+    .active {
+      font-weight: 700;
+      font-size: 36px;
+      color: #000;
+      &::after {
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: -15px;
+        width: 40px;
+        height: 6px;
+        border-radius: 3px;
+        background: #f4632c;
+        content: "";
+      }
+    }
+  }
+  .login-middle {
+    li {
+      position: relative;
+      margin-bottom: 46px;
+      // height: 94px;
+      .getCode {
+        &.active {
+          color: #f5b69f;
+          border: 1px solid #f5b69f !important;
+        }
+      }
+      .login-icon {
+        position: absolute;
+        top: 50%;
+        left: 32px;
+        transform: translateY(-50%);
+        width: 36px;
+        height: 36px;
+      }
+      input {
+        width: 100%;
+        height: 94px;
+        padding-left: 92px;
+        box-sizing: border-box;
+        background: #f7f7f7;
+        border-radius: 12px;
+      }
+      .img-cancel {
+        position: absolute;
+        top: 50%;
+        right: 30px;
+        transform: translateY(-50%);
+        width: 26px;
+        height: 26px;
+      }
+      #markImg {
+        right: 360px;
+      }
+      .getCode {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 30px;
+        padding: 13px;
+        border: 1px solid #f4632c;
+        border-radius: 25px;
+      }
+    }
+    .loginBtn {
+      margin-top: 6px;
+      text-align: center;
+      button {
+        height: 94px;
+        width: 100%;
+        background: #f4632c;
+        border-radius: 8px;
+        &.active {
+          background: #f5b69f !important;
+        }
+      }
+    }
+  }
+}
+</style>
