@@ -43,7 +43,7 @@ export default {
       tabPage: {
         important: {
           text: "买店",
-          pagePath: "/store",
+          pagePath: "/tm",
           iconPath: require("../../assets/imgs/tabbar/ic_home_tab_maidian.png")
         },
         list: [

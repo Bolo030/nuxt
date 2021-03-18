@@ -35,7 +35,7 @@
                   >{{ item.name }}
                 </span>
                 <span>
-                  以￥{{ item.price }}购得{{ platform[item.platform]
+                  以￥{{ item.price }}购得{{ $utils.getPname(item.platform)
                   }}{{ item.storeType }}</span
                 >
               </div></van-swipe-item
@@ -344,22 +344,6 @@ export default {
   },
   data() {
     return {
-      platform: {
-        tm: "天猫",
-        tb: "淘宝",
-        jd: "京东",
-        wp: "唯品会",
-        xh: "小红书",
-        pd: "拼多多",
-        mg: "蘑菇街",
-        dd: "当当网",
-        bb: "贝贝网",
-        al: "阿里巴巴",
-        sn: "苏宁",
-        yx: "亚马逊",
-        ym: "洋码头",
-        qt: "其他"
-      },
       platformList:[
          { value:'normal',name:"推荐"},
          { value:'tm',name:"天猫"},
