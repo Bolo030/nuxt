@@ -255,140 +255,6 @@
         </h4>
       </div>
 
-      <!-- 店铺列表区域 -->
-     <!--  <div class="store-list" v-for="(item,index) in list" :key="index">
-        <div class="list-platform bg-main-color">
-          <div class="platform-title d-f">
-            <img
-              src="~assets/imgs/icon_tm.png"
-              alt="九九牛网店交易平台，店铺图标"
-              class="store-icon"
-            />
-            <h3 class="font-size-30 font-weight">{{item.name}}</h3>
-          </div>
-          <div class="platform-middle">
-            <p class="desc font-size-26 text-wraps">
-              {{item.title}}
-            </p>
-            <div class="price-collect d-f d-f-between">
-              <div class="price-left font-main-color">
-                <span class="font-size-20">店铺售价￥</span>
-                <span class="font-size-34 font-weight">{{ item.parse_price }}</span>
-              </div>
-              <div class="collect-right font-main-color2 font-size-20">
-               {{item.collect}}人收藏
-              </div>
-            </div>
-          </div>
-          <div class="platform-bottom d-f-flex">
-            <img :src="item.main_category.thumb" alt="" />
-            <ul class="right-tag">
-              <li class="font-main-color2 font-size-24">  {{
-              item.main_category.name === "" ? "" : item.main_category.name + ""
-            }}
-            {{
-              item.parse_trademark_type === ""
-                ? ""
-                : "/" + item.parse_trademark_type + "标"
-            }}
-            {{
-              item.parse_store_type === "" ? "" : "/" + item.parse_store_type
-            }}</li>
-              <li class="mark">
-                <span class="d-inline-block font-size-20">牛牛严选</span>
-                <span class="d-inline-block font-size-20">牛牛品鉴</span>
-                <span class="d-inline-block font-size-20">牛牛严选</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div> -->
-      <!-- 店铺名称被隐私保护中 -->
-     <!--  <div class="store-list">
-        <div class="list-platform bg-main-color">
-          <div class="platform-title d-f">
-            <img
-              src="~assets/imgs/icon_tm.png"
-              alt="九九牛网店交易平台，店铺图标"
-              class="store-icon"
-            />
-            <img
-              src="~assets/imgs/ic_home_recommend_protect@2x.png"
-              alt="九九牛网店交易平台，店铺图标"
-              class="secret-icon"
-            />
-            <h3 class="font-size-30 font-size-24 font-main-color3">
-              该店名被隐私保护中
-            </h3>
-          </div>
-          <div class="platform-middle">
-            <p class="desc font-size-26 text-wraps">
-              华南地区 女装+内衣旗舰店 三字中文商标 一
-              般纳税人，店铺干净，卖家诚心出售，欢迎咨询！
-            </p>
-            <div class="price-collect d-f d-f-between">
-              <div class="price-left font-main-color">
-                <span class="font-size-20">店铺售价￥</span>
-                <span class="font-size-34 font-weight">22.8W</span>
-              </div>
-              <div class="collect-right font-main-color2 font-size-20">
-                321人收藏
-              </div>
-            </div>
-          </div>
-          <div class="platform-bottom d-f-flex">
-            <img src="~assets/imgs/bg_home_settlement_jindong@2x.png" alt="" />
-            <ul class="right-tag">
-              <li class="font-main-color2 font-size-24">居家日用/R标/旗舰店</li>
-              <li class="mark">
-                <span class="d-inline-block font-size-20">牛牛严选</span>
-                <span class="d-inline-block font-size-20">牛牛品鉴</span>
-                <span class="d-inline-block font-size-20">牛牛严选</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div> -->
-      <!-- 没有店铺名称 -->
-     <!--  <div class="store-list">
-        <div class="list-platform bg-main-color">
-          <div class="platform-title">
-            <img
-              src="~assets/imgs/icon_tm.png"
-              alt="九九牛网店交易平台，店铺图标"
-              class="store-icon store-icon-noTitle"
-            />
-            <h3
-              class="font-size-30 font-weight font-main-color4 text-wraps desc-title "
-            >
-              福建地区，
-              余妆旗舰店，女装+内衣类目，一般纳税，地址挂靠，无扣分，无社保
-            </h3>
-          </div>
-          <div class="platform-middle">
-            <div class="price-collect d-f d-f-between">
-              <div class="price-left font-main-color">
-                <span class="font-size-20">店铺售价￥</span>
-                <span class="font-size-34 font-weight">22.8W</span>
-              </div>
-              <div class="collect-right font-main-color2 font-size-20">
-                321人收藏
-              </div>
-            </div>
-          </div>
-          <div class="platform-bottom d-f-flex">
-            <img src="~assets/imgs/bg_home_settlement_jindong@2x.png" alt="" />
-            <ul class="right-tag">
-              <li class="font-main-color2 font-size-24">居家日用/R标/旗舰店</li>
-              <li class="mark">
-                <span class="d-inline-block font-size-20">牛牛严选</span>
-                <span class="d-inline-block font-size-20">牛牛品鉴</span>
-                <span class="d-inline-block font-size-20">牛牛严选</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div> -->
       <store-list :storeList="list" />
       <!-- 公司介绍 -->
       <div class="company-profile">
@@ -454,8 +320,8 @@
 </template>
 
 <script>
-import storeList from "~/components/common/store-list";
-import customTabbar from '~/components/common/custom-tabbar'
+// import storeList from "~/components/common/store-list";
+// import customTabbar from '~/components/common/custom-tabbar'
 export default {
   async asyncData({ app }) {
     let [info, list] = await Promise.all([
@@ -473,8 +339,8 @@ export default {
     };
   },
   components:{
-    storeList,
-    customTabbar
+    // storeList,
+    // customTabbar
   },
   data() {
     return {
