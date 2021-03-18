@@ -19,7 +19,6 @@
           placeholder="请输入你的手机号"
           maxlength="11"
           v-model="user.userPhone"
-          @change="demo"
         />
         <img
           v-show="false"
@@ -39,6 +38,7 @@
           placeholder="请输入你验证码"
           maxlength="6"
           v-model="user.userCode"
+          @focus="chekData"
         />
         <span
           class="getCode d-block font-size-22 font-main-color "
@@ -76,14 +76,16 @@
         />
       </li>
       <li class="loginBtn font-main-color6 ">
-        <button class="font-size-32 active" @click="loginButton">登录</button>
+        <button class="font-size-32" @click="loginButton" :class="{active:isShowBtn}">登录</button>
       </li>
-      <li class="font-size-24" v-if="isLoginType">
+      <li class="font-size-24 d-f d-f-between" v-if="isLoginType">
         <span id="loginPwd" @click="switchLogin(false)">密码登录</span>
+        <NuxtLink to="/forget">
+          <span class="font-main-color" id="forgetPwd">忘记密码？</span>
+        </NuxtLink>
       </li>
       <li class="font-size-24 d-f d-f-between" v-else>
         <span id="loginPhone" @click="switchLogin(true)">手机验证码登录</span>
-        <span class="font-main-color" id="forgetPwd">忘记密码？</span>
       </li>
     </ul>
   </div>
@@ -100,7 +102,8 @@ export default {
         userPwd: ""
       },
       isShowCode: false,
-      countdown: 60
+      countdown: 60,
+      isShowBtn : true
     };
   },
   asyncData(context) {
@@ -112,10 +115,14 @@ export default {
     // 切换登录方式
     switchLogin(value) {
       this.isLoginType = value;
+      this.isShowBtn = true;
+      this.user.userPhone = "";
+      this.user.userCode = "";
+      this.user.userPwd = "";
     },
     // 获取验证码
     getCodeMsg() {
-      if(this.isShowCode) return
+      if (this.isShowCode) return;
       if (this.user.userPhone.length !== 0) {
         this.isShowCode = true;
         let timer = setInterval(() => {
@@ -128,34 +135,45 @@ export default {
           }
         }, 1000);
       } else {
-        return alert('账号不能为空')
+        return this.$toast("请填写账号");
       }
     },
     // 发送登录请求
     loginButton() {
       if (this.isLoginType) {
         // 验证码登录
-        console.log(this.user.userPhone.length,this.user.userCode.length);
-        
-        if (this.user.userPhone.length !== 0 && this.user.userCode.length !== 0) {
+        console.log(this.user.userPhone.length, this.user.userCode.length);
+
+        if (
+          this.user.userPhone.length !== 0 &&
+          this.user.userCode.length !== 0
+        ) {
           // 具体业务逻辑
         } else {
-          return alert("账号或验证码不能为空");
+          return this.$toast("账号或验证码不能为空");
         }
       } else {
         // 密码登录
-        if ( this.user.userPhone.length !== 0 && this.user.userPwd.length !== 0) {
+        if (
+          this.user.userPhone.length !== 0 &&
+          this.user.userPwd.length !== 0
+        ) {
           // 具体业务逻辑
         } else {
-          return alert("账号或密码不能为空");
+          return this.$toast("账号或密码不能为空");
         }
         console.log(2);
       }
     },
     // 监听输入框变化
-    demo() {
-      console.log(1111111);
-      
+    chekData() {
+      if (this.user.userPhone.length !== 0 && this.isShowCode) {
+        this.isShowBtn = false;
+        console.log(1233);
+      } else {
+         this.isShowBtn = true;
+        return this.$toast("请输入账号和获取验证码");
+      }
     }
   }
 };
