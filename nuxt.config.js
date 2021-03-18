@@ -1,6 +1,7 @@
 export default {
   env:{
-    baseUrl: process.env.NODE_ENV=='pro'?'https://api.996110.com/api':'https://api.testing.996110.com/api'
+    baseUrl: 'https://api.testing.996110.com/api'
+    // baseUrl: process.env.NODE_ENV=='pro'?'https://api.996110.com/api':'https://api.testing.996110.com/api'
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -32,7 +33,7 @@ export default {
     '~/plugins/axios.js',
     '~/plugins/request.js',
     '~/plugins/api.js',
-    { src: "~plugins/vant", ssr: true },
+    '~/plugins/vue-global.js',
     { src: "@/plugins/lib-flexible", ssr: false }
   ],
 
@@ -46,8 +47,12 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios", "cookie-universal-nuxt"],
-
+  modules: ["@nuxtjs/axios", "cookie-universal-nuxt","@nuxtjs/style-resources"],
+  styleResources: {
+    scss: [
+      '~/assets/css/variable.scss'
+    ]
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     optimization: {
