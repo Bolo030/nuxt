@@ -1,67 +1,67 @@
 <template>
-	<view id="store-filter">
-		<view class="main" @touchmove.stop.prevent>
+	<div id="store-filter">
+		<div class="main" @touchmove.stop.prevent>
 			<!-- 导航 -->
-			<view class="nav">
-				<view class="nav-box">
-					<uni-icons v-if="showBack" @click="back" type="arrowleft" size="20" class="back"></uni-icons>
-					<view class="nav-item" v-for="(item,index) in platformList" :class="{active:item.value==search.platform}" :key="index"
-					 @click="chooseSelect(item,'platform')">
-						<text>{{item.name}}</text>
-						<view class="line" v-if="item.value==search.platform"></view>
-					</view>
-				</view>
-			</view>
+			<div class="nav">
+				<div class="nav-box">
+					<van-icon v-if="showBack" @click="back" name="arrow-left" size="20" class="back"></van-icon>
+					<nuxt-link :to="`/${item.value}`" class="nav-item" v-for="(item,index) in platformList" :class="{active:item.value==search.platform}" :key="index"
+					 >
+						<span>{{item.name}}</span>
+						<div class="line" v-if="item.value==search.platform"></div>
+					</nuxt-link>
+				</div>
+			</div>
 			<!-- 筛选栏 -->
-			<view class="filters">
-				<view class="search-box" @click="gotoSearch">
-					<image src="../../static/img/search.png"></image>
-					<text class="text-ellipsis content">{{search.search||'搜索'}}</text>
-					<view class="search-clear" v-if="search.search"  @click.stop="clearSearch">
-						<uni-icons class="clear" type="clear" size="15" ></uni-icons>
-					</view>
-				</view>
-				<view class="filter-box">
-					<view class="filter-item" v-for="(item,index) in filterList" :key='index' @click="chooseFilter(index)">
-						<text :style="{'color':item.selected||index=='filter'?'#F4632C':''}">{{item.name}}</text>
-						<image v-if="index=='filter'" class="filter" src="../../static/img/filter.png"></image>
-						<image v-else-if="index==filterIdx&&showSelect" class="arrows" src="../../static/img/filter-top.png"></image>
-						<image v-else class="arrows" src="../../static/img/filter-bottom.png.png"></image>
-					</view>
-				</view>
-			</view>
+			<div class="filters">
+				<div class="search-box" @click="gotoSearch">
+					<img src="../../assets/imgs/store/search.png"/>
+					<span class="text-wrap content">{{search.search||'搜索'}}</span>
+					<div class="search-clear" v-if="search.search"  @click.stop="clearSearch">
+						<van-icon class="clear" name="cross" size="15" ></van-icon>
+					</div>
+				</div>
+				<div class="filter-box">
+					<div class="filter-item" v-for="(item,index) in filterList" :key='index' @click="chooseFilter(index)">
+						<span :style="{'color':item.selected||index=='filter'?'#F4632C':''}">{{item.name}}</span>
+						<img v-if="index=='filter'" class="filter" src="../../assets/imgs/store/filter.png"/>
+						<img v-else-if="index==filterIdx&&showSelect" class="arrows" src="../../assets/imgs/store/filter-top.png"/>
+						<img v-else class="arrows" src="../../assets/imgs/store/filter-bottom.png.png"/>
+					</div>
+				</div>
+			</div>
 			<!-- 筛选框 -->
-			<view class="select" v-if="showSelect" @click.self ="cancel">
-				<view class="select-box" >
+			<div class="select" v-if="showSelect" @click.self ="cancel">
+				<div class="select-box" >
 					<!-- 排序 -->
-					<view class="sort" v-if="filterIdx=='sort'" >
-						<view class="sort-item" :class="{active:item.value==search.sort}" v-for="(item,index) in sortList" :key="index"
+					<div class="sort" v-if="filterIdx=='sort'" >
+						<div class="sort-item" :class="{active:item.value==search.sort}" v-for="(item,index) in sortList" :key="index"
 						 @click="chooseSelect(item,'sort')">
 							{{item.name}}
-						</view>
-					</view>
+						</div>
+					</div>
 					<!-- 价格筛选 -->
-					<view class="sel-price" v-else >
-						<view class="sel-price-section">
+					<div class="sel-price" v-else >
+						<div class="sel-price-section">
 							<input @input="priceInput" type="text" v-model="search.price.low" placeholder-class='ft-26' placeholder="最低价格" />
-							<text>—</text>
+							<span>—</span>
 							<input @input="priceInput" type="text" v-model="search.price.high" placeholder-class='ft-26' placeholder="最低价格" />
-						</view>
-						<view class="sel-price-list">
-							<view class="item" :class="{active:item.selected}" v-for="(item,index) in priceList" @click="chooseItem('priceList',index,'price')">
+						</div>
+						<div class="sel-price-list">
+							<div class="item" :class="{active:item.selected}" v-for="(item,index) in priceList" @click="chooseItem('priceList',index,'price')">
 								{{item.name}}
-							</view>
-						</view>
-						<view class="sel-price-btn btn-store">
+							</div>
+						</div>
+						<div class="sel-price-btn btn-store">
 							<button @click="cancel">取消</button>
 							<button class="active" @click="confirm">确定</button>
-						</view>
-					</view>
-				</view>
-			</view>
-		</view>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<filter-side ref='child' v-show="asideShow" :searchChild='search' :child='categoryList' @data='getAside' />
-	</view>
+	</div>
 </template>
 
 <script>
@@ -93,12 +93,16 @@
 			searchData: {
 				type: Object,
 				default: () => {}
-			}
+			},
+      	child: {
+				type: Array,
+				default: () => []
+			},
 		},
 		created() {
 			this.reset();
 			this.search = Object.assign(this.search, this.searchData)
-			this.parseParams(this.search.platform)
+			// this.parseParams(this.search.platform)
 		},
 		data() {
 			return {
@@ -111,16 +115,16 @@
 				asideShow: false,
 				search: { ...searchStatic
 				},
-				categoryList: []
+				categoryList: this.child
 
 			};
 		},
 		methods: {
 			// 返回店铺列表
 			back() {
-				uni.reLaunch({
+			/* 	uni.reLaunch({
 					url: '/pages/shop/shop'
-				})
+				}) */
 			},
 			// 重置
 			reset() {
@@ -136,7 +140,6 @@
 			},
 			// 筛类型选择
 			chooseFilter(idx) {
-				this.$helpers.roll('#store-filter')
 				if (idx == 'filter') {
 					this.asideShow = !this.asideShow
 					this.showSelect = false
@@ -156,6 +159,7 @@
 				this.search[type] = data.value;
 				this.$emit('result', this.search)
 				if (type == 'sort'){
+        //  location.href=$nuxt.route.path+data.value
 					this.showSelect = false
 					this.filterList.sort.selected=data.value?true:false
 					}
@@ -234,7 +238,7 @@
 <style lang="scss" scoped>
 	@keyframes move-bottom {
 		0% {
-			margin-top: -130rpx;
+			margin-top: -130px;
 			opacity: 0;
 		}
 
@@ -246,7 +250,7 @@
 
 	#store-filter {
 		color: #1C1C1C;
-		padding-bottom: 226rpx;
+		padding-bottom: 226px;
 		position: sticky;
 		left: 0;
 		top: var(--window-top);
@@ -258,7 +262,7 @@
 		}
 
 		.main {
-			font-size: 28rpx;
+			font-size: 28px;
 			width: 100vw;
 			position: absolute;
 			left: 0;
@@ -266,13 +270,13 @@
 		}
 
 		.nav-box {
-			padding-top: 20rpx;
+			padding-top: 20px;
 			display: flex;
 			justify-content: space-between;
-			height: 96rpx;
+			height: 96px;
 			box-sizing: border-box;
 			border-bottom: 1px solid #EDEDED;
-			width: 700rpx;
+			width: 700px;
 			margin: 0 auto;
 
 			.nav-item {
@@ -280,25 +284,25 @@
 			}
 
 			.active {
-				font-size: 32rpx;
+				font-size: 32px;
 				font-weight: 700;
 			}
 
 			.line {
-				width: 33rpx;
-				height: 6rpx;
+				width: 33px;
+				height: 6px;
 				background: #F4632C;
 				border-radius: 3px;
 				position: absolute;
-				bottom: 17rpx;
+				bottom: 17px;
 				left: 50%;
 				transform: translateX(-50%);
 			}
 		}
 
 		.filters {
-			height: 130rpx;
-			padding: 22rpx 24rpx;
+			height: 130px;
+			padding: 22px 24px;
 
 			&,
 			.search-box,
@@ -309,28 +313,28 @@
 			}
 
 			.search-box {
-				width: 320rpx;
-				height: 84rpx;
+				width: 320px;
+				height: 84px;
 				background: #F4F4F4;
-				border-radius: 42rpx;
-				padding-left: 35rpx;
-				font-size: 28rpx;
-				margin-right: 45rpx;
+				border-radius: 42px;
+				padding-left: 35px;
+				font-size: 28px;
+				margin-right: 45px;
 				flex-shrink: 0;
 				justify-content: space-between;
 				.content{
 					flex: 1;
 				}
 				.search-clear{
-					width: 60rpx;
+					width: 60px;
 					height: 100%;
 					display: flex;
 					align-items: center;
 				}
-				image {
-					height: 29rpx;
-					width: 32rpx;
-					margin-right: 14rpx;
+				img {
+					height: 29px;
+					width: 32px;
+					margin-right: 14px;
 					flex-shrink: 0;
 				}
 			}
@@ -344,15 +348,15 @@
 					justify-content: space-between;
 
 					.arrows {
-						height: 8rpx;
-						width: 14rpx;
-						margin-left: 10rpx;
+						height: 8px;
+						width: 14px;
+						margin-left: 10px;
 					}
 
 					.filter {
-						width: 22rpx;
-						height: 22rpx;
-						margin-left: 5rpx;
+						width: 22px;
+						height: 22px;
+						margin-left: 5px;
 					}
 				}
 			}
@@ -365,17 +369,17 @@
 
 			.select-box {
 				background: #F4F4F4;
-				border-radius: 0px 0px 36rpx 36rpx;
-				padding: 54rpx 24rpx;
-				font-size: 26rpx;
-				line-height: 26rpx;
+				border-radius: 0px 0px 36px 36px;
+				padding: 54px 24px;
+				font-size: 26px;
+				line-height: 26px;
 				position: relative;
 				animation: move-bottom .5s;
 			}
 
 			.sort-item {
 				&+.sort-item {
-					margin-top: 54rpx;
+					margin-top: 54px;
 				}
 
 				&.active {
@@ -389,10 +393,10 @@
 				justify-content: space-between;
 
 				input {
-					width: 320rpx;
-					height: 88rpx;
+					width: 320px;
+					height: 88px;
 					background: #FFFFFF;
-					border-radius: 8rpx;
+					border-radius: 8px;
 					text-align: center;
 				}
 			}
@@ -400,16 +404,16 @@
 			.sel-price-list {
 				display: flex;
 				flex-wrap: wrap;
-				margin: 50rpx 0 30rpx;
+				margin: 50px 0 30px;
 
 				.item {
-					width: 160rpx;
-					height: 64rpx;
-					font-size: 24rpx;
-					line-height: 64rpx;
+					width: 160px;
+					height: 64px;
+					font-size: 24px;
+					line-height: 64px;
 					background: #FFFFFF;
-					border-radius: 8rpx;
-					margin: 0 20rpx 20rpx 0;
+					border-radius: 8px;
+					margin: 0 20px 20px 0;
 					text-align: center;
 
 					&.active {

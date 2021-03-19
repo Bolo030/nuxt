@@ -1,27 +1,27 @@
 <template>
-	<view id="aside" @touchmove.stop.prevent>
-		<view class="aside-back" @click="colse">
-				<image class="back"  src='/static/icon/rectangle.png' />
-				<text>返回</text>
-		</view>
-		<scroll-view scroll-y class="aside-list">
-			<view class="aside-item" v-for="(item,index) in list" :key="index">
-				<view class="aside-item-title">
+	<div id="aside" @touchmove.stop.prevent>
+		<div class="aside-back" @click="colse">
+			<van-icon name="arrow-left" size="20" ></van-icon>
+				<span>返回</span>
+		</div>
+		<div  class="aside-list">
+			<div class="aside-item" v-for="(item,index) in list" :key="index">
+				<div class="aside-item-title">
 					{{item.title}}
-				</view>
-				<view class="child">
-					<view class="child-item text-ellipsis" :class="{active:v.selected}" v-for="(v,i) in item.childList" :key='i'
+				</div>
+				<div class="child">
+					<div class="child-item text-wrap" :class="{active:v.selected}" v-for="(v,i) in item.childList" :key='i'
 					 @click="choose(v,i,index)">
 						{{v.name}}
-					</view>
-				</view>
-			</view>
-		</scroll-view>
-		<view class="aside-btn btn-store">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="aside-btn btn-store">
 			<button class="reset" @click="reset">重置</button>
 			<button class="confirm" @click="confirm">确定</button>
-		</view>
-	</view>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -183,32 +183,33 @@
 		left: 0;
 		z-index: 100000;
 		background-color: #FFFFFF;
-		padding: 30rpx 24rpx 0;
+		padding: 30px 24px 0;
 		box-sizing: border-box;
 		animation: move-left .5s;
 		.aside-back{
 			display: flex;
 			align-items: center;
 			.back{
-				width: 17rpx;
-				height: 30rpx;
-				margin-right: 10rpx;
+				width: 17px;
+				height: 30px;
+				margin-right: 10px;
 			}
-			font-size: 30rpx;
-			margin-bottom: 40rpx;
+			font-size: 30px;
+			margin-bottom: 40px;
 			font-weight: 700;
 		}
-		
+
 		.aside-list {
-			height: calc(100% - 220rpx);
+			height: calc(100% - 220px);
+      overflow-y: auto;
 		}
 	}
 
 	.aside-item {
 		.aside-item-title {
-			font-size: 28rpx;
+			font-size: 28px;
 			font-weight: 700;
-			margin-bottom: 25rpx;
+			margin-bottom: 25px;
 		}
 
 		.child {
@@ -216,16 +217,16 @@
 			flex-wrap: wrap;
 
 			.child-item {
-				width: 160rpx;
-				height: 64rpx;
+				width: 160px;
+				height: 64px;
 				background: #F4F4F4;
-				border-radius: 8rpx;
-				font-size: 24rpx;
+				border-radius: 8px;
+				font-size: 24px;
 				font-weight: 400;
-				line-height: 64rpx;
+				line-height: 64px;
 				text-align: center;
-				margin: 0 20rpx 20rpx 0;
-				padding: 0 20rpx;
+				margin: 0 20px 20px 0;
+				padding: 0 20px;
 
 				&:nth-child(4n+4) {
 					margin-right: 0;
@@ -240,7 +241,7 @@
 	}
 
 	.aside-btn {
-		height: 140rpx;
+		height: 140px;
 		align-items: center;
 
 		button {

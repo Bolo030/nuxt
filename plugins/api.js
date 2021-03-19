@@ -20,6 +20,18 @@ export default ({ app: { $request } }, inject) => {
     getBoutique(params={}){
       return $request.get('/boutique',params)
   },
+    /**
+     * 搜索商品
+     */
+    getStoreList(params={}){
+      return $request.get('/store/',params)
+    },
 
+    /**
+     * 获取一级分类
+     */
+    getStoreSearchParams(params={}){
+      return $request.get('/store/search-params',params)
+    }
   })
 }

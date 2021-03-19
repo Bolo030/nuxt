@@ -20,13 +20,13 @@
           <span
             :style="{ 'font-weight': item.name || isInfo ? 700 : 500 }"
             v-html="item.name || item.title"
-            class="font-weight text-ellipsis-2"
+            class="font-weight text-wraps"
           />
         </span>
       </div>
       <span
         v-if="item.name || (item.showName == 2 && item.platform == 'tm')"
-        class="shopList-center text-ellipsis-2"
+        class="shopList-center text-wraps"
         v-html="item.title"
       ></span>
       <!-- 价格栏 -->

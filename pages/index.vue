@@ -320,8 +320,6 @@
 </template>
 
 <script>
-// import storeList from "~/components/common/store-list";
-// import customTabbar from '~/components/common/custom-tabbar'
 export default {
   async asyncData({ app }) {
     let [info, list] = await Promise.all([
@@ -337,10 +335,6 @@ export default {
       info,
       list
     };
-  },
-  components:{
-    // storeList,
-    // customTabbar
   },
   data() {
     return {

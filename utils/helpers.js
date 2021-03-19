@@ -126,5 +126,91 @@ export default {
       $store.commit("auth/UPDATE_TOKEN", "");
       $store.commit("auth/UPDATE_USERID", "");
     }
-  }
+  },
+  /*
+  *搜索参数解析
+  */
+  searchQuery(key, val = null, options = {}) {
+    let searchRoute = {
+      more: '-',
+      division: 'z'
+    };
+
+    if (key instanceof Object) {
+      options = key;
+      key = val = null;
+    }
+
+    let query = options.query ? options.query : {};
+    let platform = options.platform ? options.platform : '';
+    let remove = options.remove ? this.wrap(options.remove) : [];
+    let toggle = this.filled(options.toggle) ? options.toggle : true;
+
+    if (this.blank(platform)) {
+      platform = v.platform ? v.platform : 'tm';
+    }
+
+    if (this.blank(query)) {
+      query = window.v ? this.clone(v.query) : {};
+    }
+
+    if (key) {
+      if (this.isArray(val)) {
+        if (!this.hasOwn(query, key)) {
+          query[key] = [];
+        }
+        let value = val[0];
+        query[key] = this.wrap(query[key]);
+        if (query[key].includes(value) && toggle) {
+          if (query[key].length === 1) {
+            remove.push(key);
+          } else {
+            remove.push(key + this.arraySearch(value, query[key]));
+          }
+        }
+      } else {
+        // 如果 val 为空则剔除该搜索参数
+        if (this.hasOwn(query, key) && this.blank(val)) {
+          remove.push(key);
+        }
+
+        if (key && val) {
+          if (this.hasOwn(query, key) && query[key] == val && toggle) {
+            remove.push(key);
+          } else {
+            query[key] = val;
+          }
+        }
+      }
+    }
+
+    // 移除分页参数
+    if (key !== 'p') {
+      remove.push('p');
+    }
+
+    if (remove.length > 0) {
+      remove.forEach(function (item) {
+        delete query[item];
+      });
+    }
+
+    let params = [];
+
+    for (let k in query) {
+      if (this.isArray(query[k])) {
+        params.push(k + query[k].join(searchRoute.more));
+      } else {
+        params.push(k + query[k]);
+      }
+    }
+
+    params = params.length > 0 ? params.join(searchRoute.division) : '';
+
+    return '/' + platform + (params ? '/' + params : '');
+  },
+
+  jumpSearchQuery(key, val, options = {}) {
+    location.href = this.searchQuery(key, val, options);
+  },
 };

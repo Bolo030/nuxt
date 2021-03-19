@@ -166,6 +166,14 @@
     -webkit-line-clamp: 2;
     overflow: hidden;
   }
+  /*多行溢出 */
+.txt-cut {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  /* -webkit-line-clamp: 2; */
+  -webkit-box-orient: vertical;
+}
   /* 图片默认宽高 */
   img {
     width: 100%;
@@ -194,24 +202,6 @@
 }
 
 
-/*单行溢出*/
-
-.one-txt-cut {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-
-/*多行溢出 */
-
-.txt-cut {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    /* -webkit-line-clamp: 2; */
-    -webkit-box-orient: vertical;
-}
 
 
 /*绝对剧中 - z 轴*/
