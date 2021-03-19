@@ -13,26 +13,31 @@
           >
         </div>
         <div class="icon-img">
-          <img
-            src="~assets/imgs/icon-setting.png"
-            alt="九九牛网店交易平台，个人中心设置"
-          />
+          <nuxt-link to="/user/seting">
+            <img
+              src="~assets/imgs/icon-setting.png"
+              alt="九九牛网店交易平台，个人中心设置"
+            />
+          </nuxt-link>
         </div>
       </div>
       <div class="header-middle d-f-flex">
         <div class="middle-item1">
           <img
             class="border-radius-50"
-            src="https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=820522811,1360565466&fm=111&gp=0.jpg"
+            :src="userInfo.user.contact.avatar === '' ? '/_nuxt/assets/imgs/avatar.png':userInfo.user.contact.avatar"
             alt="九九牛网店交易平台，用户头像"
           />
         </div>
         <div class="middle-item2">
           <!-- 已登录 -->
-          <div class="middle-info1" style="display: none;">
-            <h4 class="font-size-30 font-weight">会飞的小猪猪</h4>
-            <div class="middle-info-desc d-f">
-              <!-- 已实名 -->
+          <div class="middle-info1" v-if="userInfo.status !== 0">
+            <h4 class="font-size-30 font-weight">{{ userInfo.user.name }}</h4>
+            <!-- 已实名 -->
+            <div
+              class="middle-info-desc d-f"
+              v-if="userInfo.user.hasRealName === 1"
+            >
               <span class="bg-gradient-color font-main-color6">
                 <img
                   src="~assets/imgs/icon-realName1.png"
@@ -47,25 +52,32 @@
                   alt="九九牛网店交易平台，实名图标"
                 />
               </span>
-
-              <!-- 未实名 -->
-              <!-- <span class="bg-main-color font-size-20 d-f">
-                                <img src="/imgs/icon-realName2.png" alt="九九牛网店交易平台，实名图标">
-                                账号尚未实名认证
-                                <img src="/imgs/icon-entry.png" alt="九九牛网店交易平台，实名图标">
-                        </span>
-                        <span class="bg-main-color font-size-20 d-f">
-                            编辑个人资料
-                            <img src="/imgs/icon-entry.png" alt="九九牛网店交易平台，实名图标">
-                        </span> -->
+            </div>
+            <!-- 未实名 -->
+            <div class="middle-info-desc d-f" v-else>
+              <span class="bg-main-color font-size-20 d-f">
+                <img
+                  src="~assets/imgs/icon-realName2.png"
+                  alt="九九牛网店交易平台，实名图标"
+                />
+                账号尚未实名认证
+                <img
+                  src="~assets/imgs/icon-entry.png"
+                  alt="九九牛网店交易平台，实名图标"
+                />
+              </span>
+              <span class="bg-main-color font-size-20 d-f">
+                编辑个人资料
+                <img
+                  src="~assets/imgs/icon-entry.png"
+                  alt="九九牛网店交易平台，实名图标"
+                />
+              </span>
             </div>
           </div>
           <!-- 未登录 -->
-          <div
-            class="middle-info2 font-size-36 font-weight"
-            style="display: ;"
-          >
-            登录/注册
+          <div class="middle-info2 font-size-36 font-weight" v-else>
+            <nuxt-link to="/login">登录/注册</nuxt-link>
           </div>
         </div>
       </div>
@@ -87,8 +99,12 @@
         </div>
         <div class="my-account-middle d-f d-f-around font-size-40 ">
           <div class="account-item d-f d-f-direction">
-            <span class="font-main-color font-weight">0.00</span>
-            <span class="font-size-20 font-main-color7">余额 (元)</span>
+            <span class="font-main-color font-weight">{{
+              userInfo.balance.price
+            }}</span>
+            <span class="font-size-20 font-main-color7"
+              >余额 ({{ userInfo.balance.unit }})</span
+            >
             <i></i>
           </div>
           <div class="account-item d-f d-f-direction">
@@ -159,12 +175,14 @@
           </div>
           <div class="center-item d-f d-f-direction">
             <img src="~assets/imgs/function-icon4.png" alt="交易攻略" />
-            <span class="font-size-22 font-main-color4">交易攻略</span>
+            <span class="font-size-22 font-main-color4" @click="dmeo"
+              >交易攻略</span
+            >
           </div>
         </div>
       </div>
       <!-- 底部tabbar -->
-      <custom-tabbar :active=2 />
+      <custom-tabbar :active="2" />
     </main>
   </div>
 </template>
@@ -173,10 +191,42 @@
 import customTabbar from "~/components/common/custom-tabbar";
 
 export default {
+  name: "user",
+  data() {
+    return {
+      userInfo: {
+        status: 0,
+        user: {
+          contact: {
+            avatar: ""
+          }
+        },
+        balance: {
+          price: 0,
+          unit: "元"
+        }
+      }
+    };
+  },
   components: {
     customTabbar
   },
-  
+  async asyncData({ app }) {
+    // 获取个人中心数据
+    let userInfo = await app.$api.getUserInfo();
+    if (userInfo.status !== 1) {
+      return;
+    } else {
+      userInfo.data.status = 1;
+      userInfo = userInfo.data;
+      return { userInfo };
+    }
+  },
+  methods: {
+    dmeo() {
+      console.log(this.userInfo);
+    }
+  }
 };
 </script>
 

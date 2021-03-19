@@ -38,7 +38,7 @@
           placeholder="请输入你验证码"
           maxlength="6"
           v-model="user.userCode"
-          @focus="chekData"
+          @focus="chekData('code')"
         />
         <span
           class="getCode d-block font-size-22 font-main-color "
@@ -68,15 +68,23 @@
           maxlength="16"
           minlength="8"
           v-model="user.userPwd"
+          @focus="chekData('pwd')"
         />
         <img
+          v-show="false"
           src="~assets/imgs/icon_cancel.png"
           alt="九九牛网店交易平台，取消图标"
           class="img-cancel"
         />
       </li>
       <li class="loginBtn font-main-color6 ">
-        <button class="font-size-32" @click="loginButton" :class="{active:isShowBtn}">登录</button>
+        <button
+          class="font-size-32"
+          @click="loginButton"
+          :class="{ active: isShowBtn }"
+        >
+          登录
+        </button>
       </li>
       <li class="font-size-24 d-f d-f-between" v-if="isLoginType">
         <span id="loginPwd" @click="switchLogin(false)">密码登录</span>
@@ -103,13 +111,11 @@ export default {
       },
       isShowCode: false,
       countdown: 60,
-      isShowBtn : true
+      isShowBtn: true
     };
   },
   asyncData(context) {
     // called every time before loading the component
-
-    return { name: "World" };
   },
   methods: {
     // 切换登录方式
@@ -125,6 +131,13 @@ export default {
       if (this.isShowCode) return;
       if (this.user.userPhone.length !== 0) {
         this.isShowCode = true;
+        this.$api.sendMsg({ type: 6, phone: this.user.userPhone }).then(res => {
+          if (res.status !== 1) {
+            return this.$toast("服务器繁忙，请稍后发送");
+          } else {
+            this.$toast(res.message);
+          }
+        });
         let timer = setInterval(() => {
           if (this.countdown === 0) {
             this.countdown = 60;
@@ -140,15 +153,29 @@ export default {
     },
     // 发送登录请求
     loginButton() {
+      this.$cookies.set("name", "value1234334");
       if (this.isLoginType) {
         // 验证码登录
-        console.log(this.user.userPhone.length, this.user.userCode.length);
-
         if (
           this.user.userPhone.length !== 0 &&
           this.user.userCode.length !== 0
         ) {
           // 具体业务逻辑
+          this.$api
+            .codeLogin({
+              username: this.user.userPhone,
+              code: this.user.userCode,
+              type: "h5"
+            })
+            .then(res => {
+              if (res.status !== 1) {
+                return this.$toast("登录失败");
+              } else {
+                this.$cookies.set("token", res.data.token);
+                this.$toast("登录成功");
+                this.$router.push("/user");
+              }
+            });
         } else {
           return this.$toast("账号或验证码不能为空");
         }
@@ -159,20 +186,45 @@ export default {
           this.user.userPwd.length !== 0
         ) {
           // 具体业务逻辑
+          this.$api
+            .pwdLogin({
+              username: this.user.userPhone,
+              password: this.user.userPwd
+            })
+            .then(res => {
+              if (res.status !== 1) {
+                return this.$toast(res.message);
+              } else {
+                this.$cookies.set("token", res.data.token);
+                this.$toast("登录成功");
+                this.$router.push("/user");
+              }
+            });
         } else {
           return this.$toast("账号或密码不能为空");
         }
-        console.log(2);
       }
     },
     // 监听输入框变化
-    chekData() {
-      if (this.user.userPhone.length !== 0 && this.isShowCode) {
-        this.isShowBtn = false;
-        console.log(1233);
-      } else {
-         this.isShowBtn = true;
-        return this.$toast("请输入账号和获取验证码");
+    chekData(value) {
+      if (value === "code") {
+        if (this.user.userPhone.length !== 0 && this.isShowCode) {
+          this.isShowBtn = false;
+          console.log(1233);
+        } else {
+          this.isShowBtn = true;
+          return this.$toast("请输入账号和获取验证码");
+        }
+      } else if (value === "pwd") {
+        if (
+          this.user.userPhone.length !== 0 &&
+          this.user.userPwd.length === 0
+        ) {
+          this.isShowBtn = false;
+        } else {
+          this.isShowBtn = true;
+          return this.$toast("请输入账号和密码");
+        }
       }
     }
   }
@@ -211,7 +263,6 @@ export default {
     li {
       position: relative;
       margin-bottom: 46px;
-      // height: 94px;
       .getCode {
         &.active {
           color: #f5b69f;

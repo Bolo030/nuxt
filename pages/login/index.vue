@@ -6,6 +6,7 @@
           src="~assets/imgs/icon_close.png"
           alt="九九牛网店交易平台，关闭按钮图标"
           class="closeImg"
+          @click="goBack"
         />
       </div>
       <div class="bgImg d-f-column d-f-center">
@@ -380,7 +381,9 @@ export default {
     Login
   },
   methods:{
-   
+   goBack() {
+      history.back();
+    },
   }
 }
 </script>
