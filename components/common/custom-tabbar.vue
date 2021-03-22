@@ -62,7 +62,7 @@ export default {
 
           {
             text: "个人中心",
-            pagePath: "",
+            pagePath: "/user",
             iconPath: require("../../assets/imgs/tabbar/ic_home_tab_geren_b.png"),
             selectedIconPath: require("../../assets/imgs/tabbar/ic_home_tab_geren_a.png")
           }
@@ -81,7 +81,7 @@ export default {
   .tabbar-box,
   .tabbar-occupy {
     height: 180px;
-    width: 100vw;
+    width: 100%;
   }
 
   img {

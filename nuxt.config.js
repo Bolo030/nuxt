@@ -21,7 +21,8 @@ export default {
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       { rel: "stylesheet", href: "/css/common.css" },
-      { rel: "stylesheet", href: "/css/reset.css" }
+      { rel: "stylesheet", href: "/css/reset.css" },
+      { rel: "stylesheet" , href:'//at.alicdn.com/t/font_2353350_bdz183nryxm.css'}
     ]
   },
 

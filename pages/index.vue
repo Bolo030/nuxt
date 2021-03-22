@@ -382,6 +382,9 @@ export default {
           }
         })
     }
+  },
+  mounted(){
+    // console.log(info)
   }
 };
 </script>

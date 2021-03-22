@@ -6,6 +6,7 @@ export default function ({ app: { $axios, $cookies } }) {
 		config.headers['Content-Type'] = 'application/json'
 		return config
 	})
+	
 	$axios.interceptors.response.use(response => {
 		if (/^[4|5]/.test(response.status)) {
 			return Promise.reject(response.statusText)
