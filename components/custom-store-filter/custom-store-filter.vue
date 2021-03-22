@@ -36,7 +36,7 @@
 					<!-- 排序 -->
 					<div class="sort" v-if="filterIdx=='sort'" >
 						<div class="sort-item" :class="{active:item.value==search.sort}" v-for="(item,index) in sortList" :key="index"
-						 @click="chooseSelect(item,'sort')">
+						 @click="chooseSelect(item,'h')">
 							{{item.name}}
 						</div>
 					</div>
@@ -48,7 +48,7 @@
 							<input @input="priceInput" type="text" v-model="search.price.high" placeholder-class='ft-26' placeholder="最低价格" />
 						</div>
 						<div class="sel-price-list">
-							<div class="item" :class="{active:item.selected}" v-for="(item,index) in priceList" @click="chooseItem('priceList',index,'price')">
+							<div class="item" :class="{active:item.selected}" v-for="(item,index) in priceList" @click="chooseItem('priceList',index,'l')">
 								{{item.name}}
 							</div>
 						</div>
@@ -115,8 +115,8 @@
 				asideShow: false,
 				search: { ...searchStatic
 				},
-				categoryList: this.child
-
+				categoryList: this.child,
+        path:''
 			};
 		},
 		methods: {
@@ -131,8 +131,8 @@
 				this.search = { ...searchStatic}
 				this.showSelect = false
 				this.filterIdx = null
-				this.chooseItem('filterList')
-				this.chooseItem('priceList',0,'price',false)
+				// this.chooseItem('filterList')
+				// this.chooseItem('priceList',0,'price',false)
 			},
 			clearSearch(){
 				this.search.search="";
@@ -151,7 +151,7 @@
 				}
 				this.filterIdx = idx;
 			},
-			chooseSelect(data, type) {
+	/* 		chooseSelect(data, type) {
 				if (type == 'platform') {
 					this.reset();
 					this.parseParams(data.value)
@@ -159,12 +159,26 @@
 				this.search[type] = data.value;
 				this.$emit('result', this.search)
 				if (type == 'sort'){
-        //  location.href=$nuxt.route.path+data.value
 					this.showSelect = false
 					this.filterList.sort.selected=data.value?true:false
 					}
+			}, */
+      chooseSelect(data, type){
+          var path=this.$utils.createQuery(this.$route.params,type,data.value)
+          this.$router.push(path)
+      },
+      chooseItem(arr,idx,type) {
+        this.path=this.$utils.createQuery(this.$route.params,type,idx)
+				for (var i in this[arr]) {
+					if (i == idx) {
+						this.$set(this[arr][i], 'selected', true)
+						/* this.search[type] = this[arr][i].value;
+						refresh&&this.$emit('result', this.search) */
+					} else
+						this.$set(this[arr][i], 'selected', false)
+				}
 			},
-			chooseItem(arr, idx,type,refresh=true) {
+			/* chooseItem(arr, idx,type,refresh=true) {
 				for (var i in this[arr]) {
 					if (i == idx) {
 						this.$set(this[arr][i], 'selected', true)
@@ -173,7 +187,7 @@
 					} else
 						this.$set(this[arr][i], 'selected', false)
 				}
-			},
+			}, */
 			cancel() {
 				this.search.price = {
 					low: undefined,
@@ -185,9 +199,10 @@
 				this.$emit('result', this.search)
 			},
 			confirm() {
-				this.$emit('result', this.search)
+          this.$router.push(this.path)
+				/* this.$emit('result', this.search)
 				this.filterList.price.selected = Boolean(this.search.price.high!=undefined||this.search.price.low!=undefined)
-				this.showSelect = false;
+				this.showSelect = false; */
 			},
 			priceInput() {
 				this.chooseItem('priceList')

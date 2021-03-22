@@ -99,7 +99,8 @@ export default {
       ]
     };
   },
-  async asyncData({ app, query, params }) {
+  async asyncData({ app, params }) {
+    console.log(params,'paramsparams')
     let search = {
       platform: params.store || "tm",
       page: 1
