@@ -91,5 +91,6 @@ export default {
         }
       }
     }
-  }
+  },
+  loading: {color:'#ff5722', height: ' 3px'}
 };

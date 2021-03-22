@@ -25,7 +25,7 @@
         <div class="middle-item1">
           <img
             class="border-radius-50"
-            :src="userInfo.user.contact.avatar === '' ? '/_nuxt/assets/imgs/avatar.png':userInfo.user.contact.avatar"
+            :src="userInfo.user.contact.avatar === ''? require('../../assets/imgs/avatar.png'):userInfo.user.contact.avatar"
             alt="九九牛网店交易平台，用户头像"
           />
         </div>
@@ -122,21 +122,13 @@
       <div
         class="my-order-info bg-main-color d-f d-f-around font-size-24 font-main-color4"
       >
-        <div class="order-info-item d-f d-f-direction">
-          <img src="~assets/imgs/order-info1.png" alt="全部订单" />
-          <span>全部订单</span>
-        </div>
-        <div class="order-info-item d-f d-f-direction">
-          <img src="~assets/imgs/order-info2.png" alt="待付款" />
-          <span>待付款</span>
-        </div>
-        <div class="order-info-item d-f d-f-direction">
-          <img src="~assets/imgs/order-info3.png" alt="交接中" />
-          <span>交接中</span>
-        </div>
-        <div class="order-info-item d-f d-f-direction">
-          <img src="~assets/imgs/order-info4.png" alt="已完成" />
-          <span>已完成</span>
+        <div
+          class="order-info-item d-f d-f-direction"
+          v-for="(item, index) in orderInfo"
+          :key="index"
+        >
+          <img :src="item.src" :alt="item.text" />
+          <span>{{ item.text }}</span>
         </div>
       </div>
       <!-- 我的店铺区域 -->
@@ -161,23 +153,14 @@
           <h3 class="font-size-28 font-weight">功能中心</h3>
         </div>
         <div class="function-center-middle d-f d-f-between font-size-40 ">
-          <div class="center-item d-f d-f-direction">
-            <img src="~assets/imgs/function-icon1.png" alt="我的合同" />
-            <span class="font-size-22 font-main-color4">我的合同</span>
-          </div>
-          <div class="center-item d-f d-f-direction">
-            <img src="~assets/imgs/function-icon2.png" alt="银行卡管理" />
-            <span class="font-size-22 font-main-color4">银行卡管理</span>
-          </div>
-          <div class="center-item d-f d-f-direction">
-            <img src="~assets/imgs/function-icon3.png" alt="我的收藏" />
-            <span class="font-size-22 font-main-color4">我的收藏</span>
-          </div>
-          <div class="center-item d-f d-f-direction">
-            <img src="~assets/imgs/function-icon4.png" alt="交易攻略" />
-            <span class="font-size-22 font-main-color4" @click="dmeo"
-              >交易攻略</span
-            >
+          <div
+            class="center-item d-f d-f-direction"
+            v-for="(item, index) in userCenterInfo"
+            :key="index"
+            @click="functionInfo(item.path)"
+          >
+            <img :src="item.src" :alt="item.text" />
+            <span class="font-size-22 font-main-color4">{{ item.text }}</span>
           </div>
         </div>
       </div>
@@ -205,7 +188,35 @@ export default {
           price: 0,
           unit: "元"
         }
-      }
+      },
+      userCenterInfo: [
+        {
+          src: require("../../assets/imgs/function-icon1.png"),
+          text: "我的合同",
+          path:''
+        },
+        {
+          src: require("../../assets/imgs/function-icon2.png"),
+          text: "银行卡管理",
+          path:''
+        },
+        {
+          src: require("../../assets/imgs/function-icon3.png"),
+          text: "我的收藏",
+          path:''
+        },
+        {
+          src: require("../../assets/imgs/function-icon4.png"),
+          text: "交易攻略",
+          path: '/article'
+        }
+      ],
+      orderInfo: [
+        { src: require("../../assets/imgs/order-info1.png"), text: "全部订单" },
+        { src: require("../../assets/imgs/order-info2.png"), text: "待付款" },
+        { src: require("../../assets/imgs/order-info3.png"), text: "交接中" },
+        { src: require("../../assets/imgs/order-info4.png"), text: "已完成" }
+      ]
     };
   },
   components: {
@@ -223,8 +234,8 @@ export default {
     }
   },
   methods: {
-    dmeo() {
-      console.log(this.userInfo);
+    functionInfo(path){
+      this.$router.push(path)
     }
   }
 };
@@ -238,152 +249,127 @@ header {
   background-size: cover;
   padding: 67px 24px 0;
   box-sizing: border-box;
+  .header-top {
+    .icon-img {
+      width: 40px;
+      height: 40px;
+      &:first-child {
+        margin-right: 40px;
+        position: relative;
+        line-height: 26px;
+        .tag {
+          position: absolute;
+          top: -30px;
+          right: -15px;
+          padding: 8px 8px;
+          background: #f51b1b;
+        }
+      }
+    }
+  }
+  .header-middle {
+    margin-top: 30px;
+    .middle-item1 {
+      width: 120px;
+      height: 120px;
+      margin-right: 20px;
+    }
+    .middle-item2 {
+      height: 120px;
+      .middle-info1 {
+        .middle-info-desc {
+          margin-top: 20px;
+          line-height: 42px;
+          span {
+            height: 42px;
+            padding: 0px 17px 0px 17px;
+            box-sizing: border-box;
+            border-radius: 300px;
+            &:first-child {
+              margin-right: 14px;
+            }
+          }
+          img {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+      .middle-info2 {
+        line-height: 120px;
+      }
+    }
+  }
 }
-
-header .header-top .icon-img {
-  width: 40px;
-  height: 40px;
-}
-
-header .header-top .icon-img:first-child {
-  margin-right: 40px;
-  position: relative;
-  line-height: 26px;
-}
-
-header .header-top .icon-img:first-child .tag {
-  position: absolute;
-  top: -30px;
-  right: -15px;
-  padding: 8px 8px;
-  background: #f51b1b;
-}
-
-header .header-middle {
-  margin-top: 30px;
-}
-
-header .header-middle .middle-item1 {
-  width: 120px;
-  height: 120px;
-  margin-right: 20px;
-}
-
-header .header-middle .middle-item2 {
-  height: 120px;
-}
-
-header .header-middle .middle-item2 .middle-info1 .middle-info-desc {
-  margin-top: 20px;
-  line-height: 42px;
-}
-
-header .header-middle .middle-item2 .middle-info1 .middle-info-desc span {
-  height: 42px;
-  padding: 0px 17px 0px 17px;
-  box-sizing: border-box;
-  border-radius: 300px;
-}
-
-header
-  .header-middle
-  .middle-item2
-  .middle-info1
-  .middle-info-desc
-  span:first-child {
-  margin-right: 14px;
-}
-
-header .header-middle .middle-item2 .middle-info1 .middle-info-desc img {
-  width: 20px;
-  height: 20px;
-}
-
-header .header-middle .middle-item2 .middle-info2 {
-  line-height: 120px;
-}
-
 #personalCenter {
   padding: 0 24px;
-}
-
-#personalCenter .my-account {
-  padding: 34px 30px 50px;
-  border-radius: 16px;
-  margin-top: -125px;
-}
-
-#personalCenter .my-account .my-account-top img {
-  width: 16px;
-  height: 16px;
-  margin-bottom: 7px;
-}
-
-#personalCenter .my-account .my-account-middle {
-  margin-top: 55px;
-}
-
-#personalCenter .my-account .my-account-middle .account-item {
-  position: relative;
-}
-
-#personalCenter .my-account .my-account-middle .account-item span:first-child {
-  margin-bottom: 10px;
-}
-
-#personalCenter .my-account .my-account-middle .account-item i {
-  position: absolute;
-  right: -60px;
-  height: 100%;
-  border-right: 1px solid #ededed;
-}
-
-#personalCenter .my-order-info {
-  margin-top: 20px;
-  padding: 0 30px;
-  box-sizing: border-box;
-  border-radius: 16px;
-  height: 187px;
-}
-
-#personalCenter .my-order-info .order-info-item img {
-  width: 48px;
-  height: 48px;
-  margin-bottom: 15px;
-}
-
-#personalCenter .my-store {
-  margin-top: 20px;
-  padding: 0 30px;
-  box-sizing: border-box;
-  border-radius: 16px;
-  height: 120px;
-}
-
-#personalCenter .my-store img {
-  width: 16px;
-  height: 16px;
-  margin-bottom: 7px;
-}
-
-#personalCenter .ad {
-  margin-top: 20px;
-  height: 148px;
-}
-
-#personalCenter .function-center {
-  padding: 34px 30px 50px;
-  border-radius: 16px;
-  margin-top: 20px;
-}
-
-#personalCenter .function-center .function-center-middle {
-  margin-top: 55px;
-}
-
-#personalCenter .function-center .function-center-middle .center-item img {
-  width: 45px;
-  height: 45px;
-  margin-bottom: 20px;
+  .my-account {
+    padding: 34px 30px 50px;
+    border-radius: 16px;
+    margin-top: -125px;
+    .my-account-top {
+      img {
+        width: 16px;
+        height: 16px;
+        margin-bottom: 7px;
+      }
+    }
+    .my-account-middle {
+      margin-top: 55px;
+      .account-item {
+        position: relative;
+        span:first-child {
+          margin-bottom: 10px;
+        }
+        i {
+          position: absolute;
+          right: -60px;
+          height: 100%;
+          border-right: 1px solid #ededed;
+        }
+      }
+    }
+  }
+  .my-order-info {
+    margin-top: 20px;
+    padding: 0 30px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    height: 187px;
+    .order-info-item img {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 15px;
+    }
+  }
+  .my-store {
+    margin-top: 20px;
+    padding: 0 30px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    height: 120px;
+    img {
+      width: 16px;
+      height: 16px;
+      margin-bottom: 7px;
+    }
+  }
+  .ad {
+    margin-top: 20px;
+    height: 148px;
+  }
+  .function-center {
+    padding: 34px 30px 50px;
+    border-radius: 16px;
+    margin-top: 20px;
+    .function-center-middle {
+      margin-top: 55px;
+      .center-item img {
+        width: 45px;
+        height: 45px;
+        margin-bottom: 20px;
+      }
+    }
+  }
 }
 </style>

@@ -130,6 +130,7 @@ export default {
     getCodeMsg() {
       if (this.isShowCode) return;
       if (this.user.userPhone.length !== 0) {
+        if(!/^1[3456789]\d{9}$/.test(this.user.userPhone)) return this.$toast("请输入正确的手机格式");
         this.isShowCode = true;
         this.$api.sendMsg({ type: 6, phone: this.user.userPhone }).then(res => {
           if (res.status !== 1) {
@@ -156,10 +157,7 @@ export default {
       this.$cookies.set("name", "value1234334");
       if (this.isLoginType) {
         // 验证码登录
-        if (
-          this.user.userPhone.length !== 0 &&
-          this.user.userCode.length !== 0
-        ) {
+        if (this.user.userPhone.length !== 0 &&this.user.userCode.length !== 0) {
           // 具体业务逻辑
           this.$api
             .codeLogin({
@@ -181,10 +179,7 @@ export default {
         }
       } else {
         // 密码登录
-        if (
-          this.user.userPhone.length !== 0 &&
-          this.user.userPwd.length !== 0
-        ) {
+        if (this.user.userPhone.length !== 0 &&this.user.userPwd.length !== 0) {
           // 具体业务逻辑
           this.$api
             .pwdLogin({
@@ -210,20 +205,17 @@ export default {
       if (value === "code") {
         if (this.user.userPhone.length !== 0 && this.isShowCode) {
           this.isShowBtn = false;
-          console.log(1233);
         } else {
           this.isShowBtn = true;
           return this.$toast("请输入账号和获取验证码");
         }
       } else if (value === "pwd") {
-        if (
-          this.user.userPhone.length !== 0 &&
-          this.user.userPwd.length === 0
-        ) {
+        if (this.user.userPhone.length !== 0 &&this.user.userPwd.length === 0) {
+          if(!/^1[3456789]\d{9}$/.test(this.user.userPhone)) return this.$toast("请输入正确的手机格式");
           this.isShowBtn = false;
         } else {
           this.isShowBtn = true;
-          return this.$toast("请输入账号和密码");
+          return this.$toast("请输入账号");
         }
       }
     }
