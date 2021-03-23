@@ -79,6 +79,23 @@
 </template>
 
 <script>
+import store from "../../components/custom-store-filter/data.js";
+const searchStatic = {
+  search: undefined,
+  platform: "tm", // 平台
+  sort: 0, //排序选择
+  area: undefined, //地区范围
+  trademarkType: undefined, // 商标
+  taxType: undefined, //认证/证明方式
+  category: undefined, //类型--服务类型
+  isNew: undefined,
+  price: {
+    low: undefined,
+    high: undefined
+  },
+  per_page: 15,
+  page: 1
+};
 export default {
   head() {
     return {
@@ -100,11 +117,10 @@ export default {
     };
   },
   async asyncData({ app, params }) {
-    console.log(params,'paramsparams')
-    let search = {
-      platform: params.store || "tm",
-      page: 1
-    };
+    let search = {...searchStatic };
+      search.platform=params.store||'tm';
+     search=params.id&&app.$utils.getSearchQuery(params.id,store,search);
+    //  console.log(search,'searchsearchsearchsearch')
     		var type;
 				switch (search.platform) {
 					case 'tm':
@@ -155,21 +171,7 @@ export default {
         }
       ],
       list: [],
-      search: {
-        search: undefined,
-        platform: "tm", // 平台
-        sort: 0, //排序选择
-        area: undefined, //地区范围
-        trademarkType: undefined, // 商标
-        type: undefined, //认证/证明方式
-        category: undefined, //类型--服务类型
-        //brand: undefined,
-        price: {
-          low: undefined,
-          high: undefined
-        },
-        per_page: 15
-      },
+      search: { ...searchStatic },
       page: {
         loadStatus: "more", //加载样式：more-加载前样式，loading-加载中样式，nomore-没有数据样式
         done: false // 是否数据加载完成
@@ -209,7 +211,8 @@ export default {
     getSearch(data) {
       this.search = data;
       this.getData(true, true);
-    }
+    },
+
   }
 };
 </script>

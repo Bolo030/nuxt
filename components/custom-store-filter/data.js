@@ -161,7 +161,7 @@ const filterList = {
 		selected: true
 	},
 }
-const trademarkType = [{
+const trademarkTypeList = [{
 		name: "R标",
 		value: "r"
 	},
@@ -171,26 +171,15 @@ const trademarkType = [{
 	},
 ]
 
-const typeList = [{
-		name: "有限责任公司",
-		value: 'ltd'
+const taxTypeList = [{
+		name: "一般纳税人",
+		value: 'general'
 	},
 	{
-		name: "股份有限责任公司",
-		value: 'shares'
+		name: "小规模纳税人",
+		value: 'small'
 	},
-	{
-		name: "个人独资企业",
-		value: 'alone'
-	},
-	{
-		name: "合伙企业",
-		value: 'partner'
-	},
-	{
-		name: "个体工商户",
-		value: 'inviewidual'
-	},
+
 ]
 
 const areaList = [{
@@ -223,7 +212,7 @@ const areaList = [{
 	}
 ]
 
-const isNew=[
+const isNewList=[
 	{name:'新店',value:1},
 	{name:'老店',value:2},
 ]
@@ -232,14 +221,27 @@ const sortList=[
 	{name:'价格从高到低',value:2},
 	{name:'价格从低到高',value:1},
 ]
+
+const searchShort={
+  'w':'search',
+  'h':'sort',
+  'l':'price',
+  'n':'isNew',
+  'u':'trademarkType',
+  'c':'category',
+  'r':'area',
+  'x':"taxType"
+
+}
 export default {
 	priceList,
 	platformlist,
 	platformList,
 	filterList,
-	typeList,
-	trademarkType,
+	taxTypeList,
+	trademarkTypeList,
 	sortList,
-	isNew,
-	areaList
+	isNewList,
+	areaList,
+  searchShort
 }

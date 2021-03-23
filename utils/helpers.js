@@ -130,9 +130,12 @@ export default {
   /*
    *拼接搜索参数
    */
-  createQuery(params, type, data) {
+  createQuery(params, type, data,pwd) {
     let { store, id } = params;
-    let path = $nuxt.$route.path||'';
+    let path = pwd||$nuxt.$route.path;
+    if(pwd){
+      id=path.split('/')[2]
+    }
     let newStr = type + data;
     if (id && id != "undefined") {
       if (id.includes(type)) {
@@ -152,7 +155,7 @@ export default {
         path = path + "z" + newStr;
       }
     } else {
-      path = path + "/" + newStr;
+      path = `/${store}/${newStr}`;
     }
     return path;
   },
@@ -168,5 +171,24 @@ export default {
     if (list[idx] != val) list[idx] = val;
     else list.splice(idx, 1);
     return list;
-  }
+  },
+     // 解析搜索条件
+     getSearchQuery(data,typeList,search){
+      let list=data.split('z');
+      let newSearch={...search}
+      for(var v of list){
+        var short=v.slice(0,1);
+        var idx=v.slice(1)
+        var name=typeList.searchShort[short]
+        if(short=='c'){
+          newSearch[name]=idx;
+        }else if(short=='h'||short=='l'){
+          newSearch[name]=typeList[name+'List'][idx].value;
+        }else{
+          newSearch[name]=typeList[name+'List'][idx-1].value;
+        }
+      }
+      // console.log(newSearch,'newSearchnewSearchnewSearch')
+      return newSearch
+    }
 };
