@@ -203,12 +203,12 @@ export default {
         {
           src: require("../../assets/imgs/function-icon3.png"),
           text: "我的收藏",
-          path:''
+          path:'/user/collect'
         },
         {
           src: require("../../assets/imgs/function-icon4.png"),
           text: "交易攻略",
-          path: '/article'
+          path: '/article/list-1'
         }
       ],
       orderInfo: [

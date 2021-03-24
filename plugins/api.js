@@ -68,6 +68,24 @@ export default ({
      */
     articlesInfo(data = {}) {
       return $request.post('/article/list', data)
+    },
+    /**
+     * 文章详情
+     */
+    articleDetail(data = {}) {
+      return $request.post('/article/info',data)
+    },
+    /**
+     * 店铺收藏
+     */
+    collectStore(data = {}) {
+      return $request.post('/user/collect/list',data)
+    },
+    /**
+     * 删除收藏
+     */
+    deleteCollect(data = {}) {
+      return $request.post('/user/collect/del',data)
     }
   })
 

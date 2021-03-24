@@ -126,5 +126,8 @@ export default {
       $store.commit("auth/UPDATE_TOKEN", "");
       $store.commit("auth/UPDATE_USERID", "");
     }
-  }
+  },
+
+ 
+
 };

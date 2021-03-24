@@ -9,7 +9,7 @@
             alt="九九牛返回"
           />
         </a>
-        <span class="title">资讯攻略</span>
+        <span class="title" @click="demo">资讯攻略</span>
       </div>
     </header>
     <main class="article">
@@ -18,14 +18,13 @@
           v-for="(item, index) in informationTitle"
           :key="index"
           :class="{ active: index === cuurentActive }"
-          @click="event(index)"
         >
-          {{ item.title }}
+          <a :href="item.path">{{ item.title }}</a>
         </li>
       </ul>
       <ul class="article-row" v-if="!clientShow">
         <li v-for="item in hotInfo" :key="item.id">
-          <a href="javascript:;">
+          <a :href="'/article/detail-'+item.id+'.html'">
             <img :src="item.thumb" alt="九九新闻资讯" />
             <p>{{ item.title }}</p>
           </a>
@@ -33,60 +32,62 @@
       </ul>
       <!-- 样式一 -->
       <ul class="article-list" v-if="clientShow">
-        <li >
-          <a class="interview" href="./interviewInfo.html">
+        <li>
+          <a class="interview" :href="'interview-'+item.id+'.html'" v-for="item in hotInfoList" :key="item.id">
             <div class="article-item">
               <img src="" alt="九九新闻资讯" />
               <div class="article-list-info">
-                <h3>2020九九牛年末团建：初心不改</h3>
+                <h3>{{item.title}}</h3>
                 <p>
-                  为向大家提供最优质的虚拟资产交易服务，经过4个月的精心策划与准备
+                 {{item.abstract}}
                 </p>
               </div>
             </div>
             <div class="interview-bottom">
               <div class="interview-bottom-item">
-                <p class="name">罗先生</p>
+                <p class="name">{{item.content.name}}</p>
                 <p>称呼</p>
               </div>
               <div class="interview-bottom-item">
-                <p class="name">27W</p>
+                <p class="name">{{item.content.store.price}}</p>
                 <p>店铺价格</p>
               </div>
               <div class="interview-bottom-item">
-                <p class="name">R标</p>
+                <p class="name">{{item.content.store.trademarkType}}</p>
                 <p>商标类型</p>
               </div>
               <div class="interview-bottom-item">
-                <p class="name">数码</p>
+                <p class="name">{{item.content.store.mainCategory}}</p>
                 <p>所属行业</p>
               </div>
             </div>
           </a>
         </li>
       </ul>
-       <!-- 样式二-->
+      <!-- 样式二-->
       <ul class="article-list" v-else>
         <li v-for="item in hotInfoList" :key="item.id">
-          <img :src="item.thumb" alt="九九新闻资讯" />
-          <div class="article-list-info">
-            <h3>{{ item.title }}</h3>
-            <p>
-              {{ item.abstract }}
-            </p>
-            <div class="ai-data">
-              <div class="ai-data-look">
-                <img
-                  class="icon-look"
-                  src="~assets/imgs/yanjing.png"
-                  alt="九九牛浏览"
-                />
-                <span>{{ item.fsbrowse }}</span
-                >人阅读
+          <a :href="'/article/detail-'+item.id +'.html'">
+            <img :src="item.thumb" alt="九九新闻资讯" />
+            <div class="article-list-info">
+              <h3>{{ item.title }}</h3>
+              <p>
+                {{ item.abstract }}
+              </p>
+              <div class="ai-data">
+                <div class="ai-data-look">
+                  <img
+                    class="icon-look"
+                    src="~assets/imgs/yanjing.png"
+                    alt="九九牛浏览"
+                  />
+                  <span>{{ item.fsbrowse }}</span
+                  >人阅读
+                </div>
+                <span>{{ item.created_at }}</span>
               </div>
-              <span>{{ item.created_at }}</span>
             </div>
-          </div>
+          </a>
         </li>
       </ul>
       <p class="text-center">没有更多数据了</p>
@@ -99,11 +100,11 @@ export default {
   data() {
     return {
       informationTitle: [
-        { title: "新闻资讯" },
-        { title: "行业资讯" },
-        { title: "交易攻略" },
-        { title: "系统公告" },
-        { title: "客户采访" }
+        { title: "新闻资讯", path: "/article/list-1" },
+        { title: "行业资讯", path: "/article/list-2" },
+        { title: "交易攻略", path: "/article/list-4" },
+        { title: "系统公告", path: "/article/list-25" },
+        { title: "客户采访", path: "/article/list-17" }
       ],
       cuurentActive: 0,
       hotInfo: [],
@@ -112,51 +113,50 @@ export default {
       per_page: 15,
       start: 0,
       end: 2,
-      clientShow:false,
+      clientShow: false,
     };
   },
-  async asyncData({ app }) {
-    let { data: res } = await app.$api.articlesInfo({
-      cid: 1,
+  async asyncData({ app, params, query }) {
+    console.log(params);
+    
+    let start = params.id.indexOf("-");
+    let cid = params.id.substring(start + 1);
+    let cuurentActive = 0;
+    let clientShow = false;
+       let { data: res } = await app.$api.articlesInfo({
+      cid: cid,
       page: 1,
-      per_page: 15
+      per_page: 15,
+      need_content: cid == 17
     });
-
     let hotInfo = res.data.slice(0, 2);
     let hotInfoList = res.data.splice(2);
-
-    return { hotInfo, hotInfoList };
+   
+    if (cid == 1) {
+      cuurentActive = 0;
+    } else if (cid == 2) {
+      cuurentActive = 1;
+    }else if (cid == 4) {
+      cuurentActive = 2;
+    }else if (cid == 25) {
+      cuurentActive = 3;
+    }else if (cid == 17) {
+      cuurentActive = 4;
+      clientShow = true;
+      hotInfoList.forEach(value => {
+        value.content = JSON.parse(value.content)
+      });
+    }
+ 
+    //  console.log(hotInfoList);
+   
+    
+    return { hotInfo, hotInfoList, cuurentActive,clientShow };
   },
-
+  created() {
+   
+  },
   methods: {
-    event(cuurentActive) {
-      let obj = {
-        page: this.page,
-        per_page: this.per_page,
-        start: this.start,
-        end: this.end
-      };
-      this.clientShow = false;
-      this.cuurentActive = cuurentActive;
-      if (cuurentActive === 0) {
-        obj.cid = 1;
-        this.articleMessage(obj);
-      } else if (cuurentActive === 1) {
-        obj.cid = 2;
-        this.articleMessage(obj);
-      } else if (cuurentActive === 2) {
-        obj.cid = 4;
-        this.articleMessage(obj);
-      } else if (cuurentActive === 3) {
-        obj.cid = 25;
-        this.articleMessage(obj);
-      } else if (cuurentActive === 4) {
-        obj.cid = 17;
-        obj.end = 0;
-        this.clientShow = true
-        this.articleMessage(obj);
-      }
-    },
     async articleMessage(data) {
       let { data: res } = await this.$api.articlesInfo({
         cid: data.cid,
@@ -165,7 +165,20 @@ export default {
       });
       this.hotInfo = res.data.slice(data.start, data.end);
       this.hotInfoList = res.data.splice(data.end);
+    },
+    demo() {
+      console.log(this.isLogin());
+      
+    },
+     /**
+   * 判断用户是否登录
+   */
+  isLogin() {
+    if (this.$cookies.get('token')) {
+      return true
     }
+    return false
+  }
   }
 };
 </script>
@@ -228,7 +241,7 @@ export default {
 .article .article-list {
   padding: 24px;
 }
-.article .article-list li {
+.article .article-list li a {
   width: 702px;
   height: 240px;
   background-color: #ffffff;
