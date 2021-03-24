@@ -95,40 +95,46 @@ export default {
     };
   },
   created() {
-    this.reset();
-    if (this.searchChild.platform) {
-      this.setItem(0, this.searchChild.platform);
-    } else if (this.searchChild.category) {
-      this.setItem(3, this.searchChild.category);
-    }
     this.search = Object.assign(this.search, this.searchChild);
+    for (var e of this.list) {
+      for (var r of e.childList) {
+        if (
+          this.search[e.type] &&
+          (this.search[e.type] == r.id || this.search[e.type] == r.value)
+        ) {
+           r['selected'] = true;
+        } else {
+           r['selected'] = false;
+        }
+      }
+    }
   },
   methods: {
     choose(data, idx, index) {
       var value = data.id || data.value;
       if (index == 0) {
-       return this.$router.push(`/${data.value}`)
+        return this.$router.push(`/${data.value}`);
       } else {
         this.path = this.$utils.createQuery(
           this.$route.params,
           this.list[index].short,
-          index==3?value:1 + idx,
+          index == 3 ? value : 1 + idx,
           this.path
         );
-        if (this.search[this.list[index].type] == value) {
+         if (this.search[this.list[index].type] == value) {
           this.chooseItem(index);
           this.search[this.list[index].type] = undefined;
           return;
         }
       }
-      console.log(this.path, "this.path");
       this.chooseItem(index, idx);
       this.search[this.list[index].type] = value;
     },
     chooseItem(index, idx) {
       for (var i in this.list[index].childList) {
+        console.log(index,idx,i,'haha')
         if (i == idx)
-          this.$set(this.list[index].childList[i], "selected", true);
+           this.$set(this.list[index].childList[i], "selected", true);
         else this.$set(this.list[index].childList[i], "selected", false);
       }
     },
@@ -140,7 +146,7 @@ export default {
     },
     colse() {
       this.$emit("data", {
-        show: false,
+        show: false
         // search: this.search
       });
     },
@@ -153,7 +159,7 @@ export default {
     },
     confirm() {
       this.$router.push(this.path);
-   /*    this.$emit("data", {
+      /*    this.$emit("data", {
         show: false,
         search: this.search
       }); */

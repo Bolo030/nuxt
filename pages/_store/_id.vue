@@ -67,7 +67,7 @@
           :showBack="isSearch"
           :searchData="search"
           @result="getSearch"
-          :child='categoryList'
+          :child="categoryList"
         ></custom-store-filter>
         <!-- 列表 -->
         <store-list style="margin-top:0.2933rem" :storeList="list" />
@@ -117,30 +117,32 @@ export default {
     };
   },
   async asyncData({ app, params }) {
-    let search = {...searchStatic };
-      search.platform=params.store||'tm';
-     search=params.id&&app.$utils.getSearchQuery(params.id,store,search);
-    //  console.log(search,'searchsearchsearchsearch')
-    		var type;
-				switch (search.platform) {
-					case 'tm':
-						type = 'mainCategory'
-						break;
-					case 'jd':
-						type = 'jdCategory'
-						break;
-					case 'tb':
-						type = 'tbCategory'
-						break;
-					default:
-						type = 'jdCategory'
-				}
+    let search = { ...searchStatic };
+    search.platform = params.store || "tm";
+    console.log(params.id);
+    search = params.id
+      ? app.$utils.getSearchQuery(params.id, store, search)
+      : search;
+    var type;
+    switch (search.platform) {
+      case "tm":
+        type = "mainCategory";
+        break;
+      case "jd":
+        type = "jdCategory";
+        break;
+      case "tb":
+        type = "tbCategory";
+        break;
+      default:
+        type = "jdCategory";
+    }
     let [list, categoryList] = await Promise.all([
       app.$api
         .getStoreList(search)
         .then(res => (res.status === 1 ? res.data.data : {})),
       app.$api
-        .getStoreSearchParams({type})
+        .getStoreSearchParams({ type })
         .then(res => (res.status === 1 ? res.data[type] : []))
     ]);
     return {
@@ -211,8 +213,7 @@ export default {
     getSearch(data) {
       this.search = data;
       this.getData(true, true);
-    },
-
+    }
   }
 };
 </script>

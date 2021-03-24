@@ -159,6 +159,21 @@ export default {
     }
     return path;
   },
+  // 删除参数
+  delQuery(params,type,pwd){
+    let { store, id } = params;
+    let path = pwd||$nuxt.$route.path;
+    if(pwd){
+      id=path.split('/')[2]
+    }
+    if (id && id != "undefined") {
+        var list = id.split('z');
+        let index = this.getFindIdx(list, type);
+        list.splice(index,1)
+        path = `/${store}/${list.join("z")}`;
+    }
+    return path;
+  },
   // 检查数组包含某元素下标
   getFindIdx(list, type) {
     var index = list.findIndex(v => {

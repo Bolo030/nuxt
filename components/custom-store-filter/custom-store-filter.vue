@@ -164,10 +164,21 @@ export default {
     }
   },
   created() {
-    this.reset();
     this.search = Object.assign(this.search, this.searchData);
-    console.log(this.search,'searchsearchsearchsearch')
-    // this.parseParams(this.search.platform)
+    this.filterList["sort"].selected = this.search.sort ? true : false;
+    if (this.search.price.low || this.search.price.high) {
+      this.filterList["price"].selected = true;
+      this.priceList.forEach(e => {
+        if (
+          e.value.low == this.search.price.low &&
+          e.value.high == this.search.price.high
+        ) {
+          return (e.selected = true);
+        }
+      });
+    }else{
+       this.filterList["price"].selected = false;
+    }
   },
   data() {
     return {
@@ -180,7 +191,7 @@ export default {
       asideShow: false,
       search: { ...searchStatic },
       categoryList: this.child,
-      path: ""
+      path: "",
     };
   },
   methods: {
@@ -189,14 +200,6 @@ export default {
       /* 	uni.reLaunch({
 					url: '/pages/shop/shop'
 				}) */
-    },
-    // 重置
-    reset() {
-      this.search = { ...searchStatic };
-      this.showSelect = false;
-      this.filterIdx = null;
-      // this.chooseItem('filterList')
-      // this.chooseItem('priceList',0,'price',false)
     },
     clearSearch() {
       this.search.search = "";
@@ -213,58 +216,43 @@ export default {
       }
       this.filterIdx = idx;
     },
-    /* 		chooseSelect(data, type) {
-				if (type == 'platform') {
-					this.reset();
-					this.parseParams(data.value)
-				}
-				this.search[type] = data.value;
-				this.$emit('result', this.search)
-				if (type == 'sort'){
-					this.showSelect = false
-					this.filterList.sort.selected=data.value?true:false
-					}
-			}, */
     chooseSelect(data, type) {
-      var path = this.$utils.createQuery(this.$route.params, type, data.value);
+      var path;
+      if (data.value == 0) {
+        path = this.$utils.delQuery(this.$route.params, type);
+        this.filterList["sort"].selected = false;
+      } else {
+        path = this.$utils.createQuery(this.$route.params, type, data.value);
+      }
       this.$router.push(path);
     },
-    chooseItem(arr, idx, type, refresh) {
-      this.path = idx && this.$utils.createQuery(this.$route.params, "l", idx);
+    chooseItem(arr, idx, type) {
+        if (idx == 0)
+        this.path = this.$utils.delQuery(this.$route.params, "l");
+      else
+        this.path = this.$utils.createQuery(this.$route.params, "l", idx);
       for (var i in this[arr]) {
-        if (i == idx) {
+        if (i == idx&&!this[arr][i].selected) {
           this.$set(this[arr][i], "selected", true);
           this.search[type] = this[arr][i].value;
-          // refresh&&this.$emit('result', this.search)
         } else this.$set(this[arr][i], "selected", false);
       }
     },
-    /* chooseItem(arr, idx,type,refresh=true) {
-				for (var i in this[arr]) {
-					if (i == idx) {
-						this.$set(this[arr][i], 'selected', true)
-						this.search[type] = this[arr][i].value;
-						refresh&&this.$emit('result', this.search)
-					} else
-						this.$set(this[arr][i], 'selected', false)
-				}
-			}, */
+
     cancel() {
-      this.search.price = {
+     /*  this.search.price = {
         low: undefined,
         high: undefined
-      };
-      this.chooseItem("priceList", 0);
-      this.filterList.price.selected = false;
+      }; */
+      // this.chooseItem("priceList", 0);
+      // this.filterList.price.selected = false;
       this.showSelect = false;
-      this.$emit("result", this.search);
+      // this.$emit("result", this.search);
     },
     confirm() {
-      console.log(this.path,'this.paththis.path')
-      if(this.path)
-      this.$router.push(this.path);
-      else
-      this.$emit("result", this.search);
+      console.log(this.path,'121')
+      if (this.path) this.$router.push(this.path);
+      else this.$emit("result", this.search);
       this.filterList.price.selected = Boolean(
         this.search.price.high != undefined ||
           this.search.price.low != undefined
@@ -272,8 +260,9 @@ export default {
       this.showSelect = false;
     },
     priceInput() {
-      this.chooseItem("priceList");
-      this.chooseItem("priceList", 0);
+     this.priceList.forEach(e=>{
+       e.selected=false
+     })
     },
     gotoSearch() {
       uni.navigateTo({
@@ -286,30 +275,6 @@ export default {
         this.search = Object.assign(this.search, e.search);
         this.$emit("result", this.search);
       }
-    },
-    parseParams(data) {
-      var type;
-      switch (data) {
-        case "tm":
-          type = "mainCategory";
-          break;
-        case "jd":
-          type = "jdCategory";
-          break;
-        case "tb":
-          type = "tbCategory";
-          break;
-        default:
-          type = "jdCategory";
-      }
-
-      getStoreSearchParams({
-        type
-      }).then(res => {
-        if (res.status == 1) {
-          this.categoryList = res.data[type];
-        }
-      });
     }
   }
 };

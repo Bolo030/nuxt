@@ -3,7 +3,7 @@ const priceList = [{
 		value: {
 			low: undefined,
 			high: undefined
-		},
+		}
 	},
 	{
 		name: "5万以下",
@@ -218,8 +218,8 @@ const isNewList=[
 ]
 const sortList=[
 	{name:'默认排序',value:0},
-	{name:'价格从高到低',value:2},
 	{name:'价格从低到高',value:1},
+	{name:'价格从高到低',value:2}
 ]
 
 const searchShort={
