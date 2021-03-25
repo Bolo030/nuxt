@@ -203,7 +203,9 @@ export default {
     },
     clearSearch() {
       this.search.search = "";
-      this.$emit("result", this.search);
+      this.path=this.$utils.delQuery(this.$route.params,'w',this.path)
+      this.$router.push(this.path)
+      // this.$emit("result", this.search);
     },
     // 筛类型选择
     chooseFilter(idx) {
@@ -265,9 +267,10 @@ export default {
      })
     },
     gotoSearch() {
-      uni.navigateTo({
+      this.$router.push({name:'search',query:{data:this.search.search,platform:this.search.platform}})
+     /*  uni.navigateTo({
         url: `/pages/search/search?data=${this.search.search}&platform=${this.search.platform}`
-      });
+      }); */
     },
     getAside(e) {
       if (e.show != undefined) this.asideShow = e.show;

@@ -163,58 +163,69 @@ const filterList = {
 }
 const trademarkTypeList = [{
 		name: "R标",
-		value: "r"
+		value: "r",
+    selected:false
 	},
 	{
 		name: "TM标",
-		value: "tm"
+		value: "tm",
+    selected:false
 	},
 ]
 
 const taxTypeList = [{
 		name: "一般纳税人",
-		value: 'general'
+		value: 'general',
+    selected:false
 	},
 	{
 		name: "小规模纳税人",
-		value: 'small'
+		value: 'small',
+    selected:false
 	},
 
 ]
 
 const areaList = [{
 		name: "华北",
-		value: 'hb'
+		value: 'hb',
+    selected:false
 	},
 	{
 		name: "东北",
-		value: 'db'
+		value: 'db',
+    selected:false
 	},
 	{
 		name: "华东",
-		value: 'hd'
+		value: 'hd',
+    selected:false
 	},
 	{
 		name: "华中",
-		value: 'hz'
+		value: 'hz',
+    selected:false
 	},
 	{
 		name: "华南",
-		value: 'hn'
+		value: 'hn',
+    selected:false
 	},
 	{
 		name: "西南",
-		value: 'xn'
+		value: 'xn',
+    selected:false
 	},
 	{
 		name: "西北",
-		value: 'xb'
+		value: 'xb',
+    selected:false
 	}
 ]
 
 const isNewList=[
-	{name:'新店',value:1},
-	{name:'老店',value:2},
+	{name:'新店',value:1, selected:false},
+	{name:'老店',value:2, selected:false},
 ]
 const sortList=[
 	{name:'默认排序',value:0},

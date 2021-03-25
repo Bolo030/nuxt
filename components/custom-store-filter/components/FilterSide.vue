@@ -102,9 +102,9 @@ export default {
           this.search[e.type] &&
           (this.search[e.type] == r.id || this.search[e.type] == r.value)
         ) {
-           r['selected'] = true;
+          r["selected"] = true;
         } else {
-           r['selected'] = false;
+          r["selected"] = false;
         }
       }
     }
@@ -121,7 +121,7 @@ export default {
           index == 3 ? value : 1 + idx,
           this.path
         );
-         if (this.search[this.list[index].type] == value) {
+        if (this.search[this.list[index].type] == value) {
           this.chooseItem(index);
           this.search[this.list[index].type] = undefined;
           return;
@@ -132,10 +132,9 @@ export default {
     },
     chooseItem(index, idx) {
       for (var i in this.list[index].childList) {
-        console.log(index,idx,i,'haha')
         if (i == idx)
-           this.$set(this.list[index].childList[i], "selected", true);
-        else this.$set(this.list[index].childList[i], "selected", false);
+          this.$set(this.list[index].childList[i], "selected", true);
+       else this.$set(this.list[index].childList[i], "selected", false);
       }
     },
     setItem(index, value) {
@@ -155,7 +154,12 @@ export default {
         if (i == 0) this.chooseItem(0, 0);
         else this.chooseItem(i);
       }
+      let shortList=['n','u','c','r','x'];
+      for(var v of shortList){
+        this.path=this.$utils.delQuery(this.$route.params,v,this.path)
+      }
       this.search = { ...search };
+      this.path&&this.$router.push(this.path);
     },
     confirm() {
       this.$router.push(this.path);

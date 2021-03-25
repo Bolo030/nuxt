@@ -2,7 +2,7 @@
   <div class="main">
     <main class="store">
       <div class="buyStore">
-        <div class="buyStore-top">
+        <div class="buyStore-top" v-if="!this.search.search">
           <!-- 步骤 -->
           <div class="tradeMsg space-evenly">
             <div class="tradeMsg-item">
@@ -145,6 +145,9 @@ export default {
         .getStoreSearchParams({ type })
         .then(res => (res.status === 1 ? res.data[type] : []))
     ]);
+    categoryList.forEach(e=>{
+      e.selected=false
+    })
     return {
       list,
       categoryList,

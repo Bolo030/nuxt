@@ -32,6 +32,13 @@ export default ({ app: { $request } }, inject) => {
      */
     getStoreSearchParams(params={}){
       return $request.get('/store/search-params',params)
-    }
+    },
+
+      /**
+     * 获取热门搜索
+     */
+       getHotSearch(data){
+        return $request.get('/customized/info/'+data)
+      }
   })
 }
