@@ -112,15 +112,7 @@ export default {
   methods: {
     // 店铺详情跳转
     navItemClick(key) {
-      if (this.types === "brand") {
-
-      } else {
-        if (this.jump) {
-
-        } else {
-          return;
-        }
-      }
+       this.$router.push(`/si/${key}`)
     }
   }
 };

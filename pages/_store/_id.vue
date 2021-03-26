@@ -70,7 +70,14 @@
           :child="categoryList"
         ></custom-store-filter>
         <!-- 列表 -->
-        <store-list style="margin-top:0.2933rem" :storeList="list" />
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          finished-text="没有更多了"
+          @load="onLoad"
+        >
+          <store-list style="margin-top:0.2933rem" :storeList="list" />
+        </van-list>
       </div>
     </main>
     <!-- 底部tabbar -->
@@ -145,9 +152,9 @@ export default {
         .getStoreSearchParams({ type })
         .then(res => (res.status === 1 ? res.data[type] : []))
     ]);
-    categoryList.forEach(e=>{
-      e.selected=false
-    })
+    categoryList.forEach(e => {
+      e.selected = false;
+    });
     return {
       list,
       categoryList,
@@ -177,34 +184,32 @@ export default {
       ],
       list: [],
       search: { ...searchStatic },
-      page: {
-        loadStatus: "more", //加载样式：more-加载前样式，loading-加载中样式，nomore-没有数据样式
-        done: false // 是否数据加载完成
-      },
       // 列表搜索加载
-      loading: true
+      loading: false,
+      finished: false
     };
   },
   methods: {
+    onLoad() {
+      this.search.page++;
+      this.getData(true, false);
+    },
     getData(loading = true, remove = false) {
-      if (remove) {
-        this.search.page = 1;
-        this.page.done = false;
-      }
+      this.loading = loading;
+      if (remove) this.search.page = 1;
       this.$api.getStoreList(this.search).then(res => {
-        if (res.status === 1) {
-          if (remove) {
-            this.list = res.data.data;
-          } else {
-            this.list.push(...res.data.data);
-            this.page.loadStatus = "more";
+        if (res.status == 1) {
+          if (remove) this.list = res.data.data;
+          else this.list.push(...res.data.data);
+          if (res.data.data.length == 0) {
+            this.finished = true;
           }
-          if (res.data.last_page === this.search.page) {
-            this.page.done = true;
-            this.page.loadStatus = "nomore";
-          }
+        } else {
+          this.finished = true;
         }
-        this.loading = loading;
+        setTimeout(() => {
+          this.loading = false;
+        }, 2000);
       });
     },
 

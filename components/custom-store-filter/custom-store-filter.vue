@@ -252,7 +252,6 @@ export default {
       // this.$emit("result", this.search);
     },
     confirm() {
-      console.log(this.path,'121')
       if (this.path) this.$router.push(this.path);
       else this.$emit("result", this.search);
       this.filterList.price.selected = Boolean(
@@ -267,7 +266,7 @@ export default {
      })
     },
     gotoSearch() {
-      this.$router.push({name:'search',query:{data:this.search.search,platform:this.search.platform}})
+      this.$router.push({name:'search',query:{searchContent:this.search.search,platform:this.search.platform}})
      /*  uni.navigateTo({
         url: `/pages/search/search?data=${this.search.search}&platform=${this.search.platform}`
       }); */

@@ -20,7 +20,7 @@
         <div class="empty" @click="clearAll">清除</div>
       </div>
       <div class="hotSearch-item">
-          <div
+        <div
           class="text"
           v-for="(item, index) in history"
           :key="index"
@@ -57,17 +57,16 @@ export default {
   head() {},
   async asyncData({ app, params, query }) {
     let { searchContent, platform } = query;
-    let history=[];
+    let history = [];
     let hotList = await app.$api
       .getHotSearch(24)
       .then(res =>
         res.status == 1 ? JSON.parse(res.data.content)[platform] : []
       );
-      // if(app.$cookies.get("history"))history=[JSON.parse(app.$cookies.get("history"))]
-    let history = app.$cookies.get("history")
-      ? [JSON.parse(app.$cookies.get("history"))]
-      : [];
+      console.log(app.$cookies.get("history"))
 
+    if(app.$cookies.get("history"))
+      history=[...app.$cookies.get("history")]
     return {
       searchContent,
       platform,
@@ -96,7 +95,7 @@ export default {
       this.$router.go(-1);
     },
     clearAll() {
-       this.history = [];
+      this.history = [];
       this.$cookies.remove("history");
     }
   }

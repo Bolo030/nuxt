@@ -241,7 +241,8 @@ const searchShort={
   'u':'trademarkType',
   'c':'category',
   'r':'area',
-  'x':"taxType"
+  'x':"taxType",
+  'f':"firstCategory"
 
 }
 export default {
