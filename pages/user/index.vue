@@ -33,29 +33,19 @@
           <!-- 已登录 -->
           <div class="middle-info1" v-if="userInfo.status !== 0">
             <h4 class="font-size-30 font-weight">{{ userInfo.user.name }}</h4>
-            <!-- 已实名 -->
             <div
-              class="middle-info-desc d-f"
-              v-if="userInfo.user.hasRealName === 1"
+              class="middle-info-desc d-f" 
             >
-              <span class="bg-gradient-color font-main-color6">
+            <!-- 已实名 -->
+              <span class="bg-gradient-color font-main-color6" v-if="userInfo.user.hasRealName === 1">
                 <img
                   src="~assets/imgs/icon-realName1.png"
                   alt="九九牛网店交易平台，实名图标"
                 />
                 已实名
               </span>
-              <span class="bg-main-color d-f">
-                编辑个人资料
-                <img
-                  src="~assets/imgs/icon-entry.png"
-                  alt="九九牛网店交易平台，实名图标"
-                />
-              </span>
-            </div>
-            <!-- 未实名 -->
-            <div class="middle-info-desc d-f" v-else>
-              <span class="bg-main-color font-size-20 d-f">
+               <!-- 未实名 -->
+              <span class="bg-main-color font-size-20 d-f" v-else>
                 <img
                   src="~assets/imgs/icon-realName2.png"
                   alt="九九牛网店交易平台，实名图标"
@@ -66,14 +56,18 @@
                   alt="九九牛网店交易平台，实名图标"
                 />
               </span>
-              <span class="bg-main-color font-size-20 d-f">
-                编辑个人资料
-                <img
-                  src="~assets/imgs/icon-entry.png"
-                  alt="九九牛网店交易平台，实名图标"
-                />
-              </span>
+              <nuxt-link :to="{path:'user/info'}" >
+                <span class="bg-main-color d-f">
+                    编辑个人资料
+                    <img
+                      src="~assets/imgs/icon-entry.png"
+                      alt="九九牛网店交易平台，实名图标"
+                    />
+                </span>
+              </nuxt-link>
+              
             </div>
+           
           </div>
           <!-- 未登录 -->
           <div class="middle-info2 font-size-36 font-weight" v-else>
@@ -134,7 +128,7 @@
       <!-- 我的店铺区域 -->
       <div class="my-store d-f d-f-between bg-main-color">
         <h3 class="font-size-28 font-weight">我的店铺</h3>
-        <span class="font-size-24 font-main-color2">
+        <span class="font-size-24 font-main-color2" @click="functionInfo('/user/my-store')">
           查看我的挂店信息
           <img
             src="~assets/imgs/icon-entry2.png"
@@ -193,7 +187,7 @@ export default {
         {
           src: require("../../assets/imgs/function-icon1.png"),
           text: "我的合同",
-          path:''
+          path:'/contract'
         },
         {
           src: require("../../assets/imgs/function-icon2.png"),
@@ -230,6 +224,8 @@ export default {
     } else {
       userInfo.data.status = 1;
       userInfo = userInfo.data;
+      console.log(userInfo,1);
+      
       return { userInfo };
     }
   },

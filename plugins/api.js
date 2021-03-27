@@ -86,7 +86,38 @@ export default ({
      */
     deleteCollect(data = {}) {
       return $request.post('/user/collect/del',data)
+    },
+    /**
+     * 我的合同
+     */
+    contractList(params = {}) {
+      return $request.get('/user/contract/',params)
+    },
+    /**
+     * 邮箱发送合同
+     */
+    sendEmailContract(contract,data={}) {
+      return $request.post('/user/contract/sendemail/'+contract,data)
+    },
+    /**
+     * 头像上传
+     */
+    upload(data) {
+      return $request.post('upload',data)
+    },
+    /**
+     * 个人资料修改
+     */
+    modifyData(data) {
+      return $request.post('/user/improve',data)
+    },
+    /**
+     * 挂店信息
+     */
+    myStoreInfo(params = {}) {
+      return $request.get('/store/my',params)
     }
+
   })
 
 

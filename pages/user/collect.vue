@@ -15,55 +15,59 @@
       </div>
     </header>
     <main class="my-favorite ">
-      <!-- 编辑状态下显示的内容 -->
-      <ul
-        class="favorite-store-list bg-main-color"
-        v-for="item in storeList"
-        :key="item.id"
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
       >
-        <li class="d-f d-f-between">
-          <span class="font-size-24 font-main-color2"
-            >店铺编号: {{ item.store.code }}
-          </span>
-          <span class="font-main-color font-size-28 font-weight">{{
-            item.store.parse_status
-          }}</span>
-        </li>
-        <li class="middle-desc bg-main-color6 d-f">
-          <img
-            src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3153405721,1524067674&fm=26&gp=0.jpg"
-            alt="店铺图标"
-          />
-          <p
-            class="middle-desc-r font-weight font-size-26 text-wraps"
-            v-if="item.store.name === ''"
-          >
-            {{ item.store.title }}
-          </p>
-          <div class="middle-desc-r" v-else>
-            <h4 class="font-weight font-size-26">{{ item.store.name }}</h4>
-            <p class="text-wrap font-size-24 font-main-color2">
+        <!-- 编辑状态下显示的内容 -->
+        <ul
+          class="favorite-store-list bg-main-color"
+          v-for="(item, index) in storeList"
+          :key="item.id"
+        >
+          <li class="d-f d-f-between">
+            <span class="font-size-24 font-main-color2"
+              >店铺编号: {{ item.store.code }}
+            </span>
+            <span class="font-main-color font-size-28 font-weight">{{
+              item.store.parse_status
+            }}</span>
+          </li>
+          <li class="middle-desc bg-main-color6 d-f">
+            <img :src="item.store_icon_path" alt="店铺图标" />
+            <p
+              class="middle-desc-r font-weight font-size-26 text-wraps"
+              v-if="item.store.name === ''"
+            >
               {{ item.store.title }}
             </p>
-          </div>
-        </li>
-        <li class="bottom-price font-main-color d-f d-f-between">
-          <div class="bottom-price-l">
-            <span class="font-szie-24">售价</span>
-            <span class="font-weight font-size-24">￥</span>
-            <span class="font-weight font-size-34">{{
-              item.store.parse_price
-            }}</span>
-          </div>
-          <div class="bottmo-select-r" v-if="isEditor">
-            <van-checkbox
-              @click="choose(item)"
-              v-model="item.checked"
-              checked-color="#f4632c"
-            ></van-checkbox>
-          </div>
-        </li>
-      </ul>
+            <div class="middle-desc-r" v-else>
+              <h4 class="font-weight font-size-26">{{ item.store.name }}</h4>
+              <p class="text-wrap font-size-24 font-main-color2">
+                {{ item.store.title }}
+              </p>
+            </div>
+          </li>
+          <li class="bottom-price font-main-color d-f d-f-between">
+            <div class="bottom-price-l">
+              <span class="font-szie-24">售价</span>
+              <span class="font-weight font-size-24">￥</span>
+              <span class="font-weight font-size-34">{{
+                item.store.parse_price
+              }}</span>
+            </div>
+            <div class="bottmo-select-r" v-if="isEditor">
+              <van-checkbox
+                @click="choose(item, index)"
+                v-model="item.checked"
+                checked-color="#f4632c"
+              ></van-checkbox>
+            </div>
+          </li>
+        </ul>
+      </van-list>
     </main>
     <div
       class="my-favorite-footer bg-main-color d-f d-f-between"
@@ -100,7 +104,9 @@ export default {
       storeList = result.data.data;
       storeList.forEach((value, index) => {
         value.checked = false;
+        value.store_icon_path = require(`~/assets/imgs/icon_${value.store.platform}.png`);
       });
+      console.log(storeList);
     }
     return { storeList };
   },
@@ -117,9 +123,8 @@ export default {
     editor() {
       this.isEditor = !this.isEditor;
     },
-    choose(item) {
+    choose(item, index) {
       console.log(item);
-      
       let a = true;
       this.storeList.forEach(e => {
         if (e.checked === false) {
@@ -159,18 +164,17 @@ export default {
       this.aginRequest();
     },
     async aginRequest() {
-      // console.log(this.storeList,111111111111);
-      
+      this.storeList = [];
       let result = await this.$api.collectStore({ page: 1, per_page: 15 });
       if (result.status !== 1) return;
       this.storeList = result.data.data;
-      // console.log(this.storeList,22222222222222);
-      // this.storeList = '33333'
       this.storeList.forEach((value, index) => {
-        value.checked = false;
+        this.$set(this.storeList[index], "checked", false);
       });
-      // this.storeList = this.storeList
-      console.log(this.storeList);
+    },
+    onLoad(){
+      console.log('hahahhahah1');
+      
     }
   },
   computed: {

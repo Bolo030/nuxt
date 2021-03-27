@@ -9,7 +9,7 @@
             alt="九九牛返回"
           />
         </a>
-        <span class="title" @click="demo">资讯攻略</span>
+        <span class="title" >资讯攻略</span>
       </div>
     </header>
     <main class="article">
@@ -30,67 +30,73 @@
           </a>
         </li>
       </ul>
+      <van-list
+         v-model="loading"
+         :finished="finished"
+         finished-text="没有更多了"
+         @load="onLoad"
+      >
       <!-- 样式一 -->
-      <ul class="article-list" v-if="clientShow">
-        <li>
-          <a class="interview" :href="'interview-'+item.id+'.html'" v-for="item in hotInfoList" :key="item.id">
-            <div class="article-item">
-              <img src="" alt="九九新闻资讯" />
-              <div class="article-list-info">
-                <h3>{{item.title}}</h3>
-                <p>
-                 {{item.abstract}}
-                </p>
+        <ul class="article-list" v-if="clientShow">
+          <li>
+            <a class="interview" :href="'interview-'+item.id+'.html'" v-for="item in hotInfoList" :key="item.id">
+              <div class="article-item">
+                <img src="" alt="九九新闻资讯" />
+                <div class="article-list-info">
+                  <h3>{{item.title}}</h3>
+                  <p>
+                   {{item.abstract}}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div class="interview-bottom">
-              <div class="interview-bottom-item">
-                <p class="name">{{item.content.name}}</p>
-                <p>称呼</p>
+              <div class="interview-bottom">
+                <div class="interview-bottom-item">
+                  <p class="name">{{item.content.name}}</p>
+                  <p>称呼</p>
+                </div>
+                <div class="interview-bottom-item">
+                  <p class="name">{{item.content.store.price}}</p>
+                  <p>店铺价格</p>
+                </div>
+                <div class="interview-bottom-item">
+                  <p class="name">{{item.content.store.trademarkType}}</p>
+                  <p>商标类型</p>
+                </div>
+                <div class="interview-bottom-item">
+                  <p class="name">{{item.content.store.mainCategory}}</p>
+                  <p>所属行业</p>
+                </div>
               </div>
-              <div class="interview-bottom-item">
-                <p class="name">{{item.content.store.price}}</p>
-                <p>店铺价格</p>
-              </div>
-              <div class="interview-bottom-item">
-                <p class="name">{{item.content.store.trademarkType}}</p>
-                <p>商标类型</p>
-              </div>
-              <div class="interview-bottom-item">
-                <p class="name">{{item.content.store.mainCategory}}</p>
-                <p>所属行业</p>
-              </div>
-            </div>
-          </a>
-        </li>
-      </ul>
+            </a>
+          </li>
+        </ul>
       <!-- 样式二-->
-      <ul class="article-list" v-else>
-        <li v-for="item in hotInfoList" :key="item.id">
-          <a :href="'/article/detail-'+item.id +'.html'">
-            <img :src="item.thumb" alt="九九新闻资讯" />
-            <div class="article-list-info">
-              <h3>{{ item.title }}</h3>
-              <p>
+        <ul class="article-list" v-else>
+          <li v-for="item in hotInfoList" :key="item.id">
+            <a :href="'/article/detail-'+item.id +'.html'">
+              <img :src="item.thumb" alt="九九新闻资讯" />
+              <div class="article-list-info">
+                <h3>{{ item.title }}</h3>
+                <p>
                 {{ item.abstract }}
-              </p>
-              <div class="ai-data">
-                <div class="ai-data-look">
-                  <img
+                </p>
+                <div class="ai-data">
+                  <div class="ai-data-look">
+                    <img
                     class="icon-look"
                     src="~assets/imgs/yanjing.png"
                     alt="九九牛浏览"
-                  />
-                  <span>{{ item.fsbrowse }}</span
-                  >人阅读
+                    />
+                    <span>{{ item.fsbrowse }}</span
+                    >人阅读
+                  </div>
+                    <span>{{ item.created_at }}</span>
                 </div>
-                <span>{{ item.created_at }}</span>
               </div>
-            </div>
-          </a>
-        </li>
-      </ul>
-      <p class="text-center">没有更多数据了</p>
+            </a>
+          </li>
+        </ul>
+      </van-list>
     </main>
   </div>
 </template>
@@ -114,16 +120,17 @@ export default {
       start: 0,
       end: 2,
       clientShow: false,
+      loading: false,
+      finished: false,
+      resNewInfo:[],
     };
   },
   async asyncData({ app, params, query }) {
-    console.log(params);
-    
     let start = params.id.indexOf("-");
     let cid = params.id.substring(start + 1);
     let cuurentActive = 0;
     let clientShow = false;
-       let { data: res } = await app.$api.articlesInfo({
+    let { data: res } = await app.$api.articlesInfo({
       cid: cid,
       page: 1,
       per_page: 15,
@@ -147,28 +154,32 @@ export default {
         value.content = JSON.parse(value.content)
       });
     }
- 
-    //  console.log(hotInfoList);
-   
-    
-    return { hotInfo, hotInfoList, cuurentActive,clientShow };
+    return { hotInfo, hotInfoList, cuurentActive,clientShow,cid };
   },
   created() {
    
   },
   methods: {
-    async articleMessage(data) {
+    async articleMessage() {
       let { data: res } = await this.$api.articlesInfo({
-        cid: data.cid,
-        page: data.page,
-        per_page: data.per_page
+        cid: this.cid,
+        page: this.page,
+        per_page: this.per_page
       });
-      this.hotInfo = res.data.slice(data.start, data.end);
-      this.hotInfoList = res.data.splice(data.end);
+      this.loading = false;
+      this.resNewInfo = res.data;
+      if(this.resNewInfo.length === 0) return this.finished = true;
+      this.hotInfoList = this.hotInfoList.concat(res.data);
     },
-    demo() {
-      console.log(this.isLogin());
-      
+    onLoad() {
+      console.log(123);
+     
+      if(this.resNewInfo.length < this.per_page && this.resNewInfo.length > 0 ) {
+          this.finished = true;
+       }else {
+         this.page++;
+         this.articleMessage()
+       }
     },
      /**
    * 判断用户是否登录

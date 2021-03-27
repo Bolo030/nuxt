@@ -210,7 +210,7 @@ export default {
           return this.$toast("请输入账号和获取验证码");
         }
       } else if (value === "pwd") {
-        if (this.user.userPhone.length !== 0 &&this.user.userPwd.length === 0) {
+        if (this.user.userPhone.length !== 0 && this.user.userPwd.length === 0) {
           if(!/^1[3456789]\d{9}$/.test(this.user.userPhone)) return this.$toast("请输入正确的手机格式");
           this.isShowBtn = false;
         } else {
