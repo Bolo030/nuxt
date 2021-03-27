@@ -5,7 +5,7 @@
       src="../../assets/imgs/store/bg_shop_details_adviser_youce.png"
     />
     <div class="serviceLeft">
-      <image :src="customerService.headPortrait" />
+      <img :src="customerService.headPortrait" />
       <div class="serviceInfo">
         <span>{{ customerService.nickname }}</span>
         <div class="serviceInfo-item">
@@ -88,7 +88,7 @@ export default {
   }
   .serviceLeft {
     display: flex;
-    image {
+    img {
       width: 100px;
       height: 100px;
       border-radius: 50%;
@@ -98,7 +98,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      text {
+      span {
         font-weight: 700;
         font-size: 28px;
         color: #1c1c1c;
@@ -106,7 +106,7 @@ export default {
       .serviceInfo-item {
         color: #2bce9e;
         font-size: 24px;
-        image {
+        img {
           width: 21px;
           height: 24px;
           margin-right: 5px;
@@ -117,7 +117,7 @@ export default {
   .serviceRight {
     position: relative;
     z-index: 1;
-    image {
+    img {
       width: 60px;
       height: 60px;
       margin-left: 37px;
@@ -137,7 +137,7 @@ export default {
       div {
         position: absolute;
         left: 40px;
-        top: -20px;
+        top: -12px;
         height: 0;
         width: 0;
         border-right: 6px solid transparent;

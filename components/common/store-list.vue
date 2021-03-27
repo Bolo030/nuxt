@@ -7,28 +7,28 @@
       @click="navItemClick(item.key)"
     >
       <div class="shopList-top ">
-        <div class="left" v-if="item.showName == 2 && item.platform == 'tm'">
+      <!--   <div class="left" v-if="item.showName == 2 && item.platform == 'tm'">
           <img :src="require('../../assets/imgs/icon_' + item.platform + '.png')" />
           <img
             src="../../assets/imgs/ic_home_recommend_protect@2x.png"
             class="pwdImg"
           />
           <span class="pwdText">该店名被隐私保护中</span>
-        </div>
-        <span class="left" v-else :class="{ 'name-active': true }">
+        </div> -->
+        <span class="left"  :class="{ 'name-active': true }">
           <img :src="require('../../assets/imgs/icon_' + item.platform + '.png')" />
           <span
-            :style="{ 'font-weight': item.name || isInfo ? 700 : 500 }"
-            v-html="item.name || item.title"
+            :style="{ 'font-weight':  isInfo ? 700 : 500 }"
+            v-html=" item.title"
             class="font-weight text-wraps"
           />
         </span>
       </div>
-      <span
+   <!--    <span
         v-if="item.name || (item.showName == 2 && item.platform == 'tm')"
         class="shopList-center text-wraps"
         v-html="item.title"
-      ></span>
+      ></span> -->
       <!-- 价格栏 -->
       <div class="sl-price">
         <div class="sl-price-box">
@@ -37,7 +37,7 @@
         </div>
 
         <div v-if="isInfo" class="sl-price-collect">
-          <!-- <img src="../static/newimg/ic_shop_details_tab_shoucang_a.png" mode=""></img>	 -->
+          <!-- <img src="../static/newimg/ic_shop_details_tab_shoucang_a.png" mode="" />	 -->
           {{ item.collect }}人收藏
         </div>
         <div v-else class="sl-price-collect">{{ item.collect }}人收藏</div>

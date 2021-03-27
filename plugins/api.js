@@ -39,6 +39,13 @@ export default ({ app: { $request } }, inject) => {
      */
        getHotSearch(data){
         return $request.get('/customized/info/'+data)
-      }
+      },
+
+      /*
+      *店铺详情
+      */
+     getStoreInfo(key){
+       return $request.get('/store/info/'+key)
+     }
   })
 }

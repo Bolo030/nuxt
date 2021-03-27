@@ -189,6 +189,14 @@ export default {
       finished: false
     };
   },
+  	filters: {
+			fourFormat(str) {
+				if (str) {
+					str = str.replace(/\s/g, '').replace(/(.{4})/g, "$1 ");
+				}
+				return str
+			}
+		},
   methods: {
     onLoad() {
       this.search.page++;

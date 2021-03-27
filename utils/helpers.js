@@ -130,20 +130,20 @@ export default {
   /*
    *拼接搜索参数
    */
-  createQuery(params, type, data,pwd) {
+  createQuery(params, type, data, pwd) {
     let { store, id } = params;
-    let path = pwd||$nuxt.$route.path;
-    if(pwd){
-      id=path.split('/')[2]
+    let path = pwd || $nuxt.$route.path;
+    if (pwd) {
+      id = path.split("/")[2];
     }
     let newStr = type + data;
     if (id && id != "undefined") {
       if (id.includes(type)) {
-        var list = id.split('z');
+        var list = id.split("z");
         let index = this.getFindIdx(list, type);
         if (type == "f") {
           newStr = data;
-          var flist = list[index].substr(0, 1).split('-');
+          var flist = list[index].substr(0, 1).split("-");
           var findex = this.getFindIdx(flist, type);
           flist = this.checkList(flist, findex, newStr);
           list[index] = "f" + flist.join("-");
@@ -160,17 +160,17 @@ export default {
     return path;
   },
   // 删除参数
-  delQuery(params,type,pwd){
+  delQuery(params, type, pwd) {
     let { store, id } = params;
-    let path = pwd||$nuxt.$route.path;
-    if(pwd){
-      id=path.split('/')[2]
+    let path = pwd || $nuxt.$route.path;
+    if (pwd) {
+      id = path.split("/")[2];
     }
     if (id && id != "undefined") {
-        var list = id.split('z');
-        let index = this.getFindIdx(list, type);
-        list.splice(index,1)
-        path = `/${store}/${list.join("z")}`;
+      var list = id.split("z");
+      let index = this.getFindIdx(list, type);
+      list.splice(index, 1);
+      path = `/${store}/${list.join("z")}`;
     }
     return path;
   },
@@ -187,23 +187,24 @@ export default {
     else list.splice(idx, 1);
     return list;
   },
-     // 解析搜索条件
-     getSearchQuery(data,typeList,search){
-      let list=data.split('z');
-      let newSearch={...search}
-      for(var v of list){
-        var short=v.slice(0,1);
-        var idx=v.slice(1)
-        var name=typeList.searchShort[short]
-        if(short=='c'||short=='w'||short=='f'){
-          newSearch[name]=idx;
-        }else if(short=='h'||short=='l'){
-          newSearch[name]=typeList[name+'List'][idx].value;
-        }else{
-          newSearch[name]=typeList[name+'List'][idx-1].value;
-        }
+  // 解析搜索条件
+  getSearchQuery(data, typeList, search) {
+    let list = data.split("z");
+    let newSearch = { ...search };
+    for (var v of list) {
+      var short = v.slice(0, 1);
+      var idx = v.slice(1);
+      var name = typeList.searchShort[short];
+      if (short == "c" || short == "w" || short == "f") {
+        newSearch[name] = idx;
+      } else if (short == "h" || short == "l") {
+        newSearch[name] = typeList[name + "List"][idx].value;
+      } else {
+        newSearch[name] = typeList[name + "List"][idx - 1].value;
       }
-      // console.log(newSearch,'newSearchnewSearchnewSearch')
-      return newSearch
     }
+    // console.log(newSearch,'newSearchnewSearchnewSearch')
+    return newSearch;
+  },
+
 };
