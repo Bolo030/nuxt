@@ -20,302 +20,456 @@
       <!-- 网店编号 -->
       <div class="storeMsg si-copy">
         <span>网店编号：{{ storeInfo.code | fourFormat }}</span>
-        <div class="copy" @click="$helpers.copy(storeInfo.code)">
+        <div class="copy" @click="$utils.copy(storeInfo.code, that)">
           复制
         </div>
       </div>
       <!-- 店铺详情 -->
-		<div class="storeMsg">
-			<div class="storeMsg-top">
-				<div @click="event(0)" class="text">
-					店铺信息
-					<div v-if="activeIndex === 0"></div>
+      <div class="storeMsg">
+        <div class="storeMsg-top">
+          <div @click="event(0)" class="text">
+            店铺信息
+            <div v-if="activeIndex === 0"></div>
+          </div>
+          <div
+            @click="event(1)"
+            class="text"
+            v-if="storeInfo.storeType != 200 || storeInfo.platform != 'tb'"
+          >
+            企业信息
+            <div v-if="activeIndex === 1"></div>
+          </div>
+          <div @click="event(2)" class="text" v-if="storeInfo.platform != 'tb'">
+            商标信息
+            <div v-if="activeIndex === 2"></div>
+          </div>
+        </div>
+        <div class="storeMsg-center" v-if="activeIndex === 0">
+          <div v-if="storeInfo.platform === 'tb'">
+            <div class="storeMsg-item">
+              <span>店铺类型:</span>
+              {{
+                storeInfo.parse_store_type ? storeInfo.parse_store_type : "-"
+              }}
+            </div>
+            <div class="storeMsg-item grade">
+              <span>店铺等级:</span>
+              <img
+                mode="heightFix"
+                v-if="storeInfo.creditRate <= 5"
+                :src="
+                  '../../static/img/credit_' + storeInfo.creditRate + '.png'
+                "
+              />
+              <img
+                mode="heightFix"
+                v-else
+                :src="
+                  '../../static/img/credit_' + storeInfo.creditRate + '.gif'
+                "
+              />
+            </div>
+            <div class="storeMsg-item">
+              <span>好评率:</span>
+              {{ storeInfo.critics ? storeInfo.critics + "%" : "-" }}
+            </div>
+            <div class="storeMsg-item">
+              <span>创店年份:</span>
+              {{ storeInfo.year ? storeInfo.year : "-" }}
+            </div>
+          </div>
+
+          <div v-else-if="storeInfo.platform === 'jd'">
+            <div class="storeMsg-item">
+              <span>店铺类型:</span>
+              {{
+                storeInfo.parse_store_type ? storeInfo.parse_store_type : "-"
+              }}
+            </div>
+            <div class="storeMsg-item">
+              <span>店铺等级:</span>
+              <van-rate
+                v-if="storeInfo.jdCredit"
+                allow-half
+                size="16"
+                :readonly="true"
+                v-model="storeInfo.jdCredit"
+              />
+              <span v-else>-</span>
+            </div>
+            <div class="storeMsg-item">
+              <span>有无爆款:</span>
+              {{ storeInfo.haveHotGoods === 1 ? "是" : "无" }}
+            </div>
+            <div class="storeMsg-item">
+              <span>创店年份:</span>
+              {{ storeInfo.year ? storeInfo.year : "-" }}
+            </div>
+          </div>
+          <!-- 天猫 -->
+          <div v-else>
+            <div class="storeMsg-item">
+              <span>店铺类型:</span>
+              {{
+                storeInfo.parse_store_type ? storeInfo.parse_store_type : "-"
+              }}
+            </div>
+            <div class="storeMsg-item">
+              <span>创店年份:</span>
+              {{ storeInfo.year ? storeInfo.year : "-" }}
+            </div>
+            <div class="storeMsg-item">
+              <span>已开通类目:</span>
+              <div v-if="storeInfo.parse_first_category.length > 0">
+                <span
+                  class="more-type"
+                  space="ensp"
+                  v-for="(item, index) in storeInfo.parse_first_category"
+                  :key="index"
+                >
+                  {{ item ? item + " " : "-" }}
+                </span>
+              </div>
+              <span class="more-type" v-else>-</span>
+            </div>
+            <div class="storeMsg-item">
+              <span>违规扣分:</span>
+              一般 {{ storeInfo.violationsGeneral }}分/ 严重
+              {{ storeInfo.violationsSerious }}分/ 售价
+              {{ storeInfo.violationsSellingFake }}分
+            </div>
+          </div>
+          <!-- 分割区域 -->
+          <div class="moreInfo" @click="showMore()" v-if="isShowMore">
+            <span>展示更多信息</span>
+            <!-- <img src="../../assets/imgs/ic_shop_details_information_xiala.png" /> -->
+          </div>
+          <!-- 超出6条隐藏 -->
+          <div v-else>
+            <!-- 京东平台 -->
+            <div v-if="storeInfo.platform === 'jd'">
+              <div class="storeMsg-item">
+                <span>违规扣分:</span>
+                一般 {{ storeInfo.violationsGeneral }}分/ 严重
+                {{ storeInfo.violationsSerious }}分/ 售价
+                {{ storeInfo.violationsSellingFake }}分
+              </div>
+              <div class="storeMsg-item">
+                <span>收藏人数:</span>
+                {{ storeInfo.collectCount ? storeInfo.collectCount : "-" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>经营状态:</span>
+                {{ storeInfo.operationStatus === 1 ? "在经营" : "未经营" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>运营经验:</span>
+                {{ storeInfo.operationExp === 1 ? "传授" : "不传授" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>店铺贷款：</span>
+                {{ storeInfo.is_loan ? "有贷款" : "无贷款" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>直播权限:</span>
+                {{ storeInfo.live === 1 ? "有" : "无" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>当面交易：</span>
+                {{ storeInfo.faceTransaction == 1 ? "是" : "否" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>带货出售:</span>
+                {{ storeInfo.sellWithGoods === 1 ? "是" : "否" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>提供货源:</span>
+                {{ storeInfo.supplySource === 1 ? "是" : "否" }}
+              </div>
+            </div>
+
+            <!-- 淘宝平台 -->
+            <div v-else-if="storeInfo.platform === 'tb'">
+              <div class="storeMsg-item">
+                <span>店铺信誉:</span>
+                {{ storeInfo.reputation ? storeInfo.reputation : "-" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>粉丝数量:</span>
+                {{ storeInfo.fans ? storeInfo.fans : "-" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>收藏人气:</span>
+                {{ storeInfo.collectCount ? storeInfo.collectCount : "-" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>违规扣分:</span>
+                一般 {{ storeInfo.violationsGeneral }}分/ 严重
+                {{ storeInfo.violationsSerious }}分/ 售价
+                {{ storeInfo.violationsSellingFake }}分
+              </div>
+              <div class="storeMsg-item">
+                <span>所在地区：</span>
+                {{ storeInfo.regionalRegion ? storeInfo.regionalRegion : "-" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>店铺贷款：</span>
+                {{ storeInfo.is_loan ? "有贷款" : "无贷款" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>直播权限：</span>
+                {{ storeInfo.live ? "有" : "无" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>当面交易：</span>
+                {{ storeInfo.faceTransaction === 1 ? "是" : "否" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>带货出售:</span>
+                {{ storeInfo.sellWithGoods === 1 ? "是" : "否" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>提供货源:</span>
+                {{ storeInfo.supplySource === 1 ? "是" : "否" }}
+              </div>
+            </div>
+
+            <!-- 天猫平台 -->
+            <div v-else>
+              <div class="storeMsg-item">
+                <span>经营状态:</span>
+                {{ storeInfo.operationStatus === 1 ? "在经营" : "未经营" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>运营经验:</span>
+                {{ storeInfo.operationExp === 1 ? "传授" : "不传授" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>运营团队转让：</span>
+                {{ storeInfo.teamTransfer === 1 ? "转让" : "不转让" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>店铺贷款：</span>
+                {{ storeInfo.is_loan ? "有贷款" : "无贷款" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>当面交易：</span>
+                {{ storeInfo.faceTransaction == 1 ? "是" : "否" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>带货出售:</span>
+                {{ storeInfo.sellWithGoods === 1 ? "是" : "否" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>提供货源:</span>
+                {{ storeInfo.supplySource === 1 ? "是" : "否" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>是否带行业字眼:</span>
+                {{ storeInfo.industryWord === 1 ? "是" : "否" }}
+              </div>
+              <div class="storeMsg-item">
+                <span>是否带实体:</span>
+                {{ storeInfo.entity === 1 ? "是" : "否" }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 公司 -->
+        <div class="storeMsg-center" v-if="activeIndex === 1">
+          <div class="storeMsg-item">
+            <span>所在地区：</span>
+            {{ storeInfo.regionalRegion ? storeInfo.regionalRegion : "-" }}
+          </div>
+          <div class="storeMsg-item">
+            <span>纳税性质：</span>
+            {{ storeInfo.parse_tax_type ? storeInfo.parse_tax_type : "-" }}
+          </div>
+          <div class="storeMsg-item">
+            <span>注册资金：</span>
+            {{
+              storeInfo.registeredCapital
+                ? storeInfo.registeredCapital + "万"
+                : "-"
+            }}
+          </div>
+          <div class="storeMsg-item">
+            <span>企业贷款：</span>
+            {{ storeInfo.enLoan == 1 ? "有" : "无" }}
+          </div>
+          <div class="storeMsg-item">
+            <span>企业债权：</span>
+            {{ storeInfo.enCreditors == 1 ? "有" : "无" }}
+          </div>
+          <div class="storeMsg-item">
+            <span>公司类型：</span>
+            {{ storeInfo.parse_type ? storeInfo.parse_type : "-" }}
+          </div>
+          <div class="storeMsg-item">
+            <span>迁移地址：</span>
+            {{ storeInfo.transferAddress === 1 ? "可迁移" : "不可迁移" }}
+          </div>
+          <div class="storeMsg-item">
+            <span>公司过户：</span>
+            {{ storeInfo.enTransfer === 1 ? "是" : "否" }}
+          </div>
+          <div class="storeMsg-item">
+            <span>地址类型：</span>
+            {{
+              storeInfo.parse_address_type ? storeInfo.parse_address_type : "-"
+            }}
+          </div>
+        </div>
+
+        <!-- 商标 -->
+        <div class="storeMsg-center" v-if="activeIndex === 2">
+          <div class="storeMsg-item">
+            <span>商标类型：</span>
+            {{
+              storeInfo.parse_trademark_type
+                ? storeInfo.parse_trademark_type
+                : "-"
+            }}
+          </div>
+          <div class="storeMsg-item">
+            <span>商标类别：</span>
+            <div v-if="storeInfo.parse_trademark.length > 0">
+              <span
+                class="more-type"
+                space="ensp"
+                v-for="(item, index) in storeInfo.parse_trademark"
+                :key="index"
+              >
+                {{ item.name }}</span
+              >
+            </div>
+            <span class="more-type" v-else>-</span>
+          </div>
+          <div class="storeMsg-item">
+            <span>商标名称类型：</span>
+            {{
+              storeInfo.parse_trademark_name_type
+                ? storeInfo.parse_trademark_name_type
+                : "-"
+            }}
+          </div>
+          <div class="storeMsg-item">
+            <span>商标归属：</span>
+            {{
+              storeInfo.parse_trademark_ownership
+                ? storeInfo.parse_trademark_ownership
+                : "-"
+            }}
+          </div>
+          <div class="storeMsg-item">
+            <span>商标属性：</span>
+            {{
+              storeInfo.parse_trademark_attr
+                ? storeInfo.parse_trademark_attr
+                : "-"
+            }}
+          </div>
+          <div class="storeMsg-item">
+            <span>商标持有人：</span>
+            {{
+              storeInfo.parse_trademark_hold
+                ? storeInfo.parse_trademark_hold
+                : "-"
+            }}
+          </div>
+        </div>
+      </div>
+      <!-- 卡片组件 -->
+      <card title="店铺截图" v-if="screenshotList.length != 0">
+        <div class="screenshot">
+          <div
+            v-for="(item, index) in screenshotList"
+            :key="index"
+            class="screenshot-item"
+          >
+            <img :src="item.thumb" @click="predivImg(index)" />
+          </div>
+        </div>
+      </card>
+      <!-- 店铺动态 -->
+      <card title="店铺动态">
+        <div
+          class="shopDynamic"
+          v-for="(item, index) in shopDynamics"
+          :key="index"
+        >
+          <span>{{ item.title }}</span>
+          <div class="progress">
+            <van-progress :show-pivot='false' :percentage="percent[item.keys]" />
+          </div>
+          <div class="evaluate" :class="'evaluate-' + item.keys">
+            {{ desc[item.keys] }}
+          </div>
+        </div>
+      </card>
+          <!-- 顾客服务组件 -->
+      <customer-service
+        :customerService="customerService"
+        :platform="storeInfo.platform"
+        @changeWx="$refs.pop.openDialog()"
+        @changeCall="callPhone()"
+      />
+       <!-- 交易流程 -->
+    	<card title="交易流程">
+			<div class="trade-process">
+				<block v-for="(item, index) in tradeList" :key="index">
+					<div class="trade-item">
+						<div>
+							<img :src="item.src" />
+						</div>
+						<span>{{ item.title }}</span>
+					</div>
+					<div class="trade-arrow">
+						<img v-if="index !== tradeList.length - 1" src="../../assets/imgs/ic_shop_details_process_jiantou.png" class="arrow-img" />
+					</div>
+				</block>
+			</div>
+			<div class="divider">
+				<img src="../../assets/imgs/ic_shop_details_process_zhishitiao.png" />
+			</div>
+		</card>
+    	<!-- 猜你喜欢 -->
+		<div class="storeInfo-bottom">
+			<div class="guessLikes">
+				<div class="left">
+					<img src="../../assets/imgs/ic_shop_details_guess_aixing.png" />
+					<span>猜你喜欢</span>
 				</div>
-				<div @click="event(1)" class="text" v-if="storeInfo.storeType!=200||storeInfo.platform != 'tb'">
-					企业信息
-					<div v-if="activeIndex === 1"></div>
-				</div>
-				<div @click="event(2)" class="text" v-if="storeInfo.platform != 'tb'">
-					商标信息
-					<div v-if="activeIndex === 2"></div>
+				<div class="right" @click="getRecommend()">
+					<img src="../../assets/imgs/ic_shop_details_guess_huanyipi.png" />
+					<span>换一批</span>
 				</div>
 			</div>
-			<div class="storeMsg-center" v-if="activeIndex === 0">
-
-				<div v-if="storeInfo.platform === 'tb'">
-					<div class="storeMsg-item">
-						<span>店铺类型:</span>
-						{{ storeInfo.parse_store_type ? storeInfo.parse_store_type : "-" }}
-					</div>
-					<div class="storeMsg-item grade">
-						<span>店铺等级:</span>
-						<img mode="heightFix" v-if="storeInfo.creditRate <= 5" :src="'../../static/img/credit_'+storeInfo.creditRate+'.png'" />
-						<img mode="heightFix" v-else :src="'../../static/img/credit_'+storeInfo.creditRate+'.gif'" />
-					</div>
-					<div class="storeMsg-item">
-						<span>好评率:</span>
-						{{ storeInfo.critics ? storeInfo.critics+'%' : "-" }}
-					</div>
-					<div class="storeMsg-item">
-						<span>创店年份:</span>
-						{{ storeInfo.year ? storeInfo.year : "-" }}
-					</div>
-				</div>
-
-				<div v-else-if="storeInfo.platform === 'jd'">
-					<div class="storeMsg-item">
-						<span>店铺类型:</span>
-						{{ storeInfo.parse_store_type ? storeInfo.parse_store_type : "-" }}
-					</div>
-					<div class="storeMsg-item">
-						<span>店铺等级:</span>
-            <van-rate v-if="storeInfo.jdCredit" allow-half size="16" :readonly="true"  v-model="storeInfo.jdCredit" />
-						<span v-else>-</span>
-					</div>
-					<div class="storeMsg-item">
-						<span>有无爆款:</span>
-						{{ storeInfo.haveHotGoods === 1 ? "是" : "无" }}
-					</div>
-					<div class="storeMsg-item">
-						<span>创店年份:</span>
-						{{ storeInfo.year ? storeInfo.year : "-" }}
-					</div>
-				</div>
-				<!-- 天猫 -->
-				<div v-else>
-					<div class="storeMsg-item">
-						<span>店铺类型:</span>
-						{{ storeInfo.parse_store_type ? storeInfo.parse_store_type : "-" }}
-					</div>
-					<div class="storeMsg-item">
-						<span>创店年份:</span>
-						{{ storeInfo.year ? storeInfo.year : "-" }}
-					</div>
-					<div class="storeMsg-item">
-						<span>已开通类目:</span>
-						<div v-if="storeInfo.parse_first_category.length>0">
-							<span class="more-type" space='ensp' v-for="(item, index) in storeInfo.parse_first_category" :key="index">
-								{{ item ? item+" " : "-" }}
-							</span>
-						</div>
-						<span class="more-type" v-else>-</span>
-					</div>
-					<div class="storeMsg-item">
-						<span>违规扣分:</span>
-						一般 {{ storeInfo.violationsGeneral }}分/ 严重
-						{{ storeInfo.violationsSerious }}分/ 售价
-						{{ storeInfo.violationsSellingFake }}分
-					</div>
-				</div>
-				<!-- 分割区域 -->
-				<div class="moreInfo" @click="showMore()" v-if="isShowMore">
-					<span>展示更多信息</span>
-					<img src="/static/newImage/ic_shop_details_information_xiala.png" />
-				</div>
-				<!-- 超出6条隐藏 -->
-				<div v-else>
-
-					<!-- 京东平台 -->
-					<div v-if="storeInfo.platform === 'jd'">
-						<div class="storeMsg-item">
-							<span>违规扣分:</span>
-							一般 {{ storeInfo.violationsGeneral }}分/ 严重
-							{{ storeInfo.violationsSerious }}分/ 售价
-							{{ storeInfo.violationsSellingFake }}分
-						</div>
-						<div class="storeMsg-item">
-							<span>收藏人数:</span>
-							{{ storeInfo.collectCount ? storeInfo.collectCount : "-" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>经营状态:</span>
-							{{ storeInfo.operationStatus === 1 ? "在经营" : "未经营" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>运营经验:</span>
-							{{ storeInfo.operationExp === 1 ? "传授" : "不传授" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>店铺贷款：</span>
-							{{ storeInfo.is_loan ? "有贷款" : "无贷款" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>直播权限:</span>
-							{{ storeInfo.live === 1 ? "有" : "无" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>当面交易：</span>
-							{{ storeInfo.faceTransaction==1 ? "是" : "否" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>带货出售:</span>
-							{{ storeInfo.sellWithGoods === 1 ? "是" : "否" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>提供货源:</span>
-							{{ storeInfo.supplySource === 1 ? "是" : "否" }}
-						</div>
-					</div>
-
-					<!-- 淘宝平台 -->
-					<div v-else-if="storeInfo.platform === 'tb'">
-						<div class="storeMsg-item">
-							<span>店铺信誉:</span>
-							{{ storeInfo.reputation ? storeInfo.reputation : "-" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>粉丝数量:</span>
-							{{ storeInfo.fans ? storeInfo.fans : "-" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>收藏人气:</span>
-							{{ storeInfo.collectCount ? storeInfo.collectCount : "-" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>违规扣分:</span>
-							一般 {{ storeInfo.violationsGeneral }}分/ 严重
-							{{ storeInfo.violationsSerious }}分/ 售价
-							{{ storeInfo.violationsSellingFake }}分
-						</div>
-						<div class="storeMsg-item">
-							<span>所在地区：</span>
-							{{ storeInfo.regionalRegion ? storeInfo.regionalRegion : "-" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>店铺贷款：</span>
-							{{ storeInfo.is_loan ? "有贷款" : "无贷款" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>直播权限：</span>
-							{{ storeInfo.live ? "有" : "无" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>当面交易：</span>
-							{{ storeInfo.faceTransaction === 1 ? "是" : "否" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>带货出售:</span>
-							{{ storeInfo.sellWithGoods === 1 ? "是" : "否" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>提供货源:</span>
-							{{ storeInfo.supplySource === 1 ? "是" : "否" }}
-						</div>
-					</div>
-
-					<!-- 天猫平台 -->
-					<div v-else>
-						<div class="storeMsg-item">
-							<span>经营状态:</span>
-							{{ storeInfo.operationStatus === 1 ? "在经营" : "未经营" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>运营经验:</span>
-							{{ storeInfo.operationExp === 1 ? "传授" : "不传授" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>运营团队转让：</span>
-							{{ storeInfo.teamTransfer === 1 ? "转让" : "不转让" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>店铺贷款：</span>
-							{{ storeInfo.is_loan ? "有贷款" : "无贷款" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>当面交易：</span>
-							{{ storeInfo.faceTransaction==1 ? "是" : "否" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>带货出售:</span>
-							{{ storeInfo.sellWithGoods === 1 ? "是" : "否" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>提供货源:</span>
-							{{ storeInfo.supplySource === 1 ? "是" : "否" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>是否带行业字眼:</span>
-							{{ storeInfo.industryWord === 1 ? "是" : "否" }}
-						</div>
-						<div class="storeMsg-item">
-							<span>是否带实体:</span>
-							{{ storeInfo.entity === 1 ? "是" : "否" }}
-						</div>
-					</div>
-				</div>
+		</div>
+			<store-list :storeList="recommendList" :isShowList="true"></store-list>
+      <div class="footerFixed">
+			<div class="collent" @click="isShowCollect()">
+				<img :src="
+            isCollect
+              ? require('../../assets/imgs/ic_shop_details_tab_shoucang_b.png')
+              : require('../../assets/imgs/ic_shop_details_tab_shoucang_a.png')
+          " />
+				<span :class="isCollect ? 'active-color' : ''">{{
+          isCollect ? "已收藏" : "收藏"
+        }}</span>
 			</div>
-
-			<!-- 公司 -->
-			<div class="storeMsg-center" v-if="activeIndex === 1">
-				<div class="storeMsg-item">
-					<span>所在地区：</span>
-					{{ storeInfo.regionalRegion ? storeInfo.regionalRegion : "-" }}
-				</div>
-				<div class="storeMsg-item">
-					<span>纳税性质：</span>
-					{{ storeInfo.parse_tax_type ? storeInfo.parse_tax_type : "-" }}
-				</div>
-				<div class="storeMsg-item">
-					<span>注册资金：</span>
-					{{storeInfo.registeredCapital? storeInfo.registeredCapital + "万": "-"}}
-				</div>
-				<div class="storeMsg-item">
-					<span>企业贷款：</span>
-					{{ storeInfo.enLoan==1 ? "有" : "无" }}
-				</div>
-				<div class="storeMsg-item">
-					<span>企业债权：</span>
-					{{ storeInfo.enCreditors==1 ? "有" : "无" }}
-				</div>
-				<div class="storeMsg-item">
-					<span>公司类型：</span>
-					{{ storeInfo.parse_type ? storeInfo.parse_type : "-" }}
-				</div>
-				<div class="storeMsg-item">
-					<span>迁移地址：</span>
-					{{ storeInfo.transferAddress === 1 ? "可迁移" : "不可迁移" }}
-				</div>
-				<div class="storeMsg-item">
-					<span>公司过户：</span>
-					{{ storeInfo.enTransfer === 1 ? "是" : "否" }}
-				</div>
-				<div class="storeMsg-item">
-					<span>地址类型：</span>
-					{{ storeInfo.parse_address_type? storeInfo.parse_address_type
-              : "-" }}
-				</div>
+			<div class="collent" @click="$refs.pop.openDialog()">
+				<img src="../../assets/imgs/ic_shop_details_tab_weixin.png" />
+				<span>微信</span>
 			</div>
-
-			<!-- 商标 -->
-			<div class="storeMsg-center" v-if="activeIndex === 2">
-				<div class="storeMsg-item">
-					<span>商标类型：</span>
-					{{storeInfo.parse_trademark_type? storeInfo.parse_trademark_type: "-"}}
-				</div>
-				<div class="storeMsg-item">
-					<span>商标类别：</span>
-					<div v-if="storeInfo.parse_trademark.length>0">
-						<span class="more-type" space='ensp' v-for="(item, index) in storeInfo.parse_trademark" :key="index">
-							{{ item.name}}</span>
-					</div>
-					<span class="more-type" v-else>-</span>
-				</div>
-				<div class="storeMsg-item">
-					<span>商标名称类型：</span>
-					{{storeInfo.parse_trademark_name_type? storeInfo.parse_trademark_name_type: "-"}}
-				</div>
-				<div class="storeMsg-item">
-					<span>商标归属：</span>
-					{{ storeInfo.parse_trademark_ownership ? storeInfo.parse_trademark_ownership : "-" }}
-				</div>
-				<div class="storeMsg-item">
-					<span>商标属性：</span>
-					{{ storeInfo.parse_trademark_attr ? storeInfo.parse_trademark_attr : "-"}}
-				</div>
-				<div class="storeMsg-item">
-					<span>商标持有人：</span>
-					{{ storeInfo.parse_trademark_hold ? storeInfo.parse_trademark_hold : "-" }}
-				</div>
+			<div class="collent" @click="callPhone()">
+				<img src="../../assets/imgs/ic_shop_details_tab_dianhua.png" />
+				<span>电话</span>
+			</div>
+			<div class="order-bargainirg">
+				<span @click="immediatelypurchase()">0元下单</span>
+				<span @click="bargain()">我要砍价</span>
 			</div>
 		</div>
     </div>
@@ -332,15 +486,50 @@
 <script>
 import CustomerService from "../../components/store-info/customer-service";
 export default {
-  async asyncData({app,params}){
-    let key=params.key||""
-    let storeInfo=await app.$api.getStoreInfo(key).then(res=>res.status==1?res.data:{})
-    let storeList=[];
-    storeList.push(storeInfo)
-    return {
-      storeInfo,
-      storeList
+  async asyncData({ app, params }) {
+    let key = params.key || "";
+    let [storeInfo,recommendList]=await Promise.all([
+      app.$api
+      .getStoreInfo(key)
+      .then(res => (res.status == 1 ? res.data : {})),
+       app.$api
+      .StoreList(key)
+      .then(res => (res.status == 1 ? res.data : {}))
+    ])
+   /*  let storeInfo = await app.$api
+      .getStoreInfo(key)
+      .then(res => (res.status == 1 ? res.data : {})); */
+
+    let customerService = storeInfo.customer_service;
+    let storeList = [];
+    storeList.push(storeInfo);
+    let screenshotList = storeInfo.thumbs;
+    let shopDynamics = [];
+    for (let key in storeInfo) {
+      if (
+        key === "consistentScore" ||
+        key === "attitudeScore" ||
+        key === "logisticsScore"
+      ) {
+        shopDynamics.push({
+          keys: storeInfo[key]
+        });
+      }
     }
+    shopDynamics[0].title = "宝贝与描述相符";
+    shopDynamics[1].title = "卖家的服务态度";
+    shopDynamics[2].title = "卖家的发货速度";
+    let isCollect = storeInfo.is_collect;
+    return {
+      key,
+      storeInfo,
+      storeList,
+      customerService,
+      screenshotList,
+      shopDynamics,
+      recommendList,
+      isCollect
+    };
   },
   data() {
     return {
@@ -352,6 +541,7 @@ export default {
       customerService: {},
       recommendList: [],
       legendList: [],
+      that: this,
       tradeList: [
         {
           title: "确定店铺",
@@ -403,11 +593,44 @@ export default {
   methods: {
     // 拨打电话
     callPhone() {
-					window.location.href="tel:"+this.customerService.workTel;
+      window.location.href = "tel:" + this.customerService.workTel;
     },
     // 店铺信息选择
-			event(val) {
-				this.activeIndex = val;
+    event(val) {
+      this.activeIndex = val;
+    },
+    // 展示更多店铺信息
+    showMore() {
+      this.isShowMore = false;
+    },
+    // 获取推荐列表数据
+			async getRecommend(key = this.key) {
+				let res = await this.$api.StoreList(key);
+				this.recommendList = res.data;
+			},
+      	// 判断是否收藏
+			isShowCollect() {
+			/* 	if (!this.$helpers.isLogin()) {
+					return wx.navigateTo({
+						url: '/pages/login/login'
+					})
+				} */
+				this.isCollect = !this.isCollect;
+				if (!this.isCollect) {
+					CollectDel(this.key).then((res) => {
+					/* 	uni.showToast({
+							title: "已取消收藏",
+							duration: 2000,
+						}); */
+					});
+				} else {
+					CollectAdd(this.key).then((res) => {
+					/* 	uni.showToast({
+							title: "收藏成功！",
+							duration: 2000,
+						}); */
+					});
+				}
 			},
   }
 };
@@ -430,7 +653,7 @@ export default {
     display: flex;
     width: 100%;
     white-space: nowrap;
-
+    overflow: scroll;
     .screenshot-item {
       width: 170px;
       height: 120px;
@@ -490,7 +713,9 @@ export default {
     color: #1c1c1c;
     justify-content: space-between;
     margin-top: 10px;
-
+    block{
+      display: flex;
+    }
     .trade-item {
       display: flex;
       flex-direction: column;
@@ -583,8 +808,8 @@ export default {
 
         div {
           position: absolute;
-          width: 26px;
-          height: 3px;
+          width: 42px;
+          height: 6px;
           background: #f4632c;
           -webkit-border-radius: 3px;
           border-radius: 3px;
@@ -701,7 +926,7 @@ export default {
     width: 373px;
     border-radius: 44px;
     padding: 0 40px 0 50px;
-    background: url("/static/newImage/bt_shop_details_tab_xiadan.png");
+    background: url("../../assets/imgs/bt_shop_details_tab_xiadan.png");
     background-size: cover;
     font-size: 28px;
     color: #fff;

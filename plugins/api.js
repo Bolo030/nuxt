@@ -46,6 +46,27 @@ export default ({ app: { $request } }, inject) => {
       */
      getStoreInfo(key){
        return $request.get('/store/info/'+key)
-     }
+     },
+
+     /*
+     *猜你喜欢
+     */
+     StoreList(key){
+      return $request.get('/store/other/'+ key);
+     },
+
+     /*
+     *添加收藏
+     */
+     CollectAdd(key){
+      return $request.post('/user/collect/add/' + key);
+     },
+
+     /*
+     *取消收藏
+     */
+     CollectDel(key){
+      return $request.post('/user/collect/del/' + key, data);
+     },
   })
 }

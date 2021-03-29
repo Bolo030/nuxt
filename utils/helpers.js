@@ -1,3 +1,4 @@
+import { Toast  } from 'vant';
 export default {
   getPname(val) {
     let platform = {
@@ -206,5 +207,22 @@ export default {
     // console.log(newSearch,'newSearchnewSearchnewSearch')
     return newSearch;
   },
+
+  // 复制
+  async copy(data){
+    let oInput =document.createElement('input') //创建input 节点
+    oInput.value=data //给input的value赋值
+    oInput.style.opacity=0;
+    document.body.appendChild(oInput) //向页面插入input节点
+    oInput.select() //选中input
+    try {
+      await document.execCommand('Copy') // 执行浏览器复制命令
+      oInput.parentElement.removeChild(oInput);
+      Toast.success('复制成功');
+    }
+    catch(e){
+      Toast.fail('复制失败');
+    }
+  }
 
 };

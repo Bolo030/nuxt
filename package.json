@@ -16,6 +16,7 @@
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.8.3",
     "cross-env": "^7.0.3",
+    "echarts": "^5.0.2",
     "lib-flexible": "^0.3.2",
     "nuxt": "^2.14.12",
     "postcss-px2rem-exclude": "0.0.6",

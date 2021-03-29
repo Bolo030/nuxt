@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main :class="isInfo?'':'pd-22'">
     <div
       class="shopList"
       v-for="(item, index) in storeList"
@@ -103,15 +103,23 @@ export default {
       type: Boolean,
       default: true
     },
-    isInfo: Boolean,
+    isInfo:{
+      type: Boolean,
+      default: false
+    },
     jump: {
       type: Boolean,
       default: true
     }
   },
+  data(){
+    return{
+    }
+  },
   methods: {
     // 店铺详情跳转
     navItemClick(key) {
+      if(!this.isInfo)
        this.$router.push(`/si/${key}`)
     }
   }
@@ -120,8 +128,10 @@ export default {
 
 <style lang="scss" scoped>
 main{
-  padding: 0 22px;
   box-sizing: border-box;
+}
+.pd-22{
+ padding: 0 22px;
 }
 .shopList {
   background: #ffffff;
