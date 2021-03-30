@@ -567,7 +567,6 @@ export default {
         color: "#56E4CE"
       }
     ];
-    console.log(legendList, "legendList");
     return {
       key,
       storeInfo,

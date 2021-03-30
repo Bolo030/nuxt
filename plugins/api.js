@@ -129,7 +129,7 @@ export default ({
      */
     myStoreInfo(params = {}) {
       return $request.get('/store/my',params)
-    }
+    },
 
       /**
      * 获取热门搜索
