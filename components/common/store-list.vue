@@ -1,13 +1,14 @@
 <template>
-  <main :class="isInfo?'':'pd-22'">
-    <div
+  <main :class="isInfo ? '' : 'pd-22'">
+    <a
       class="shopList"
+      :href="isInfo?'#':`/si/${item.key}`"
       v-for="(item, index) in storeList"
       :key="index"
       @click="navItemClick(item.key)"
     >
       <div class="shopList-top ">
-      <!--   <div class="left" v-if="item.showName == 2 && item.platform == 'tm'">
+        <!--   <div class="left" v-if="item.showName == 2 && item.platform == 'tm'">
           <img :src="require('../../assets/imgs/icon_' + item.platform + '.png')" />
           <img
             src="../../assets/imgs/ic_home_recommend_protect@2x.png"
@@ -15,16 +16,18 @@
           />
           <span class="pwdText">该店名被隐私保护中</span>
         </div> -->
-        <span class="left"  :class="{ 'name-active': true }">
-          <img :src="require('../../assets/imgs/icon_' + item.platform + '.png')" />
+        <span class="left" :class="{ 'name-active': true }">
+          <img
+            :src="require('../../assets/imgs/icon_' + item.platform + '.png')"
+          />
           <span
-            :style="{ 'font-weight':  isInfo ? 700 : 500 }"
-            v-html=" item.title"
+            :style="{ 'font-weight': isInfo ? 700 : 500 }"
+            v-html="item.title"
             class="font-weight text-wraps"
           />
         </span>
       </div>
-   <!--    <span
+      <!--    <span
         v-if="item.name || (item.showName == 2 && item.platform == 'tm')"
         class="shopList-center text-wraps"
         v-html="item.title"
@@ -87,7 +90,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </a>
   </main>
 </template>
 
@@ -103,7 +106,7 @@ export default {
       type: Boolean,
       default: true
     },
-    isInfo:{
+    isInfo: {
       type: Boolean,
       default: false
     },
@@ -112,26 +115,27 @@ export default {
       default: true
     }
   },
-  data(){
-    return{
-    }
+  data() {
+    return {};
   },
   methods: {
     // 店铺详情跳转
     navItemClick(key) {
-      if(!this.isInfo)
-       this.$router.push(`/si/${key}`)
+      if (!this.isInfo) this.$router.push(`/si/${key}`);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-main{
+a{
+  display: block;
+}
+main {
   box-sizing: border-box;
 }
-.pd-22{
- padding: 0 22px;
+.pd-22 {
+  padding: 0 22px;
 }
 .shopList {
   background: #ffffff;

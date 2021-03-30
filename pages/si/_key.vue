@@ -401,77 +401,110 @@
         >
           <span>{{ item.title }}</span>
           <div class="progress">
-            <van-progress :show-pivot='false' :percentage="percent[item.keys]" />
+            <van-progress
+              :show-pivot="false"
+              :percentage="percent[item.keys]"
+            />
           </div>
           <div class="evaluate" :class="'evaluate-' + item.keys">
             {{ desc[item.keys] }}
           </div>
         </div>
       </card>
-          <!-- 顾客服务组件 -->
+      <!-- 店铺费用 -->
+      <card title="费用预估">
+        <div class="qiun-columns qiun-bg-white">
+          <div class="qiun-bg-white qiun-title-bar qiun-common-mt"></div>
+          <div class="qiun-charts">
+            <canvas id="myChart" class="charts"></canvas>
+          </div>
+          <div class="chart-legend">
+            <div
+              class="chart-legend-item"
+              v-for="(item, index) in legendList"
+              :key="index"
+            >
+              <div class="cl-dot" :style="{ background: item.color }"></div>
+              <div class="cl-content">
+                <div class="cl-title">
+                  {{ item.name }}
+                </div>
+                <div class="cl-price">￥{{ item.value }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </card>
+      <!-- 顾客服务组件 -->
       <customer-service
         :customerService="customerService"
         :platform="storeInfo.platform"
         @changeWx="$refs.pop.openDialog()"
         @changeCall="callPhone()"
       />
-       <!-- 交易流程 -->
-    	<card title="交易流程">
-			<div class="trade-process">
-				<block v-for="(item, index) in tradeList" :key="index">
-					<div class="trade-item">
-						<div>
-							<img :src="item.src" />
-						</div>
-						<span>{{ item.title }}</span>
-					</div>
-					<div class="trade-arrow">
-						<img v-if="index !== tradeList.length - 1" src="../../assets/imgs/ic_shop_details_process_jiantou.png" class="arrow-img" />
-					</div>
-				</block>
-			</div>
-			<div class="divider">
-				<img src="../../assets/imgs/ic_shop_details_process_zhishitiao.png" />
-			</div>
-		</card>
-    	<!-- 猜你喜欢 -->
-		<div class="storeInfo-bottom">
-			<div class="guessLikes">
-				<div class="left">
-					<img src="../../assets/imgs/ic_shop_details_guess_aixing.png" />
-					<span>猜你喜欢</span>
-				</div>
-				<div class="right" @click="getRecommend()">
-					<img src="../../assets/imgs/ic_shop_details_guess_huanyipi.png" />
-					<span>换一批</span>
-				</div>
-			</div>
-		</div>
-			<store-list :storeList="recommendList" :isShowList="true"></store-list>
+      <!-- 交易流程 -->
+      <card title="交易流程">
+        <div class="trade-process">
+          <block v-for="(item, index) in tradeList" :key="index">
+            <div class="trade-item">
+              <div>
+                <img :src="item.src" />
+              </div>
+              <span>{{ item.title }}</span>
+            </div>
+            <div class="trade-arrow">
+              <img
+                v-if="index !== tradeList.length - 1"
+                src="../../assets/imgs/ic_shop_details_process_jiantou.png"
+                class="arrow-img"
+              />
+            </div>
+          </block>
+        </div>
+        <div class="divider">
+          <img src="../../assets/imgs/ic_shop_details_process_zhishitiao.png" />
+        </div>
+      </card>
+      <!-- 猜你喜欢 -->
+      <div class="storeInfo-bottom">
+        <div class="guessLikes">
+          <div class="left">
+            <img src="../../assets/imgs/ic_shop_details_guess_aixing.png" />
+            <span>猜你喜欢</span>
+          </div>
+          <div class="right" @click="getRecommend()">
+            <img src="../../assets/imgs/ic_shop_details_guess_huanyipi.png" />
+            <span>换一批</span>
+          </div>
+        </div>
+      </div>
+      <store-list :storeList="recommendList" :isShowList="true"></store-list>
       <div class="footerFixed">
-			<div class="collent" @click="isShowCollect()">
-				<img :src="
-            isCollect
-              ? require('../../assets/imgs/ic_shop_details_tab_shoucang_b.png')
-              : require('../../assets/imgs/ic_shop_details_tab_shoucang_a.png')
-          " />
-				<span :class="isCollect ? 'active-color' : ''">{{
-          isCollect ? "已收藏" : "收藏"
-        }}</span>
-			</div>
-			<div class="collent" @click="$refs.pop.openDialog()">
-				<img src="../../assets/imgs/ic_shop_details_tab_weixin.png" />
-				<span>微信</span>
-			</div>
-			<div class="collent" @click="callPhone()">
-				<img src="../../assets/imgs/ic_shop_details_tab_dianhua.png" />
-				<span>电话</span>
-			</div>
-			<div class="order-bargainirg">
-				<span @click="immediatelypurchase()">0元下单</span>
-				<span @click="bargain()">我要砍价</span>
-			</div>
-		</div>
+        <div class="collent" @click="isShowCollect()">
+          <img
+            :src="
+              isCollect
+                ? require('../../assets/imgs/ic_shop_details_tab_shoucang_b.png')
+                : require('../../assets/imgs/ic_shop_details_tab_shoucang_a.png')
+            "
+          />
+          <span :class="isCollect ? 'active-color' : ''">{{
+            isCollect ? "已收藏" : "收藏"
+          }}</span>
+        </div>
+        <div class="collent" @click="$refs.pop.openDialog()">
+          <img src="../../assets/imgs/ic_shop_details_tab_weixin.png" />
+          <span>微信</span>
+        </div>
+        <div class="collent" @click="callPhone()">
+          <img src="../../assets/imgs/ic_shop_details_tab_dianhua.png" />
+          <span>电话</span>
+        </div>
+        <div class="order-bargainirg">
+          <span @click="immediatelypurchase()">0元下单</span>
+          <span @click="bargain()">我要砍价</span>
+        </div>
+      </div>
     </div>
     <custom-dialog
       ref="pop"
@@ -488,18 +521,10 @@ import CustomerService from "../../components/store-info/customer-service";
 export default {
   async asyncData({ app, params }) {
     let key = params.key || "";
-    let [storeInfo,recommendList]=await Promise.all([
-      app.$api
-      .getStoreInfo(key)
-      .then(res => (res.status == 1 ? res.data : {})),
-       app.$api
-      .StoreList(key)
-      .then(res => (res.status == 1 ? res.data : {}))
-    ])
-   /*  let storeInfo = await app.$api
-      .getStoreInfo(key)
-      .then(res => (res.status == 1 ? res.data : {})); */
-
+    let [storeInfo, recommendList] = await Promise.all([
+      app.$api.getStoreInfo(key).then(res => (res.status == 1 ? res.data : {})),
+      app.$api.StoreList(key).then(res => (res.status == 1 ? res.data : {}))
+    ]);
     let customerService = storeInfo.customer_service;
     let storeList = [];
     storeList.push(storeInfo);
@@ -520,6 +545,29 @@ export default {
     shopDynamics[1].title = "卖家的服务态度";
     shopDynamics[2].title = "卖家的发货速度";
     let isCollect = storeInfo.is_collect;
+    let legendList = [
+      {
+        value: Number(storeInfo.price) || 0,
+        name: "网店售价",
+        color: "#ED4F48"
+      },
+      {
+        value: Number(storeInfo.protectionPrice) || 0,
+        name: "消费者保障金",
+        color: "#9262FF"
+      },
+      {
+        value: Number(storeInfo.technologyYearPrice) || 0,
+        name: "技术年费",
+        color: "#FF9860"
+      },
+      {
+        value: Number(storeInfo.buyer_commission) || 0,
+        name: "服务费",
+        color: "#56E4CE"
+      }
+    ];
+    console.log(legendList, "legendList");
     return {
       key,
       storeInfo,
@@ -528,7 +576,8 @@ export default {
       screenshotList,
       shopDynamics,
       recommendList,
-      isCollect
+      isCollect,
+      legendList
     };
   },
   data() {
@@ -590,6 +639,17 @@ export default {
   components: {
     CustomerService
   },
+  filters: {
+    fourFormat(str) {
+      if (str) {
+        str = str.replace(/\s/g, "").replace(/(.{4})/g, "$1 ");
+      }
+      return str;
+    }
+  },
+  mounted() {
+    this.echartsInit();
+  },
   methods: {
     // 拨打电话
     callPhone() {
@@ -604,34 +664,69 @@ export default {
       this.isShowMore = false;
     },
     // 获取推荐列表数据
-			async getRecommend(key = this.key) {
-				let res = await this.$api.StoreList(key);
-				this.recommendList = res.data;
-			},
-      	// 判断是否收藏
-			isShowCollect() {
-			/* 	if (!this.$helpers.isLogin()) {
+    async getRecommend(key = this.key) {
+      let res = await this.$api.StoreList(key);
+      this.recommendList = res.data;
+    },
+    // 判断是否收藏
+    isShowCollect() {
+      /* 	if (!this.$helpers.isLogin()) {
 					return wx.navigateTo({
 						url: '/pages/login/login'
 					})
 				} */
-				this.isCollect = !this.isCollect;
-				if (!this.isCollect) {
-					CollectDel(this.key).then((res) => {
-					/* 	uni.showToast({
+      this.isCollect = !this.isCollect;
+      if (!this.isCollect) {
+        CollectDel(this.key).then(res => {
+          /* 	uni.showToast({
 							title: "已取消收藏",
 							duration: 2000,
 						}); */
-					});
-				} else {
-					CollectAdd(this.key).then((res) => {
-					/* 	uni.showToast({
+        });
+      } else {
+        CollectAdd(this.key).then(res => {
+          /* 	uni.showToast({
 							title: "收藏成功！",
 							duration: 2000,
 						}); */
-					});
-				}
-			},
+        });
+      }
+    },
+    echartsInit() {
+      // 找到容器
+      let myChart = this.$echarts.init(document.getElementById("myChart"));
+      let _this = this;
+      // 开始渲染
+      myChart.setOption({
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        color: ["#ED4F48", "#9262FF", "#FF9860", "#56E4CE"],
+        series: [
+          {
+            type: "pie",
+            radius: [30, 50],
+            data: _this.legendList,
+            emphasis: {
+              itemStyle: {
+                borderColor: "#fff",
+                borderWidth: 1
+              }
+            },
+            label: {
+              normal: {
+                show: true,
+                formatter: "{d}%",
+                textStyle:{
+                  fontSize:10,
+              }
+              }
+            }
+          }
+        ]
+      });
+    }
   }
 };
 </script>
@@ -713,7 +808,7 @@ export default {
     color: #1c1c1c;
     justify-content: space-between;
     margin-top: 10px;
-    block{
+    block {
       display: flex;
     }
     .trade-item {
@@ -1025,11 +1120,14 @@ page {
   width: 750px;
   height: 500px;
   background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .charts {
-  width: 750px;
-  height: 500px;
   background-color: #ffffff;
+  height: 75%;
+  width: 100%;
 }
 </style>

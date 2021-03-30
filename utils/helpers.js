@@ -1,4 +1,4 @@
-import { Toast  } from 'vant';
+import { Toast } from "vant";
 export default {
   getPname(val) {
     let platform = {
@@ -209,20 +209,38 @@ export default {
   },
 
   // 复制
-  async copy(data){
-    let oInput =document.createElement('input') //创建input 节点
-    oInput.value=data //给input的value赋值
-    oInput.style.opacity=0;
-    document.body.appendChild(oInput) //向页面插入input节点
-    oInput.select() //选中input
+  async copy(data) {
+    let oInput = document.createElement("input"); //创建input 节点
+    oInput.value = data; //给input的value赋值
+    oInput.style.opacity = 0;
+    document.body.appendChild(oInput); //向页面插入input节点
+    oInput.select(); //选中input
     try {
-      await document.execCommand('Copy') // 执行浏览器复制命令
+      await document.execCommand("Copy"); // 执行浏览器复制命令
       oInput.parentElement.removeChild(oInput);
-      Toast.success('复制成功');
+      Toast.success("复制成功");
+    } catch (e) {
+      Toast.fail("复制失败");
     }
-    catch(e){
-      Toast.fail('复制失败');
-    }
+  },
+  // 下载
+  downloadFile(imgsrc, name) {
+    var image = new Image(); // 解决跨域 Canvas 污染问题
+    image.setAttribute("crossOrigin", "anonymous");
+    image.onload = function() {
+      var canvas = document.createElement("canvas");
+      canvas.width = image.width;
+      canvas.height = image.height;
+      var context = canvas.getContext("2d");
+      context.drawImage(image, 0, 0, image.width, image.height);
+      var url = canvas.toDataURL("image/png"); //得到图片的base64编码数据
+      var a = document.createElement("a"); // 生成一个a元素
+      var event = new MouseEvent("click"); // 创建一个单击事件
+      a.download = name || "photo"; // 设置图片名称
+      a.href = url; // 将生成的URL设置为a.href属性
+      a.dispatchEvent(event); // 触发a的单击事件
+      a.parentElement.removeChild(a);
+    };
+    image.src = imgsrc;
   }
-
 };
