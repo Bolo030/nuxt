@@ -35,7 +35,8 @@ export default {
     '~/plugins/request.js',
     '~/plugins/api.js',
     '~/plugins/vue-global.js',
-    { src: "@/plugins/lib-flexible", ssr: false }
+    { src: "@/plugins/lib-flexible", ssr: false },
+    { src: '@/plugins/vue-mavon-editor', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -90,6 +91,29 @@ export default {
           exclude: /node_modules|folder_name/i //取消vant组件css转成rem
         }
       }
+    }
+  },
+  loading: { color: '#ff5722', height: ' 3px' },
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push(
+        {
+          name: "detail",
+          path: "/article/detail-:id",
+          component: resolve(__dirname, "pages/article/detail.vue")
+        },
+        {
+          name: "article-index",
+          path: "/article/list-:id",
+          component: resolve(__dirname, "pages/article/index.vue")
+        },
+        {
+          name: "interview",
+          path: "/article/interview-:id",
+          component: resolve(__dirname, "pages/article/interview.vue")
+        }
+        
+      );
     }
   }
 };
