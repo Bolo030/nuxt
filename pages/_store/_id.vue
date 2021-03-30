@@ -2,7 +2,7 @@
   <div class="main">
     <main class="store">
       <div class="buyStore">
-        <div class="buyStore-top">
+        <div class="buyStore-top" v-if="!this.search.search">
           <!-- 步骤 -->
           <div class="tradeMsg space-evenly">
             <div class="tradeMsg-item">
@@ -67,10 +67,17 @@
           :showBack="isSearch"
           :searchData="search"
           @result="getSearch"
-          :child='categoryList'
+          :child="categoryList"
         ></custom-store-filter>
         <!-- 列表 -->
-        <store-list style="margin-top:0.2933rem" :storeList="list" />
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          finished-text="没有更多了"
+          @load="onLoad"
+        >
+          <store-list style="margin-top:0.2933rem" :storeList="list" />
+        </van-list>
       </div>
     </main>
     <!-- 底部tabbar -->
@@ -79,6 +86,23 @@
 </template>
 
 <script>
+import store from "../../components/custom-store-filter/data.js";
+const searchStatic = {
+  search: undefined,
+  platform: "tm", // 平台
+  sort: 0, //排序选择
+  area: undefined, //地区范围
+  trademarkType: undefined, // 商标
+  taxType: undefined, //认证/证明方式
+  category: undefined, //类型--服务类型
+  isNew: undefined,
+  price: {
+    low: undefined,
+    high: undefined
+  },
+  per_page: 15,
+  page: 1
+};
 export default {
   head() {
     return {
@@ -99,33 +123,38 @@ export default {
       ]
     };
   },
-  async asyncData({ app, query, params }) {
-    let search = {
-      platform: params.store || "tm",
-      page: 1
-    };
-    		var type;
-				switch (search.platform) {
-					case 'tm':
-						type = 'mainCategory'
-						break;
-					case 'jd':
-						type = 'jdCategory'
-						break;
-					case 'tb':
-						type = 'tbCategory'
-						break;
-					default:
-						type = 'jdCategory'
-				}
+  async asyncData({ app, params }) {
+    let search = { ...searchStatic };
+    search.platform = params.store || "tm";
+    console.log(params.id);
+    search = params.id
+      ? app.$utils.getSearchQuery(params.id, store, search)
+      : search;
+    var type;
+    switch (search.platform) {
+      case "tm":
+        type = "mainCategory";
+        break;
+      case "jd":
+        type = "jdCategory";
+        break;
+      case "tb":
+        type = "tbCategory";
+        break;
+      default:
+        type = "jdCategory";
+    }
     let [list, categoryList] = await Promise.all([
       app.$api
         .getStoreList(search)
         .then(res => (res.status === 1 ? res.data.data : {})),
       app.$api
-        .getStoreSearchParams({type})
+        .getStoreSearchParams({ type })
         .then(res => (res.status === 1 ? res.data[type] : []))
     ]);
+    categoryList.forEach(e => {
+      e.selected = false;
+    });
     return {
       list,
       categoryList,
@@ -154,49 +183,41 @@ export default {
         }
       ],
       list: [],
-      search: {
-        search: undefined,
-        platform: "tm", // 平台
-        sort: 0, //排序选择
-        area: undefined, //地区范围
-        trademarkType: undefined, // 商标
-        type: undefined, //认证/证明方式
-        category: undefined, //类型--服务类型
-        //brand: undefined,
-        price: {
-          low: undefined,
-          high: undefined
-        },
-        per_page: 15
-      },
-      page: {
-        loadStatus: "more", //加载样式：more-加载前样式，loading-加载中样式，nomore-没有数据样式
-        done: false // 是否数据加载完成
-      },
+      search: { ...searchStatic },
       // 列表搜索加载
-      loading: true
+      loading: false,
+      finished: false
     };
   },
+  	filters: {
+			fourFormat(str) {
+				if (str) {
+					str = str.replace(/\s/g, '').replace(/(.{4})/g, "$1 ");
+				}
+				return str
+			}
+		},
   methods: {
+    onLoad() {
+      this.search.page++;
+      this.getData(true, false);
+    },
     getData(loading = true, remove = false) {
-      if (remove) {
-        this.search.page = 1;
-        this.page.done = false;
-      }
+      this.loading = loading;
+      if (remove) this.search.page = 1;
       this.$api.getStoreList(this.search).then(res => {
-        if (res.status === 1) {
-          if (remove) {
-            this.list = res.data.data;
-          } else {
-            this.list.push(...res.data.data);
-            this.page.loadStatus = "more";
+        if (res.status == 1) {
+          if (remove) this.list = res.data.data;
+          else this.list.push(...res.data.data);
+          if (res.data.data.length == 0) {
+            this.finished = true;
           }
-          if (res.data.last_page === this.search.page) {
-            this.page.done = true;
-            this.page.loadStatus = "nomore";
-          }
+        } else {
+          this.finished = true;
         }
-        this.loading = loading;
+        setTimeout(() => {
+          this.loading = false;
+        }, 2000);
       });
     },
 

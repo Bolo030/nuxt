@@ -1,3 +1,4 @@
+import { Toast  } from 'vant';
 export default {
   getPname(val) {
     let platform = {
@@ -128,89 +129,100 @@ export default {
     }
   },
   /*
-  *搜索参数解析
-  */
-  searchQuery(key, val = null, options = {}) {
-    let searchRoute = {
-      more: '-',
-      division: 'z'
-    };
-
-    if (key instanceof Object) {
-      options = key;
-      key = val = null;
+   *拼接搜索参数
+   */
+  createQuery(params, type, data, pwd) {
+    let { store, id } = params;
+    let path = pwd || $nuxt.$route.path;
+    if (pwd) {
+      id = path.split("/")[2];
     }
-
-    let query = options.query ? options.query : {};
-    let platform = options.platform ? options.platform : '';
-    let remove = options.remove ? this.wrap(options.remove) : [];
-    let toggle = this.filled(options.toggle) ? options.toggle : true;
-
-    if (this.blank(platform)) {
-      platform = v.platform ? v.platform : 'tm';
-    }
-
-    if (this.blank(query)) {
-      query = window.v ? this.clone(v.query) : {};
-    }
-
-    if (key) {
-      if (this.isArray(val)) {
-        if (!this.hasOwn(query, key)) {
-          query[key] = [];
+    let newStr = type + data;
+    if (id && id != "undefined") {
+      if (id.includes(type)) {
+        var list = id.split("z");
+        let index = this.getFindIdx(list, type);
+        if (type == "f") {
+          newStr = data;
+          var flist = list[index].substr(0, 1).split("-");
+          var findex = this.getFindIdx(flist, type);
+          flist = this.checkList(flist, findex, newStr);
+          list[index] = "f" + flist.join("-");
+        } else {
+          list = this.checkList(list, index, newStr);
         }
-        let value = val[0];
-        query[key] = this.wrap(query[key]);
-        if (query[key].includes(value) && toggle) {
-          if (query[key].length === 1) {
-            remove.push(key);
-          } else {
-            remove.push(key + this.arraySearch(value, query[key]));
-          }
-        }
+        path = `/${store}/${list.join("z")}`;
       } else {
-        // 如果 val 为空则剔除该搜索参数
-        if (this.hasOwn(query, key) && this.blank(val)) {
-          remove.push(key);
-        }
-
-        if (key && val) {
-          if (this.hasOwn(query, key) && query[key] == val && toggle) {
-            remove.push(key);
-          } else {
-            query[key] = val;
-          }
-        }
+        path = path + "z" + newStr;
+      }
+    } else {
+      path = `/${store}/${newStr}`;
+    }
+    return path;
+  },
+  // 删除参数
+  delQuery(params, type, pwd) {
+    let { store, id } = params;
+    let path = pwd || $nuxt.$route.path;
+    if (pwd) {
+      id = path.split("/")[2];
+    }
+    if (id && id != "undefined") {
+      var list = id.split("z");
+      let index = this.getFindIdx(list, type);
+      list.splice(index, 1);
+      path = `/${store}/${list.join("z")}`;
+    }
+    return path;
+  },
+  // 检查数组包含某元素下标
+  getFindIdx(list, type) {
+    var index = list.findIndex(v => {
+      return v.includes(type);
+    });
+    return index;
+  },
+  // 数组替换/去除
+  checkList(list, idx, val) {
+    if (list[idx] != val) list[idx] = val;
+    else list.splice(idx, 1);
+    return list;
+  },
+  // 解析搜索条件
+  getSearchQuery(data, typeList, search) {
+    let list = data.split("z");
+    let newSearch = { ...search };
+    for (var v of list) {
+      var short = v.slice(0, 1);
+      var idx = v.slice(1);
+      var name = typeList.searchShort[short];
+      if (short == "c" || short == "w" || short == "f") {
+        newSearch[name] = idx;
+      } else if (short == "h" || short == "l") {
+        newSearch[name] = typeList[name + "List"][idx].value;
+      } else {
+        newSearch[name] = typeList[name + "List"][idx - 1].value;
       }
     }
-
-    // 移除分页参数
-    if (key !== 'p') {
-      remove.push('p');
-    }
-
-    if (remove.length > 0) {
-      remove.forEach(function (item) {
-        delete query[item];
-      });
-    }
-
-    let params = [];
-
-    for (let k in query) {
-      if (this.isArray(query[k])) {
-        params.push(k + query[k].join(searchRoute.more));
-      } else {
-        params.push(k + query[k]);
-      }
-    }
-
-    params = params.length > 0 ? params.join(searchRoute.division) : '';
-
-    return '/' + platform + (params ? '/' + params : '');
+    // console.log(newSearch,'newSearchnewSearchnewSearch')
+    return newSearch;
   },
 
-  jumpSearchQuery(key, val, options = {}) {
-    location.href = this.searchQuery(key, val, options);
-  },
+  // 复制
+  async copy(data){
+    let oInput =document.createElement('input') //创建input 节点
+    oInput.value=data //给input的value赋值
+    oInput.style.opacity=0;
+    document.body.appendChild(oInput) //向页面插入input节点
+    oInput.select() //选中input
+    try {
+      await document.execCommand('Copy') // 执行浏览器复制命令
+      oInput.parentElement.removeChild(oInput);
+      Toast.success('复制成功');
+    }
+    catch(e){
+      Toast.fail('复制失败');
+    }
+  }
+
 };

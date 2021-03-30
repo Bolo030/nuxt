@@ -131,6 +131,40 @@ export default ({
       return $request.get('/store/my',params)
     }
 
+      /**
+     * 获取热门搜索
+     */
+       getHotSearch(data){
+        return $request.get('/customized/info/'+data)
+      },
+
+      /*
+      *店铺详情
+      */
+     getStoreInfo(key){
+       return $request.get('/store/info/'+key)
+     },
+
+     /*
+     *猜你喜欢
+     */
+     StoreList(key){
+      return $request.get('/store/other/'+ key);
+     },
+
+     /*
+     *添加收藏
+     */
+     CollectAdd(key){
+      return $request.post('/user/collect/add/' + key);
+     },
+
+     /*
+     *取消收藏
+     */
+     CollectDel(key){
+      return $request.post('/user/collect/del/' + key, data);
+     },
   })
 
 

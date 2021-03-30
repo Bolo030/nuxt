@@ -3,7 +3,7 @@ const priceList = [{
 		value: {
 			low: undefined,
 			high: undefined
-		},
+		}
 	},
 	{
 		name: "5万以下",
@@ -161,85 +161,99 @@ const filterList = {
 		selected: true
 	},
 }
-const trademarkType = [{
+const trademarkTypeList = [{
 		name: "R标",
-		value: "r"
+		value: "r",
+    selected:false
 	},
 	{
 		name: "TM标",
-		value: "tm"
+		value: "tm",
+    selected:false
 	},
 ]
 
-const typeList = [{
-		name: "有限责任公司",
-		value: 'ltd'
+const taxTypeList = [{
+		name: "一般纳税人",
+		value: 'general',
+    selected:false
 	},
 	{
-		name: "股份有限责任公司",
-		value: 'shares'
+		name: "小规模纳税人",
+		value: 'small',
+    selected:false
 	},
-	{
-		name: "个人独资企业",
-		value: 'alone'
-	},
-	{
-		name: "合伙企业",
-		value: 'partner'
-	},
-	{
-		name: "个体工商户",
-		value: 'inviewidual'
-	},
+
 ]
 
 const areaList = [{
 		name: "华北",
-		value: 'hb'
+		value: 'hb',
+    selected:false
 	},
 	{
 		name: "东北",
-		value: 'db'
+		value: 'db',
+    selected:false
 	},
 	{
 		name: "华东",
-		value: 'hd'
+		value: 'hd',
+    selected:false
 	},
 	{
 		name: "华中",
-		value: 'hz'
+		value: 'hz',
+    selected:false
 	},
 	{
 		name: "华南",
-		value: 'hn'
+		value: 'hn',
+    selected:false
 	},
 	{
 		name: "西南",
-		value: 'xn'
+		value: 'xn',
+    selected:false
 	},
 	{
 		name: "西北",
-		value: 'xb'
+		value: 'xb',
+    selected:false
 	}
 ]
 
-const isNew=[
-	{name:'新店',value:1},
-	{name:'老店',value:2},
+const isNewList=[
+	{name:'新店',value:1, selected:false},
+	{name:'老店',value:2, selected:false},
 ]
 const sortList=[
 	{name:'默认排序',value:0},
-	{name:'价格从高到低',value:2},
 	{name:'价格从低到高',value:1},
+	{name:'价格从高到低',value:2}
 ]
+
+const searchShort={
+  'w':'search',
+  'h':'sort',
+  'l':'price',
+  'n':'isNew',
+  'u':'trademarkType',
+  'c':'category',
+  'r':'area',
+  'x':"taxType",
+  'f':"firstCategory"
+
+}
 export default {
 	priceList,
 	platformlist,
 	platformList,
 	filterList,
-	typeList,
-	trademarkType,
+	taxTypeList,
+	trademarkTypeList,
 	sortList,
-	isNew,
-	areaList
+	isNewList,
+	areaList,
+  searchShort
 }
