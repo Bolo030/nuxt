@@ -169,7 +169,7 @@ export default {
               if (res.status !== 1) {
                 return this.$toast("登录失败");
               } else {
-                this.$cookies.set("token", res.data.token);
+                this.$cookies.set("token", res.data.token,{expires:this.$store.state.auth.cookieMaxExpires});
                 this.$toast("登录成功");
                 this.$router.push("/user");
               }
@@ -190,7 +190,7 @@ export default {
               if (res.status !== 1) {
                 return this.$toast(res.message);
               } else {
-                this.$cookies.set("token", res.data.token);
+                 this.$cookies.set("token", res.data.token,{expires:this.$store.state.auth.cookieMaxExpires});
                 this.$toast("登录成功");
                 this.$router.push("/user");
               }

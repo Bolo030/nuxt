@@ -163,8 +163,21 @@ export default ({
      *取消收藏
      */
      CollectDel(key){
-      return $request.post('/user/collect/del/' + key, data);
+      return $request.post('/user/collect/del/' + key);
      },
+
+    /*
+    *店铺详情简略信息
+    */
+    getSimple(key){
+      return $request.get('/store/simple/' + key);
+    },
+    /*
+    *卖店 && 砍价
+    */
+    RosterAdd(data) {
+      return $request.post('/leads/roster_add',data)
+  }
   })
 
 

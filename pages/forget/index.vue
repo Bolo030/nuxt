@@ -195,7 +195,7 @@ export default {
             if (res.status !== 1) {
               return this.$toast(res.message);
             } else {
-              this.$cookies.set("token", res.data.token);
+              this.$cookies.set("token", res.data.token,{expires:this.$store.state.auth.cookieMaxExpires});
               this.$toast(res.message);
               this.$router.push("/user");
             }

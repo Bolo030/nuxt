@@ -669,27 +669,55 @@ export default {
     },
     // 判断是否收藏
     isShowCollect() {
-      /* 	if (!this.$helpers.isLogin()) {
-					return wx.navigateTo({
-						url: '/pages/login/login'
-					})
-				} */
+      if (!this.$utils.isLogin(this)) {
+        return this.$router.push("/login");
+      }
       this.isCollect = !this.isCollect;
       if (!this.isCollect) {
-        CollectDel(this.key).then(res => {
-          /* 	uni.showToast({
-							title: "已取消收藏",
-							duration: 2000,
-						}); */
+        this.$api.CollectDel(this.key).then(res => {
+          this.$toast("已取消收藏");
         });
       } else {
-        CollectAdd(this.key).then(res => {
-          /* 	uni.showToast({
-							title: "收藏成功！",
-							duration: 2000,
-						}); */
+        this.$api.CollectAdd(this.key).then(res => {
+          this.$toast("收藏成功！");
         });
       }
+    },
+    //砍价
+    bargain() {
+      if (this.storeInfo.status != "4") {
+        return this.$$toast("店铺已出售");
+      }
+      this.$router.push("/bargain/" + this.key);
+    },
+    immediatelypurchase() {
+      if (this.$utils.isLogin()) {
+        this.$router.push({
+          url: "/login/visitorsOrder?key=" + this.key
+        });
+        return;
+      }
+      if (this.storeInfo.status != "4") {
+        return this.$toast("店铺已出售");
+      }
+      this.$toast.loading({
+        message: "创建中...",
+        forbidClick: true,
+        loadingType: "spinner"
+      });
+      CreateOrder(this.key)
+        .then(res => {
+          if (res.status == 1) {
+            this.$toast.success("订单创建成功");
+            this.$router.push({
+              url: "/order-success/" + res.data.key
+            });
+          }
+          this.$toast.clear();
+        })
+        .catch(err => {
+          this.$toast.clear();
+        });
     },
     echartsInit() {
       // 找到容器
@@ -717,9 +745,9 @@ export default {
               normal: {
                 show: true,
                 formatter: "{d}%",
-                textStyle:{
-                  fontSize:10,
-              }
+                textStyle: {
+                  fontSize: 10
+                }
               }
             }
           }
