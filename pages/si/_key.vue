@@ -686,16 +686,13 @@ export default {
     //砍价
     bargain() {
       if (this.storeInfo.status != "4") {
-        return this.$$toast("店铺已出售");
+        return this.$toast("店铺已出售");
       }
       this.$router.push("/bargain/" + this.key);
     },
     immediatelypurchase() {
-      if (this.$utils.isLogin()) {
-        this.$router.push({
-          url: "/login/visitorsOrder?key=" + this.key
-        });
-        return;
+      if (!this.$utils.isLogin(this)) {
+        return this.$router.push("/login/visitorsOrder?key=" + this.key);
       }
       if (this.storeInfo.status != "4") {
         return this.$toast("店铺已出售");
@@ -709,9 +706,7 @@ export default {
         .then(res => {
           if (res.status == 1) {
             this.$toast.success("订单创建成功");
-            this.$router.push({
-              url: "/order-success/" + res.data.key
-            });
+            this.$router.push("/order-success/" + res.data.key);
           }
           this.$toast.clear();
         })

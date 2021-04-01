@@ -1,6 +1,7 @@
 <template>
-  <div class="pay-success">
+<main>
     <van-nav-bar title="下单成功" left-arrow @click-left="$router.go(-1)" />
+  <div class="pay-success">
     <img class="icon" src="../../assets/imgs/ic_checkout_success.png" />
     <div class="main">恭喜您！下单成功</div>
     <div class="sub">专业顾问将尽快与您取得联系，请耐心等待…</div>
@@ -12,6 +13,8 @@
       <button v-else @click="goto('back')" class="active">返回详情</button>
     </div>
   </div>
+</main>
+
 </template>
 
 <script>
@@ -51,6 +54,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+main{
+  height: 100vh;
+}
 .pay-success {
   text-align: center;
   padding-top: 165px;

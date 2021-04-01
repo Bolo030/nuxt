@@ -29,72 +29,13 @@
     </div>
     <main id="login-main">
       <!-- 登录注册区域 -->
-      <Login></Login>
-      <!-- 游客下单 -->
-      <div class="login-box" style="display: none;" id="customerLoginbox">
-        <div class="login-top-title d-f d-f-between">
-          <h3
-            class="font-size-30 font-weight font-main-color2"
-            id="customerLogin"
-          >
-            登录/注册
-          </h3>
-          <h3 class="font-weight font-size-36 ">
-            游客下单
-            <i></i>
-          </h3>
-        </div>
-        <ul class="login-middle">
-          <li>
-            <img
-              src="~assets/imgs/phone_icon.png"
-              alt="九九牛网店交易平台，登录图标"
-              class="login-icon"
-            />
-            <input type="tel" placeholder="请输入你的手机号" maxlength="11" />
-            <img
-              src="~assets/imgs/icon_cancel.png"
-              alt="九九牛网店交易平台，取消图标"
-              class="img-cancel"
-            />
-          </li>
-          <li>
-            <img
-              src="~assets/imgs/msg-code-icon.png"
-              alt="九九牛网店交易平台，登录图标"
-              class="login-icon"
-            />
-            <input type="number" placeholder="请输入你验证码" maxlength="6" />
-            <span class="getCode d-block font-size-22 font-main-color"
-              >获取验证码</span
-            >
-            <img
-              src="~assets/imgs/icon_cancel.png"
-              alt="九九牛网店交易平台，取消图标"
-              class="img-cancel"
-              id="markImg"
-            />
-          </li>
-          <li class="loginBtn font-main-color6">
-            <button class="font-size-32 ">0元下单</button>
-          </li>
-          <li class="font-size-24">
-            <span class="font-main-color">*</span>
-            以游客身份下单请留下正确的联系方式，下单成功后平台客服
-            将尽快与您取得联系，请留意您的通信设备。
-          </li>
-        </ul>
-      </div>
+      <login></login>
     </main>
   </div>
 </template>
 
 <script>
-import Login from '~/components/login/login'
 export default {
-  components:{
-    Login
-  },
   methods:{
    goBack() {
       history.back();
@@ -105,6 +46,10 @@ export default {
 
 
 <style lang="scss" scoped>
+#login{
+  height: 100%;
+  background: #fff;
+}
 header .closeBtn {
   height: 88px;
 }

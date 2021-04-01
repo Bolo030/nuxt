@@ -1,8 +1,8 @@
 <template>
   <!-- 手机号登录 -->
   <div class="login-box" style="display: block;" id="phoneLoginbox">
-    <div class="login-top-title d-f d-f-between">
-      <h3 class=" active">
+    <div class="login-top-title d-f d-f-between" v-if="isShow">
+      <h3 class=" active" >
         {{ isLoginType ? "验证码登录" : "密码登录" }}
       </h3>
       <h3 class="" v-show="false">游客下单</h3>
@@ -113,6 +113,13 @@ export default {
       countdown: 60,
       isShowBtn: true
     };
+  },
+   props: {
+      isShow:{
+          require: true,
+          default: () => true,
+          type: Boolean
+      }
   },
   asyncData(context) {
     // called every time before loading the component

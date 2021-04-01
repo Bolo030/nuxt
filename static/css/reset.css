@@ -165,4 +165,9 @@ input {
     font-size: 1.6vw;
 }
 
+#__nuxt,#__layout,#__layout>div{
+  height: 100%;
+}
+
+
 

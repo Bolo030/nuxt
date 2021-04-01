@@ -231,6 +231,8 @@ export default {
 <style lang="scss" scoped>
 #login-main {
   padding: 0 42px;
+  background: #fff;
+  height: 100%;
   .pwd-login-title {
     .closeBtn {
       height: 88px;

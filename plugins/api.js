@@ -1,9 +1,5 @@
-export default ({
-  app: {
-    $request
-  }
-}, inject) => {
-  inject('api', {
+export default ({ app: { $request } }, inject) => {
+  inject("api", {
     /**
      * 登录验证
      * @param {string} password - 密码
@@ -16,26 +12,26 @@ export default ({
      * 获取首页列表
      */
     getIndexList() {
-      return $request.get('/index')
+      return $request.get("/index");
     },
     /**
      * 获取首页商品列表
      */
-    getBoutique(params={}){
-      return $request.get('/boutique',params)
-  },
+    getBoutique(params = {}) {
+      return $request.get("/boutique", params);
+    },
     /**
      * 搜索商品
      */
-    getStoreList(params={}){
-      return $request.get('/store/',params)
+    getStoreList(params = {}) {
+      return $request.get("/store/", params);
     },
 
     /**
      * 获取一级分类
      */
-    getStoreSearchParams(params={}){
-      return $request.get('/store/search-params',params)
+    getStoreSearchParams(params = {}) {
+      return $request.get("/store/search-params", params);
     },
 
     /**
@@ -43,7 +39,7 @@ export default ({
      *@params phone type
      */
     sendMsg(data = {}) {
-      return $request.post('/login/send_msg', data)
+      return $request.post("/login/send_msg", data);
     },
 
     /**
@@ -51,7 +47,7 @@ export default ({
      * @params userPhone code type
      */
     codeLogin(data = {}) {
-      return $request.post('/login/sms-login', data)
+      return $request.post("/login/sms-login", data);
     },
 
     /**
@@ -59,7 +55,7 @@ export default ({
      * @params username password
      */
     pwdLogin(data = {}) {
-      return $request.post('/login/login', data)
+      return $request.post("/login/login", data);
     },
 
     /**
@@ -67,118 +63,167 @@ export default ({
      * @params
      */
     restPwd(data = {}) {
-      return $request.post('/login/forget', data)
+      return $request.post("/login/forget", data);
     },
 
     /**
      * 用户信息
      */
     getUserInfo(data = {}) {
-      return $request.post('/user/info', data)
+      return $request.post("/user/info", data);
     },
     /**
      * 文章资讯
      */
     articlesInfo(data = {}) {
-      return $request.post('/article/list', data)
+      return $request.post("/article/list", data);
     },
     /**
      * 文章详情
      */
     articleDetail(data = {}) {
-      return $request.post('/article/info',data)
+      return $request.post("/article/info", data);
     },
     /**
      * 店铺收藏
      */
     collectStore(data = {}) {
-      return $request.post('/user/collect/list',data)
+      return $request.post("/user/collect/list", data);
     },
     /**
      * 删除收藏
      */
     deleteCollect(data = {}) {
-      return $request.post('/user/collect/del',data)
+      return $request.post("/user/collect/del", data);
     },
     /**
      * 我的合同
      */
     contractList(params = {}) {
-      return $request.get('/user/contract/',params)
+      return $request.get("/user/contract/", params);
     },
     /**
      * 邮箱发送合同
      */
-    sendEmailContract(contract,data={}) {
-      return $request.post('/user/contract/sendemail/'+contract,data)
+    sendEmailContract(contract, data = {}) {
+      return $request.post("/user/contract/sendemail/" + contract, data);
     },
     /**
      * 头像上传
      */
     upload(data) {
-      return $request.post('upload',data)
+      return $request.post("upload", data);
     },
     /**
      * 个人资料修改
      */
     modifyData(data) {
-      return $request.post('/user/improve',data)
+      return $request.post("/user/improve", data);
     },
     /**
      * 挂店信息
      */
     myStoreInfo(params = {}) {
-      return $request.get('/store/my',params)
+      return $request.get("/store/my", params);
     },
 
-      /**
+    /**
      * 获取热门搜索
      */
-       getHotSearch(data){
-        return $request.get('/customized/info/'+data)
-      },
+    getHotSearch(data) {
+      return $request.get("/customized/info/" + data);
+    },
 
-      /*
-      *店铺详情
-      */
-     getStoreInfo(key){
-       return $request.get('/store/info/'+key)
-     },
+    /*
+     *店铺详情
+     */
+    getStoreInfo(key) {
+      return $request.get("/store/info/" + key);
+    },
 
-     /*
+    /*
      *猜你喜欢
      */
-     StoreList(key){
-      return $request.get('/store/other/'+ key);
-     },
+    StoreList(key) {
+      return $request.get("/store/other/" + key);
+    },
 
-     /*
+    /*
      *添加收藏
      */
-     CollectAdd(key){
-      return $request.post('/user/collect/add/' + key);
-     },
+    CollectAdd(key) {
+      return $request.post("/user/collect/add/" + key);
+    },
 
-     /*
+    /*
      *取消收藏
      */
-     CollectDel(key){
-      return $request.post('/user/collect/del/' + key);
-     },
+    CollectDel(key) {
+      return $request.post("/user/collect/del/" + key);
+    },
 
     /*
-    *店铺详情简略信息
-    */
-    getSimple(key){
-      return $request.get('/store/simple/' + key);
+     *店铺详情简略信息
+     */
+    getSimple(key) {
+      return $request.get("/store/simple/" + key);
     },
     /*
-    *卖店 && 砍价
-    */
+     *卖店 && 砍价
+     */
     RosterAdd(data) {
-      return $request.post('/leads/roster_add',data)
-  }
-  })
-
-
-}
+      return $request.post("/leads/roster_add", data);
+    },
+    /*
+     *游客下单
+     */
+    visitorsOrder(data) {
+      return $request.post("/login/tourist-order", data);
+    },
+    /*
+     *发送短信
+     */
+    sendMsg(data) {
+      return $request.post("/login/send_msg", data);
+    },
+    /*
+     *订单列表
+     */
+    myOrders(data) {
+      return $request.get("/order/olist", data);
+    },
+    /*
+     *取消订单
+     */
+    orderCancel(key) {
+      return $request.post("/order/cancel/" + key);
+    },
+    /**
+     * 删除订单
+     *
+     * @param key
+     * @returns {AxiosPromise<any>}
+     */
+    orderDel(key) {
+      return $request.post("/order/orderdel/" + key);
+    },
+    /*
+     *订单详情
+     */
+    orderInfo(key) {
+      return $request.get("/order/oinfo/" + key);
+    },
+    /*
+     *结算详情
+     */
+    GetSettlement(key) {
+      return $request.get("/order/settlement/" + key);
+    },
+    /*
+     *收银台
+     */
+    orderCashier(data) {
+      return $request.get('/order/cashier', data);
+    }
+  });
+};

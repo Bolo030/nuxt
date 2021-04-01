@@ -34,7 +34,7 @@
           <div class="middle-info1" v-if="userInfo.status !== 0">
             <h4 class="font-size-30 font-weight">{{ userInfo.user.name }}</h4>
             <div
-              class="middle-info-desc d-f" 
+              class="middle-info-desc d-f"
             >
             <!-- 已实名 -->
               <span class="bg-gradient-color font-main-color6" v-if="userInfo.user.hasRealName === 1">
@@ -65,9 +65,9 @@
                     />
                 </span>
               </nuxt-link>
-              
+
             </div>
-           
+
           </div>
           <!-- 未登录 -->
           <div class="middle-info2 font-size-36 font-weight" v-else>
@@ -120,6 +120,7 @@
           class="order-info-item d-f d-f-direction"
           v-for="(item, index) in orderInfo"
           :key="index"
+          @click="goto(index)"
         >
           <img :src="item.src" :alt="item.text" />
           <span>{{ item.text }}</span>
@@ -168,7 +169,6 @@
 import customTabbar from "~/components/common/custom-tabbar";
 
 export default {
-  name: "user",
   data() {
     return {
       userInfo: {
@@ -219,19 +219,22 @@ export default {
   async asyncData({ app }) {
     // 获取个人中心数据
     let userInfo = await app.$api.getUserInfo();
+    console.log(userInfo)
     if (userInfo.status !== 1) {
       return;
     } else {
       userInfo.data.status = 1;
       userInfo = userInfo.data;
-      console.log(userInfo,1);
-      
+
       return { userInfo };
     }
   },
   methods: {
     functionInfo(path){
       this.$router.push(path)
+    },
+    goto(){
+      this.$router.push({name:'user-order'})
     }
   }
 };
