@@ -223,7 +223,49 @@ export default ({ app: { $request } }, inject) => {
      *收银台
      */
     orderCashier(data) {
-      return $request.get('/order/cashier', data);
-    }
+      return $request.get("/order/cashier", data);
+    },
+    /**
+     * 订单结算
+     *
+     * @param data
+     * @returns {*}
+     */
+    SettlementDo(key, data) {
+      return $request.post("/order/settlement/" + key, data);
+    },
+    /**
+     * 支付宝支付
+     *
+     * @param key
+     * @returns {*}
+     */
+    aliPay(key, data) {
+      return $request.post("/payment/aliqrcode/" + key, data);
+    },
+    /**
+     * 支付订单状态
+     *
+     * @param key
+     * @returns {*}
+     */
+    orderStatus(key) {
+      return $request.get("/payment/payment-query/" + key);
+    },
+    /**
+     * 微信支付
+     *
+     * @param key
+     * @returns {*}
+     */
+    wechatPay(key, data) {
+      return $request.post("/payment/wechat-app-pay/" + key, data);
+    },
+    /*
+     *创建订单
+     */
+    CreateOrder(key) {
+      return $request.post("/order/create/" + key);
+    },
   });
 };

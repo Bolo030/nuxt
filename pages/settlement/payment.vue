@@ -1,90 +1,62 @@
 <template>
-  <div class="main">
-    <div class="pay-head">
-      <div class="pay-head-price">
-        {{ info.total | numTwo }}
+  <div class="container">
+    <van-nav-bar title="游客下单" left-arrow @click-left="$router.go(-1)" />
+    <div class="main">
+      <div class="pay-head">
+        <div class="pay-head-price">
+          {{ info.total | numTwo }}
+        </div>
+        <div class="pay-head-time">
+          请在
+          <van-count-down :time="countDown" format="DD 天 HH 时 mm 分 ss 秒" />
+          内完成付款
+        </div>
       </div>
-      <div class="pay-head-time">
-        请在
-        <van-count-down :time="countDown" format="DD 天 HH 时 mm 分 ss 秒" />
-        内完成付款
+      <div class="pay-way">
+        <van-radio-group v-model="radio">
+          <van-cell-group>
+            <van-cell
+              :title="`余额支付（￥${info.available}）`"
+              :icon="require('../../assets/imgs/user/ye.png')"
+              clickable
+              @click="radio = '0'"
+            >
+              <template #right-icon>
+                <van-radio name="0" />
+              </template>
+            </van-cell>
+            <van-cell
+              title="支付宝支付"
+              :icon="require('../../assets/imgs/user/zfb.png')"
+              clickable
+              @click="radio = '1'"
+            >
+              <template #right-icon>
+                <van-radio name="1" />
+              </template>
+            </van-cell>
+            <van-cell v-if="isWeiXinLogin()"
+              title="微信支付"
+              :icon="require('../../assets/imgs/user/wx.png')"
+              clickable
+              @click="radio = '2'"
+            >
+              <template #right-icon>
+                <van-radio name="2" />
+              </template>
+            </van-cell>
+          </van-cell-group>
+        </van-radio-group>
       </div>
-    </div>
-    <div class="pay-way">
-      <van-radio-group v-model="radio">
-        <van-cell-group>
-          <van-cell
-            :title="`余额支付（￥${info.available}）`"
-            :icon="require('../../assets/imgs/user/ye.png')"
-            clickable
-            @click="radio = '1'"
-          >
-            <template #right-icon>
-              <van-radio name="1" />
-            </template>
-          </van-cell>
-          <van-cell
-            title="支付宝支付"
-            :icon="require('../../assets/imgs/user/zfb.png')"
-            clickable
-            @click="radio = '2'"
-          >
-            <template #right-icon>
-              <van-radio name="2" />
-            </template>
-          </van-cell>
-          <van-cell
-            title="微信支付"
-            :icon="require('../../assets/imgs/user/wx.png')"
-            clickable
-            @click="radio = '3'"
-          >
-            <template #right-icon>
-              <van-radio name="3" />
-            </template>
-          </van-cell>
-        </van-cell-group>
-      </van-radio-group>
-      <!--   	<radio-group @change="radioChange">
-				<label>
-					<div class="pay-way-item">
-						<text class="iconfont iconyue"></text>
-						余额支付<text>（￥{{info.available|numTwo}}）</text>
-					</div>
-					<radio color="#f4632c" :checked="chooseType==0" value="0"></radio>
-				</label>
-				<label>
-					<div class="pay-way-item" v-if="!isWeiXinLogin()">
-						<text class="iconfont iconzhifubao"></text>
-						支付宝支付
-					</div>
-					<radio color="#f4632c" :checked="chooseType==1" value="1"></radio>
-				</label>
 
-				<label v-if="isWeiXinLogin()">
-					<div class="pay-way-item">
-						<text class="iconfont iconweixinzhifu"></text>
-						微信支付
-					</div>
-					<radio color="#f4632c" :checked="chooseType==2" value="2"></radio>
-				</label>
-			</radio-group> -->
-    </div>
-
-    <div class="pay-btn flex-center">
-      <button type="default" @click="submit">立即支付</button>
+      <div class="pay-btn flex-center">
+        <button type="default" @click="submit">立即支付</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-/* 	import {
-		orderCashier,
-		SettlementDo,
-		aliPay,
-		orderStatus,
-		wechatpay
-	} from '@/requests/order.js' */
 export default {
   async asyncData({ app, query }) {
     let cashier = query;
@@ -116,7 +88,7 @@ export default {
       info: {},
       countDown: null,
       reset: false,
-      radio: "1",
+      radio: "0",
       orderKey: "",
       times: null
     };
@@ -139,49 +111,41 @@ export default {
 
     //支付
     submit() {
-      if (this.chooseType == 0) {
+      if (this.radio == 0) {
         if (Number(this.info.available) < Number(this.info.total)) {
-          return this.$api.msg("余额不足");
+          return this.$toast("余额不足");
         }
-        SettlementDo(this.cashier.key, {
-          payType: this.cashier.payType
-        }).then(res => {
-          if (res.status == 1) {
-            this.$api.msg("支付成功");
-            setTimeout(() => {
-              uni.redirectTo({
-                url:
-                  "/pages/immediatepayment/payment-finish?total=" +
-                  this.info.total
-              });
-            }, 800);
-          }
-        });
-      } else if (this.chooseType == 1) {
-        aliPay(this.cashier.key, {
-          payType: this.cashier.payType
-        }).then(res => {
-          if (res.status == 1) {
-            this.orderKey = res.data.key;
-            this.times = setInterval(() => {
-              this.getOrderStatus();
-            }, 3000);
-            // #ifdef H5
-            location.href = res.data.url;
-            // #endif
-            // #ifdef APP-PLUS
-            plus.runtime.openURL(res.data.url, err => {
-              uni.showToast({
-                title: "打开支付宝失败！请检查是否已安装？",
-                icon: "none"
-              });
-            });
-            // #endif
-          }
-        });
-      } else if (this.chooseType == 2) {
+        this.$api
+          .SettlementDo(this.cashier.key, {
+            payType: this.cashier.payType
+          })
+          .then(res => {
+            if (res.status == 1) {
+              this.$toast("支付成功");
+              setTimeout(() => {
+                this.$router.push(
+                  "/settlement/paymentSuccess?total=" + this.info.total
+                );
+              }, 800);
+            }
+          });
+      } else if (this.radio == 1) {
+        this.$api
+          .aliPay(this.cashier.key, {
+            payType: this.cashier.payType
+          })
+          .then(res => {
+            if (res.status == 1) {
+              this.orderKey = res.data.key;
+              this.times = setInterval(() => {
+                this.getOrderStatus();
+              }, 3000);
+              this.$router.push(res.data.url);
+            }
+          });
+      } else if (this.radio == 2) {
         // app启动
-        /* 	wechatpay(this.cashier.key, {
+        /* 	 this.$api.wechatpay(this.cashier.key, {
 							payType: this.cashier.payType
 						}).then(res => {
 							if (res.status == 1) {
@@ -197,34 +161,26 @@ export default {
     },
     // 查看订单状态
     getOrderStatus() {
-      orderStatus(this.orderKey).then(res => {
+      this.$api.orderStatus(this.orderKey).then(res => {
         if (res.status == 1) {
           clearInterval(this.times);
-          this.$api.msg("支付成功");
+          this.$toast("支付成功");
           setTimeout(() => {
-            uni.redirectTo({
-              url:
-                "/pages/immediatepayment/payment-finish?total=" +
-                this.info.total
-            });
+            this.$router.push(
+              "/settlement/paymentSuccess?total=" + this.info.total
+            );
           }, 800);
         }
       });
     },
     isWeiXinLogin() {
-      var ua = window.navigator.userAgent.toLowerCase();
-      console.log(ua,'浏览器类型')
-      if (ua.match(/MicroMessenger/i) == "micromessenger") {
-        return true; // 微信中打开
-      } else {
-        return false; // 普通浏览器中打开
-      }
+      var ua=this.$store.state.auth.deviceType||{};
+      return ua.env=='wechat'?true:false
     }
+  },
+  destroyed() {
+    clearInterval(this.times);
   }
-
-  /* 	onUnload() {
-			clearInterval(this.times)
-		} */
 };
 </script>
 

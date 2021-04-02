@@ -233,8 +233,8 @@ export default {
     functionInfo(path){
       this.$router.push(path)
     },
-    goto(){
-      this.$router.push({name:'user-order'})
+    goto(idx){
+      this.$router.push({name:'user-order',query:{tab:idx}})
     }
   }
 };

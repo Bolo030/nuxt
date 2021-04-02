@@ -25,7 +25,7 @@
           <!-- 菜单 -->
           <div class="storeInfo">
             <a
-              href="#"
+              href="/tool/buyStore"
               class="storeInfo-item"
               style="background: linear-gradient(90deg, #ff7849 0%, #ff9975 100%);"
             >
@@ -33,7 +33,7 @@
               <span>网店购买</span>
             </a>
             <a
-              href="#"
+              href="/zur"
               class="storeInfo-item"
               style="background: linear-gradient(90deg, #80d04f 0%, #80d884 100%);"
             >
@@ -41,7 +41,7 @@
               <span>网店出售</span>
             </a>
             <a
-              href="#"
+              href="/tool/assess"
               class="storeInfo-item"
               style="background: linear-gradient(90deg, #25cacc 0%, #66d9da 100%);"
             >

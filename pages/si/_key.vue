@@ -702,7 +702,7 @@ export default {
         forbidClick: true,
         loadingType: "spinner"
       });
-      CreateOrder(this.key)
+      this.$api.CreateOrder(this.key)
         .then(res => {
           if (res.status == 1) {
             this.$toast.success("订单创建成功");

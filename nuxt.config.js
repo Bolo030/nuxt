@@ -95,6 +95,7 @@ export default {
   },
   loading: { color: '#ff5722', height: ' 3px' },
   router: {
+    middleware: ["device"],
     extendRoutes(routes, resolve) {
       routes.push(
         {
@@ -112,7 +113,7 @@ export default {
           path: "/article/interview-:id",
           component: resolve(__dirname, "pages/article/interview.vue")
         }
-        
+
       );
     }
   }

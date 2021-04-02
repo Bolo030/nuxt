@@ -66,7 +66,7 @@
         </li>
         <li class="billing-item d-f d-f-between font-size-26">
           <span>服务费</span>
-          <span>￥{{ info.order.waitPay }}</span>
+          <span>￥{{ info.order.buyerCommission }}</span>
         </li>
         <li class="billing-item d-f d-f-between font-size-26">
           <span>其他费用</span>
@@ -89,7 +89,10 @@
             : total
         }}</span>
       </div>
-      <button class="order-footer-r font-main-color6 font-size-24" @click="toPay">
+      <button
+        class="order-footer-r font-main-color6 font-size-24"
+        @click="toPay"
+      >
         去支付
       </button>
     </div>
@@ -100,14 +103,20 @@
 export default {
   async asyncData({ app, params }) {
     let radio = "2";
+     let total=0
     let info = await app.$api
       .GetSettlement(params.key)
       .then(res => (res.status == 1 ? res.data : {}));
     let depositRate = info.depositRate <= 0 ? 10 : info.depositRate;
-    let total = parseFloat(
-      (info.order.amount * (depositRate / 100)).toFixed(2)
-    );
-    if (info.order.status == "3") radio = "1";
+    if (info.order.status == "3") {
+      radio = "1";
+      total=info.order.waitPay;
+    } else {
+      let total = parseFloat(
+        (info.order.amount * (depositRate / 100)).toFixed(2)
+      );
+    }
+
     return {
       info,
       total,
@@ -134,7 +143,12 @@ export default {
   },
   methods: {
     toPay() {
-      this.$router.push("/settlement/payment?key=" + this.info.order.key + "&payType=" + this.radio);
+      this.$router.push(
+        "/settlement/payment?key=" +
+          this.info.order.key +
+          "&payType=" +
+          this.radio
+      );
     },
     // 切换金额，选择定金或全款
     computePrice() {

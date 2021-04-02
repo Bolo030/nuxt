@@ -55,7 +55,7 @@ export default {
           },
           {
             text: "卖店",
-            pagePath: "",
+            pagePath: "/zur",
             iconPath: require("../../assets/imgs/tabbar/ic_home_tab_maidian_b.png"),
             selectedIconPath: require("../../assets/imgs/tabbar/ic_home_tab_maidian_a.png")
           },

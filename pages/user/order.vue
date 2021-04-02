@@ -13,10 +13,17 @@
         >
       </div>
       <div class="order-status">
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          finished-text="没有更多了"
+          @load="onLoad"
+        >
         <div
           class="status-item bg-main-color"
           v-for="(item, index) in list"
           :key="index"
+          @click="goInfo(item.key)"
         >
           <div class="title-desc d-f d-f-between">
             <div class="title-desc-l font-size-24 font-main-color2">
@@ -88,6 +95,7 @@
             </div>
           </div>
         </div>
+        </van-list>
       </div>
     </main>
   </div>
@@ -95,16 +103,19 @@
 
 <script>
 export default {
-  async asyncData({ app }) {
+  async asyncData({ app, query }) {
+    let searchType = ["all", "paid", "handover", "completed"];
+    let tab = query.tab || 0;
     let search = {
-      search_type: "all",
+      search_type: searchType[tab],
       page: 1,
       per_page: 15
     };
     let list = await app.$api
       .myOrders(search)
       .then(res => (res.status == 1 ? res.data.data : []));
-    return { list };
+      console.log(list)
+    return { list, tab };
   },
   data() {
     return {
@@ -126,16 +137,24 @@ export default {
         search_type: "all",
         page: 1,
         per_page: 15
-      }
+      },
+       // 列表搜索加载
+      loading: false,
+      finished: false
     };
   },
   methods: {
+     onLoad() {
+      this.search.page++;
+      this.getData(true, false);
+    },
     chooseTab(tab) {
       this.tab = tab;
       this.search.page = 1;
       this.getData(true, true);
     },
     getData(loading = true, remove = false) {
+       this.loading = loading;
       let searchType = ["all", "paid", "handover", "completed"];
       this.search.search_type = searchType[this.tab];
       this.$api.myOrders(this.search).then(res => {
@@ -145,7 +164,15 @@ export default {
           } else {
             this.list.push(...res.data.data);
           }
+           if (res.data.data.length == 0) {
+            this.finished = true;
+          }
+        }else{
+          this.finished = true;
         }
+         setTimeout(() => {
+          this.loading = false;
+        }, 2000);
       });
     },
     oCancel(key) {
@@ -190,6 +217,9 @@ export default {
     },
     toPay(key) {
       this.$router.push("/settlement/" + key);
+    },
+    goInfo(key) {
+      this.$router.push("/user/order-info/buy?key=" + key);
     }
   }
 };
