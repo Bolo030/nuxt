@@ -49,7 +49,7 @@
               <span>网店估价</span>
             </a>
             <a
-              href="#"
+              href="/enter"
               class="storeInfo-item"
               style="background: linear-gradient(90deg, #ffb049 0%, #f5b96d 100%);"
             >

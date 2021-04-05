@@ -1,6 +1,6 @@
 <template>
   <main>
-    <van-nav-bar title="购买网店" left-arrow @click-left="$router.go(-1)" />
+    <van-nav-bar title="网店评估" left-arrow @click-left="$router.go(-1)" />
     <div class="buy">
       <div class="buy-hint">
         <span class="red">*</span>
