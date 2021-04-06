@@ -71,9 +71,8 @@ export default {
     if (userInfo.status !== 1) {
       return;
     } else {
-      userInfo.data.status = 1;
-      userInfo = userInfo.data.user;
-      console.log(userInfo,11);
+       userInfo.data.status = 1;
+       userInfo = userInfo.data.user;
        let userInfoBackfill = {}
        userInfoBackfill.avatar = [];
        userInfoBackfill.name = userInfo.name;

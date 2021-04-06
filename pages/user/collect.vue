@@ -8,7 +8,7 @@
             src="~/assets/imgs/store/rectangle.png"
             alt="九九牛返回"
         /></a>
-        <span class="title">我的收藏</span>
+        <span class="title" @click="demo">我的收藏</span>
         <button class="font-size-28 edit" @click="editor">
           {{ isEditor ? "完成" : "编辑" }}
         </button>
@@ -106,7 +106,6 @@ export default {
         value.checked = false;
         value.store_icon_path = require(`~/assets/imgs/icon_${value.store.platform}.png`);
       });
-      console.log(storeList);
     }
     return { storeList };
   },
@@ -116,7 +115,12 @@ export default {
       isEditor: false,
       chooseArray: [],
       storeList: [],
-      deleteList: []
+      deleteList: [],
+      newStoreList: [],
+      page:1,
+      per_page: 15,
+      loading: false,
+      finished: false,
     };
   },
   methods: {
@@ -124,7 +128,6 @@ export default {
       this.isEditor = !this.isEditor;
     },
     choose(item, index) {
-      console.log(item);
       let a = true;
       this.storeList.forEach(e => {
         if (e.checked === false) {
@@ -161,20 +164,35 @@ export default {
       });
       if (res.status != 1) return this.$toast("删除失败！");
       this.$toast(res.message);
-      this.aginRequest();
+      this.aginRequest(false);
     },
-    async aginRequest() {
-      this.storeList = [];
-      let result = await this.$api.collectStore({ page: 1, per_page: 15 });
+    async aginRequest(options) {
+      console.log(this.page);
+      let result = await this.$api.collectStore({ page: options?this.page:1, per_page: this.per_page });
       if (result.status !== 1) return;
-      this.storeList = result.data.data;
+      if(!options) {
+        this.storeList = result.data.data;
+      }else {
+        this.loading = false;
+        this.newStoreList = result.data.data;
+        if(this.newStoreList.length === 0) return this.finished = true;
+        this.storeList = this.storeList.concat(this.newStoreList);
+      };
       this.storeList.forEach((value, index) => {
         this.$set(this.storeList[index], "checked", false);
+         value.store_icon_path = require(`~/assets/imgs/icon_${value.store.platform}.png`);
       });
     },
     onLoad(){
-      console.log('hahahhahah1');
-      
+      if(this.newStoreList.length < this.per_page && this.newStoreList.length > 0 ) {
+          this.finished = true;
+       }else {
+         this.page++;
+         this.aginRequest(true)
+       }
+    },
+    demo(){
+      console.log(1234,this.storeList);
     }
   },
   computed: {

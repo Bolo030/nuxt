@@ -54,7 +54,6 @@
     <van-dialog v-model="showMask" 
                 title="请填写邮箱地址" 
                 show-cancel-button 
-                @confirm='confirmSendEmail' 
                 :before-close="onBeforeClose" >
       <div class="email-box">
         <van-loading color="#f66d2e" class="loading"  v-show="isShowLoading"/>
@@ -74,19 +73,19 @@ export default {
     });
     if(result.status !== 1) return ;
     contractLists = result.data.data;
-   
     contractLists.forEach(item => {
       item.store_icon_path = require(`~/assets/imgs/icon_${item.platform}.png`)
     });
-   return {contractLists}
-    
+   return {contractLists} 
   },
   data() {
     return {
       showMask: false,
       userEmail:'',
       contractId:'',
-      isShowLoading: false
+      isShowLoading: false,
+      page:1,
+      per_page:15
     };
   },
   methods:{
@@ -96,24 +95,10 @@ export default {
         this.showMask = true;
       }else {
         this.$toast('该订单暂无合同')
-      }
-      
-    },
-    confirmSendEmail(){
-      
-      // if(this.userEmail.trim().length === 0) return this.$toast('邮箱不能为空!');
-      // if(!this.contractId) return this.$toast('合同id不能为空!')
-      // this.$api.sendEmailContract(this.contractId,{
-      //   contract:this.contractId,
-      //   email: this.userEmail
-      // }).then(res=>{
-      //   if(res.status !== 1) return this.$toast(res.message)
-      //   console.log(res);
-      // })
+      } 
     },
     async onBeforeClose(action, done) {
       if (action === "confirm") {
-        done(false)
         if(this.userEmail.trim().length === 0) {
           return this.$toast('邮箱不能为空!');
         } 
@@ -122,34 +107,15 @@ export default {
           email: this.userEmail
         });
         if(res.status !== 1) return this.$toast(res.message);
-        // this.isShowLoading = true;
-        console.log(1000);
-        
         this.$toast(res.message);
-        // this.isShowLoading = false;
-        console.log(123);
-        
         done();
-        console.log(456);
-        
-        // .then(res=>{
-        //   if(res.status !== 1) return this.$toast(res.message);
-        //   this.isShowLoading = true;
-        //   this.$toast(res.message);
-        //   // this.isShowLoading = false;
-        //   done()
-        //   console.log(res);
-        // })
       } else {
-        console.log(456);
-        
         return done()
       }
     },
     lookCantract(downpath){
       if(!downpath) return this.$toast('暂无合同');
-      console.log(downpath);
-      
+      console.log(downpath);  
     }
     
   }
