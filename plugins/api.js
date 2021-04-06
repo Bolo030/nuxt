@@ -271,16 +271,22 @@ export default ({ app: { $request } }, inject) => {
      *获取高级定制数据
      */
     getCustomizedInfo(data) {
-      return $request.get("/customized/info/"+data.cid);
+      return $request.get("/customized/info/" + data.cid);
     },
-     getCustomized(data) {
-      return $request.get("/customized/list/"+data.cid,data);
+    getCustomized(data) {
+      return $request.get("/customized/list/" + data.cid, data);
     },
     /*
-    *获取明星顾问
-    */
-   getConsultant(data){
-    return $request.get('/consultant/'+data)
-   }
+     *获取明星顾问
+     */
+    getConsultant(data) {
+      return $request.get("/consultant/" + data);
+    },
+    /*
+     *获取用户资金
+     */
+    getCapital(){
+      return $request.get("/assets/capital")
+    }
   });
 };

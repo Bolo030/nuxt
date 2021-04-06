@@ -92,7 +92,7 @@
           </span>
         </div>
         <div class="my-account-middle d-f d-f-around font-size-40 ">
-          <div class="account-item d-f d-f-direction">
+          <nuxt-link to='/assets' class="account-item d-f d-f-direction">
             <span class="font-main-color font-weight">{{
               userInfo.balance.price
             }}</span>
@@ -100,7 +100,7 @@
               >余额 ({{ userInfo.balance.unit }})</span
             >
             <i></i>
-          </div>
+          </nuxt-link>
           <div class="account-item d-f d-f-direction">
             <span class="font-main-color font-weight">0</span>
             <span class="font-size-20 font-main-color7">我的优惠券</span>

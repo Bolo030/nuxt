@@ -193,7 +193,7 @@ export default {
           res.status == 1 ? JSON.parse(res.data.content).consultant : []
         )
     ]);
-    console.log(counselorList, 11111111111, caseList, 2222222222222);
+    // console.log(counselorList, 11111111111, caseList, 2222222222222);
     return {
       platformType,
       counselorList,
