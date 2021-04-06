@@ -172,8 +172,6 @@ export default {
       this.hotInfoList = this.hotInfoList.concat(res.data);
     },
     onLoad() {
-      console.log(123);
-     
       if(this.resNewInfo.length < this.per_page && this.resNewInfo.length > 0 ) {
           this.finished = true;
        }else {
@@ -182,14 +180,14 @@ export default {
        }
     },
      /**
-   * 判断用户是否登录
-   */
-  isLogin() {
-    if (this.$cookies.get('token')) {
-      return true
+      * 判断用户是否登录
+     */
+    isLogin() {
+      if (this.$cookies.get('token')) {
+        return true
+      }
+      return false
     }
-    return false
-  }
   }
 };
 </script>

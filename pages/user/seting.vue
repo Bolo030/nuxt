@@ -68,7 +68,7 @@ export default {
         exitLogin(){
             this.$cookies.remove('token');
             this.$toast('退出成功')
-            this.$router.push('/')
+            this.$router.push('/user')
         }
     }
 };

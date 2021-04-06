@@ -51,12 +51,8 @@ export default {
     if (res.status !== 1) {
       return console.log("操作失败");
     } else {
-       articleInfo = res.data;
-      
+       articleInfo = res.data;  
     }
-    
-    console.log(articleInfo);
-
     return {articleInfo}
   }
 };
