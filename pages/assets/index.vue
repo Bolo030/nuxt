@@ -25,10 +25,10 @@
                 <img src="../../assets/imgs/many-way-icon1.png" alt="充值">
                 充值
             </nuxt-link>
-            <div class="way-item bg-main-color d-f d-f-center" id="withdraw-btn">
+            <nuxt-link to='/assets/wd' class="way-item bg-main-color d-f d-f-center" id="withdraw-btn">
                 <img src="../../assets/imgs/many-way-icon2.png" alt="提现">
                 提现
-            </div>
+            </nuxt-link>
         </div>
 
         <!-- 详情查看区域 -->

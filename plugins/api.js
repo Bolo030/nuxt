@@ -1,4 +1,4 @@
-export default ({ app: { $request } }, inject) => {
+export default ({ app: { $request, $axios } }, inject) => {
   inject("api", {
     /**
      * 登录验证
@@ -285,8 +285,64 @@ export default ({ app: { $request } }, inject) => {
     /*
      *获取用户资金
      */
-    getCapital(){
-      return $request.get("/assets/capital")
+    getCapital() {
+      return $request.get("/assets/capital");
+    },
+    /*
+     *获取收款账号
+     */
+    assetsDepositor() {
+      return $request.post("/assets/depositor");
+    },
+
+    /**
+     * 文件上传
+     * @param file
+     * @returns {Promise<AxiosResponse<any>>}
+     */
+    uploadFile(file, Oup) {
+      let form = new FormData();
+      form.append("file", file);
+      $axios.defaults.headers["Content-Type"] = "multipart/form-data";
+      let res = $axios({
+        url: "/upload",
+        method: "post",
+        data: form,
+        onUploadProgress: Oup ? Oup : false
+      });
+      $axios.defaults.headers["Content-Type"] = "application/json";
+      return res;
+    },
+
+    /*
+     *提交充值信息
+     */
+    assetsRecharge(data) {
+      return $request.post("/assets/recharge", data);
+    },
+    /*
+     *提现申请
+     */
+    subWithdrawal(data) {
+      return $request.post("/assets/withdrawal", data);
+    },
+    /*
+     *获取银行列表
+     */
+    getBankList(data) {
+      return $request.post("/user/bank/list", data);
+    },
+    /*
+     *资金流水
+     */
+    assetsCashrecords(data) {
+      return $request.post("/assets/cashrecords", data);
+    },
+    /*
+    *资金记录
+    */
+    assetsCashDetails(data) {
+      return $request.get("/assets/cash-details", data);
     }
   });
 };

@@ -1,85 +1,160 @@
 <template>
-<div class="container">
-  <van-nav-bar title="对公账户汇款充值" left-arrow @click-left="$router.go(-1)" />
+  <div class="container">
+    <van-nav-bar
+      title="对公账户汇款充值"
+      left-arrow
+      @click-left="$router.go(-1)"
+    />
     <main id="recharge">
-        <h3 class="warm-info font-main-color2 font-size-24">
-            <i class="font-main-color">*</i>
-            请仔细核对汇款账户，如需开具发票，请汇款至对公银行账户!
-        </h3>
-        <h2 class="title-desc font-size-28 font-weight">汇款信息</h2>
-        <div class="form-info bg-main-color">
-            <ul class="font-size-24">
-                <li class="info-item">
-                    <h5>
-                        <i class="font-main-color">*</i>
-                        汇款人
-                    </h5>
-                    <input type="text" placeholder="请填写汇款人姓名">
-                </li>
-                <li class="info-item">
-                    <h5>
-                        <i class="font-main-color">*</i>
-                        汇款金额
-                    </h5>
-                    <input type="number" min="0" placeholder="请填写汇款金额">
-                </li>
-                <li class="info-item position-r">
-                    <h5>
-                        <i class="font-main-color">*</i>
-                        上传汇款截图
-                    </h5>
-                    <input type="file" id="upload-file">
-                    <div class="upload-style bg-main-color6">
-                        <i class="iconfont iconjia font-main-color2"></i>
-                    </div>
-                </li>
-                <li class="info-item">
-                    <button class="font-main-color6 font-size-28 font-weight">提交</button>
-                </li>
-            </ul>
-        </div>
-        <h2 class="bank-title title-desc font-size-28 font-weight">银行对公账户</h2>
-        <div class="account-info bg-main-color position-r">
-            <div class="line position-a1"></div>
-            <ul class="account-info-item font-size-28">
-                <li>
-                    <h6 class="item-title font-size-20 font-main-color">收款方:</h6>
-                    <p>成都九九牛君尚科技有限公司</p>
-                </li>
-                <li>
-                    <h6 class="item-title font-size-20 font-main-color">银行分支行:</h6>
-                    <p>招商银行股份有限公司玉双路支行</p>
-                </li>
-                <li class="position-r">
-                    <h6 class="item-title font-size-20 font-main-color">对公账号:</h6>
-                    <p>785 987 564 789 284 987</p>
-                    <button class="copy position-a1 font-main-color2 font-size-20">复制</button>
-                </li>
-            </ul>
-        </div>
-        <h2 class="bank-title title-desc font-size-28 font-weight">支付宝账户</h2>
-        <div class="account-info bg-main-color position-r">
-            <div class="line line1 position-a1 "></div>
-            <ul class="account-info-item font-size-28">
-                <li class="position-r">
-                    <h6 class=" alipay ">四川九九牛君尚科技有限公司</h6>
-                    <p>2125094970@qq.com</p>
-                    <button class="copy position-a1 font-main-color2 font-size-20">复制</button>
-                </li>
-            </ul>
-        </div>
+      <h3 class="warm-info font-main-color2 font-size-24">
+        <i class="font-main-color">*</i>
+        请仔细核对汇款账户，如需开具发票，请汇款至对公银行账户!
+      </h3>
+      <h2 class="title-desc font-size-28 font-weight">汇款信息</h2>
+      <div class="form-info bg-main-color">
+        <ul class="font-size-24">
+          <li class="info-item">
+            <h5>
+              <i class="font-main-color">*</i>
+              汇款人
+            </h5>
+            <input
+              type="text"
+              v-model="formData.username"
+              placeholder="请填写汇款人姓名"
+            />
+          </li>
+          <li class="info-item">
+            <h5>
+              <i class="font-main-color">*</i>
+              汇款金额
+            </h5>
+            <input
+              type="number"
+              min="0"
+              v-model="formData.price"
+              placeholder="请填写汇款金额"
+            />
+          </li>
+          <li class="info-item position-r">
+            <h5>
+              <i class="font-main-color">*</i>
+              上传汇款截图
+            </h5>
+            <van-uploader v-model="fileList" class="upload" :max-count="1">
+              <template #preview-cover="{ file }">
+                <div class="preview-cover van-ellipsis">{{ file.name }}</div>
+              </template>
+            </van-uploader>
+          </li>
+          <li class="info-item">
+            <button
+              class="font-main-color6 font-size-28 font-weight"
+              @click="onSubmit"
+            >
+              提交
+            </button>
+          </li>
+        </ul>
+      </div>
+      <h2 class="bank-title title-desc font-size-28 font-weight">
+        银行对公账户
+      </h2>
+      <div class="account-info bg-main-color position-r">
+        <div class="line position-a1"></div>
+        <ul class="account-info-item font-size-28">
+          <li>
+            <h6 class="item-title font-size-20 font-main-color">收款方:</h6>
+            <p>{{ info.title }}</p>
+          </li>
+          <li>
+            <h6 class="item-title font-size-20 font-main-color">银行分支行:</h6>
+            <p>{{ info.provider }}</p>
+          </li>
+          <li class="position-r">
+            <h6 class="item-title font-size-20 font-main-color">对公账号:</h6>
+            <p>{{ info.account }}</p>
+            <button
+              class="copy position-a1 font-main-color2 font-size-20"
+              @click="$utils.copy(info.account)"
+            >
+              复制
+            </button>
+          </li>
+        </ul>
+      </div>
+      <!--     <h2 class="bank-title title-desc font-size-28 font-weight">支付宝账户</h2>
+      <div class="account-info bg-main-color position-r">
+        <div class="line line1 position-a1 "></div>
+        <ul class="account-info-item font-size-28">
+          <li class="position-r">
+            <h6 class=" alipay ">四川九九牛君尚科技有限公司</h6>
+            <p>2125094970@qq.com</p>
+            <button class="copy position-a1 font-main-color2 font-size-20">
+              复制
+            </button>
+          </li>
+        </ul>
+      </div> -->
     </main>
-</div>
+  </div>
 </template>
 
 <script>
 export default {
-
-}
+  async asyncData({ app }) {
+    let info = await app.$api
+      .assetsDepositor()
+      .then(res => (res.status == 1 ? res.data[0] : {}));
+    let formData = {
+      username: "",
+      price: "",
+      bank: info.id,
+      voucher: ""
+    };
+    return {
+      info,
+      formData
+    };
+  },
+  data() {
+    return {
+      fileList: [],
+      formData: {
+        username: "",
+        price: "",
+        bank: "",
+        voucher: ""
+      }
+    };
+  },
+  methods: {
+    async onSubmit() {
+      if (!this.formData.username) return this.$toast("请填写汇款人");
+      if (!this.formData.username) return this.$toast("请输入汇款金额");
+      if (this.fileList.length > 0) {
+        await this.$api.uploadFile(this.fileList[0].file).then(res => {
+          this.formData.voucher = res.data.url;
+        });
+      } else {
+        return this.$toast("请上传汇款截图");
+      }
+      await this.$api.assetsRecharge(this.formData).then(res => {
+        if (res.status == 1) {
+          this.$toast("您的充值记录已成功提交，请等待财务人员审核");
+          /*  setTimeout(function() {
+            uni.redirectTo({
+              url: "/pages/user-detail/user-detail?tab=records"
+            });
+          }, 2000); */
+        }
+      });
+    }
+  }
+};
 </script>
 
-<style lang='scss' scoped>
-/* 公用头部样式 */
+<style lang="scss" scoped>
 #recharge {
   padding: 0 3.2vw 10.2667vw;
 }
@@ -207,5 +282,18 @@ export default {
 #recharge .account-info .account-info-item li .alipay {
   margin-bottom: 4.2667vw;
 }
-
+.preview-cover {
+  position: absolute;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 4px;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+}
+.upload {
+  margin-top: 20px;
+}
 </style>
