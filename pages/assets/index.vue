@@ -32,29 +32,29 @@
         </div>
 
         <!-- 详情查看区域 -->
-        <ul class="look-msg">
-            <li class="item d-f d-f-between bg-main-color font-size-28">
-                <div class="left">
+        <div class="look-msg">
+            <nuxt-link to="/assets/rw" class="item d-f d-f-between bg-main-color font-size-28">
+                    <div class="left">
                     <img src="../../assets/imgs/money-info1.png" class="left-icon" alt="流水明细">
                     流水明细
                 </div>
                 <img class="right-icon" alt="箭头" src="../../assets/imgs/icon-entry2.png" />
-            </li>
-            <li class="item d-f d-f-between bg-main-color font-size-28">
+            </nuxt-link>
+            <nuxt-link to="/assets/frozen" class="item d-f d-f-between bg-main-color font-size-28">
                 <div class="left">
                     <img src="../../assets/imgs/money-info2.png" class="left-icon" alt="流水明细">
                     冻结资金
                 </div>
                 <img class="right-icon" alt="箭头" src="../../assets/imgs/icon-entry2.png" />
-            </li>
-            <li class="item d-f d-f-between bg-main-color font-size-28">
+            </nuxt-link>
+            <nuxt-link to='/assets/rm' class="item d-f d-f-between bg-main-color font-size-28">
                 <div class="left">
                     <img src="../../assets/imgs/money-info3.png" class="left-icon" alt="流水明细">
                     资金记录
                 </div>
                 <img class="right-icon" alt="箭头" src="../../assets/imgs/icon-entry2.png" />
-            </li>
-        </ul>
+            </nuxt-link>
+        </div>
 
         <!-- 充值弹框 -->
      <!--    <div class="mask" id="recharge-mask" v-if="isActionSheet" >

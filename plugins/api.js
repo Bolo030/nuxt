@@ -343,6 +343,12 @@ export default ({ app: { $request, $axios } }, inject) => {
     */
     assetsCashDetails(data) {
       return $request.get("/assets/cash-details", data);
-    }
+    },
+    /*
+    *银行卡列表
+    */
+   getMyBank(){
+     return $request.get('/user/bank/index')
+   }
   });
 };

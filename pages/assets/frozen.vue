@@ -1,14 +1,14 @@
 <template>
   <div class="container">
-    <van-nav-bar title="资金记录" left-arrow @click-left="$router.go(-1)" />
+    <van-nav-bar title="资金冻结" left-arrow @click-left="$router.go(-1)" />
     <main id="waterSubsidiary">
       <div class="main-top d-f font-size-24">
-        <!-- <div class="item" @click="showCalendar = true">
-          <span>时间</span>
+        <div class="item" @click="showCalendar = true">
+          <span>{{ search.date || "时间" }}</span>
           <img src="../../assets/imgs/pull-icon.png" alt="三角图标" />
-        </div> -->
+        </div>
         <div class="item" @click="showPicker = true">
-          <span>{{typeName||"状态"}}</span>
+          <span>{{ typeName || "状态" }}</span>
           <img src="../../assets/imgs/pull-icon.png" alt="三角图标" />
         </div>
       </div>
@@ -33,7 +33,7 @@
               <div class="bt-l ">
                 <h4 class="text-wrap">
                   <span class="font-weight font-size-28">{{
-                    item.type==1?'充值':'提现'
+                    columns[item.type-1]
                   }}</span>
                   <span class="font-size-24" v-if="item.remark"> [{{item.remark}}]</span>
                 </h4>
@@ -43,9 +43,10 @@
               </div>
               <div class="bt-r">
                 <h4 class="font-size-30 font-weight">
-                  {{ item.cash }}
+                  {{ Number(item.before) > Number(item.after) ? "-" : "+"
+                  }}{{ item.cash }}
                 </h4>
-                <i class="font-size-20" :style="{'color':(item.status==1?'#f4632c':'')}">{{item.status==1?'待处理':item.status==2?'成功':'驳回'}}</i>
+                <i class="font-size-20">可用余额 ￥{{ item.after }}</i>
               </div>
             </div>
           </div>
@@ -62,12 +63,12 @@
       />
     </van-popup>
     <!-- 日历 -->
-  <!--   <van-calendar
+    <!--    <van-calendar
       v-model="showCalendar"
       :min-date="minDate"
       @confirm="onConfirmDate"
     /> -->
-      <van-popup v-model="showCalendar" position="bottom">
+    <van-popup v-model="showCalendar" position="bottom">
       <van-datetime-picker
         @confirm="onConfirmDate"
         type="year-month"
@@ -84,8 +85,8 @@
 export default {
   async asyncData({ app }) {
     let list = await app.$api
-      .assetsCashDetails()
-      .then(res => (res.status == 1 ? res.data.data : []));
+      .assetsCashrecords({ category: "frozen" })
+      .then(res => (res.status == 1 ? res.data.log.data : []));
     console.log(list, "list");
     return {
       list
@@ -100,29 +101,36 @@ export default {
       search: {
         page: 1,
         type: "",
+        date: "",
+        category: "frozen"
       },
+      typeName: "",
       list: [],
       columns: [
         "充值",
         "提现",
+        "消费",
+        "收入",
+        "冻结",
+        "解冻",
+        "提现失败",
+        "其他"
       ],
-      typeName:"",
       minDate: new Date(2021, 0, 1)
     };
   },
   methods: {
     onConfirm(value, index) {
-      this.typeName=value
-      console.log(index,'indexindex')
-      this.search.type = index?'cash':'recharge';
+      this.typeName = value;
+      this.search.type = 1 + index;
       this.showPicker = false;
       this.getData(true, true);
     },
- /*    onConfirmDate(date) {
+    onConfirmDate(date) {
       this.search.date = `${date.getFullYear()}-${date.getMonth() + 1}`;
       this.getData(true, true);
       this.showCalendar = false;
-    }, */
+    },
     onLoad() {
       this.search.page++;
       this.getData(true, false);
@@ -130,11 +138,11 @@ export default {
     getData(loading = true, remove = false) {
       this.loading = loading;
       if (remove) this.search.page = 1;
-      this.$api.assetsCashDetails(this.search).then(res => {
+      this.$api.assetsCashrecords(this.search).then(res => {
         if (res.status == 1) {
-          if (remove) this.list = res.data.data;
-          else this.list.push(...res.data.data);
-          if (res.data.data.length == 0) {
+          if (remove) this.list = res.data.log.data;
+          else this.list.push(...res.data.log.data);
+          if (res.data.log.data.length == 0) {
             this.finished = true;
           }
         } else {

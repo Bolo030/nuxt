@@ -192,7 +192,7 @@ export default {
         {
           src: require("../../assets/imgs/function-icon2.png"),
           text: "银行卡管理",
-          path:''
+          path:'/user/bank'
         },
         {
           src: require("../../assets/imgs/function-icon3.png"),
