@@ -5,23 +5,29 @@
       <div class="withdraw-info bg-main-color">
         <ul class="withdraw-info-in">
           <!-- 已绑定银行卡 -->
-          <li class="withdraw-item1  d-f-flex d-f-between" v-if="bankList.length>0">
+          <li
+            class="withdraw-item1  d-f-flex d-f-between"
+            v-if="bankList.length > 0"
+          >
             <div class="item-right font-size-32 d-f ">
-              <img src="../../assets/imgs/bank-icon1.png" alt="银行图标" />
-              <span>中国银行 (8457)</span>
+              <img :src="defaultBank[0].bank_data.logo" alt="银行图标" />
+              <span
+                >{{ defaultBank[0].bank_data.name }} ({{
+                  defaultBank[0].simple_number
+                }})</span
+              >
             </div>
             <div
               class="item-left font-size-24 font-main-color d-f"
               id="selectBank"
+              @click="isShow = true"
             >
               <span>选择银行卡</span>
-              <img src="../../assets/imgs/icon-entry2.png" alt="箭头" @click="isShow=true" />
+              <img src="../../assets/imgs/icon-entry2.png" alt="箭头" />
             </div>
           </li>
           <!-- 未绑定银行卡 -->
-          <li v-else
-            class="withdraw-item1  d-f-flex d-f-between"
-          >
+          <li v-else class="withdraw-item1  d-f-flex d-f-between">
             <div class="item-right font-size-32 d-f">
               <span class="font-main-color2">暂未绑定银行卡</span>
             </div>
@@ -49,12 +55,12 @@
           <li class="withdraw-item4 d-f d-f-between font-size-24">
             <p class=" font-main-color2">
               <span>可提现金额 </span>
-              <sapn>￥{{capital.available}}</sapn>
+              <sapn>￥{{ capital.available }}</sapn>
             </p>
             <span class=" font-main-color" @click="all">全部提现</span>
           </li>
           <li class="withdraw-item5 font-size-30 font-main-color6">
-            <button click="submit">确认提现</button>
+            <button click="submit" @click="onSubmit">确认提现</button>
           </li>
         </ul>
       </div>
@@ -74,24 +80,41 @@
         <div class="mask-box bg-main-color">
           <div class="item-top">
             <h6 class="font-size-32 font-weight">选择银行卡</h6>
-            <img src="../../assets/imgs/icon_close.png" alt="关闭图标" id="close" @click="isShow=false" />
+            <img
+              src="../../assets/imgs/icon_close.png"
+              alt="关闭图标"
+              id="close"
+              @click="isShow = false"
+            />
           </div>
           <div
             class="wrapper1 item-middle"
             style="height: 86.6667vw; overflow: hidden;"
           >
             <ul class="content">
-              <li class="d-f d-f-between font-size-30">
+              <li
+                class="d-f d-f-between font-size-30"
+                v-for="(item, index) in bankList"
+                :key="index"
+                @click="chooseBank(index)"
+              >
                 <div class="banck-left d-f">
-                  <img src="../../assets/imgs/bank-icon1.png" alt="银行图标" />
-                  <span>中国银行</span>
-                  <span>(9857)</span>
+                  <img :src="item.bank_data.logo" alt="银行图标" />
+                  <span>{{ item.bank_data.name }}</span>
+                  <span>({{ item.simple_number }})</span>
                 </div>
-                <img src="../../assets/imgs/success-icon.png" alt="选中图标" />
+                <img
+                  src="../../assets/imgs/success-icon.png"
+                  alt="选中图标"
+                  v-if="item.selected"
+                />
               </li>
             </ul>
           </div>
-          <div class="item-bottom font-size-30 font-weight d-f d-f-center">
+          <div
+            class="item-bottom font-size-30 font-weight d-f d-f-center"
+            @click="$router.push('/user/bank')"
+          >
             <img src="../../assets/imgs/bank-add-icon.png" alt="" />
             <span>添加银行卡</span>
           </div>
@@ -103,47 +126,73 @@
 
 <script>
 export default {
-async asyncData({app}){
-  let [capital,bankList]=await Promise.all([
-    app.$api.getCapital().then(res=>res.status==1?res.data:{}),
-    app.$api.getBankList().then(res=>res.status==1?[...res.data.personal,...res.data.company]:[])
-  ])
-  return{
-    capital,
-    bankList
-  }
-},
-data(){
-  return{
-    capital:{},
-    bankList:[],
-    isShow:false,
-    formData: {
-					price: null,
-					bank: null
-				}
-  }
-},
-methods:{
-  all(){
-    this.formData.price=this.capital.available.split(',').join("")
+  async asyncData({ app }) {
+    let [capital, bankList] = await Promise.all([
+      app.$api.getCapital().then(res => (res.status == 1 ? res.data : {})),
+      app.$api.getMyBank().then(res => (res.status == 1 ? res.data.list : []))
+    ]);
+    let defaultBank = bankList.filter(e => {
+      return e.isDefault == 2;
+    });
+    if (defaultBank.length == 0 && bankList.length != 0) {
+      defaultBank = bankList[0];
+    }
+    return {
+      capital,
+      bankList,
+      defaultBank
+    };
   },
-  	submit() {
-				var data = { ...this.formData
-				};
-				data.price = Number(data.price)
-				if (!data.bank) return this.$toast('请选择提现银行')
-				if (!data.price) return this.$toast('请输入提现金额')
-				if (data.price <= 0 || data.price > Number(this.capital.available)) return this.$toast('请输入正确的提现金额')
-				this.$api.subWithdrawal(data).then(res => {
-					if (res.status == 1) {
-            this.$toast.success('提交成功')
-            this.$router.push('/assets/wdSuccess')
-					}
-				})
-			}
-}
-
+  data() {
+    return {
+      defaultBank:[],
+      capital: {},
+      bankList: [],
+      isShow: false,
+      formData: {
+        price: null,
+        bank: null
+      }
+    };
+  },
+  methods: {
+    all() {
+      this.formData.price = this.capital.available.split(",").join("");
+    },
+    submit() {
+      var data = { ...this.formData };
+      data.price = Number(data.price);
+      if (!data.bank) return this.$toast("请选择提现银行");
+      if (!data.price) return this.$toast("请输入提现金额");
+      if (data.price <= 0 || data.price > Number(this.capital.available))
+        return this.$toast("请输入正确的提现金额");
+      this.$api.subWithdrawal(data).then(res => {
+        if (res.status == 1) {
+          this.$toast.success("提交成功");
+          this.$router.push("/assets/wdSuccess");
+        }
+      });
+    },
+    chooseBank(index) {
+      for (var i in this.bankList) {
+        this.bankList[i]['select'] = false;
+      }
+      this.$set(this.bankList[index],'selected',true);
+      this.defaultBank[0]=this.bankList[index];
+      this.isShow=false
+      console.log(this.bankList,'this.bankList')
+    },
+    // 提现
+    onSubmit(){
+      this.formData.bank=this.defaultBank[0].id;
+      this.$api.withdraw(this.formData).then(res=>{
+        if(res.status==1){
+          this.$toast.success('提交成功');
+          this.$router.go(-1)
+        }
+      })
+    }
+  }
 };
 </script>
 

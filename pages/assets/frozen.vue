@@ -26,7 +26,7 @@
         >
           <div class="item-middle">
             <div class="top d-f d-f-between font-main-color2 ">
-              <span class="font-size-22 "> 流水号：854169752348575</span>
+              <span class="font-size-22 "> 流水号：{{item.number}}</span>
               <span class="right font-size-20">复制</span>
             </div>
             <div class="bottom d-f d-f-between">

@@ -4,18 +4,18 @@
     <main class="selectBank-box ">
       <div class="selectBank-header bg-main-color">
         <span class="iconfont iconsousuo position-a1"></span>
-        <input type="text" placeholder="请输入银行卡名称" />
+        <input v-model="name" type="text" placeholder="请输入银行卡名称" @change="getData" />
       </div>
 
       <!-- 银行卡列表 -->
       <div class="bank-list wrapper bg-main-color ">
         <ul class="bankList-item content bg-main-color">
-          <li class="d-f">
+          <li class="d-f" v-for="(item,index) in list" :key="index" @click="selectBank(item)">
             <img
-              src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3960928708,2426126516&fm=11&gp=0.jpg"
+              :src="item.logo"
               alt="银行图标"
             />
-            <span class="font-size-30 font-mian-color4">中国农业银行</span>
+            <span class="font-size-30 font-mian-color4">{{item.name}}</span>
           </li>
         </ul>
       </div>
@@ -25,13 +25,30 @@
 
 <script>
 export default {
-async asyncData(){
+async asyncData({app}){
+  let list=await app.$api.getOpenBank().then(res=>res.status==1?res.data.banks:[]);
   return {
-
+    list
   }
 },
 data(){
-return{}
+return{
+  list:[],
+  name:""
+}
+},
+methods:{
+  getData(){
+    this.$api.getOpenBank({name:this.name}).then(res=>{
+          if(res.status==1){
+            this.list=res.data.banks;
+          }
+    })
+  },
+  selectBank(item){
+    this.$store.commit('auth/UPDATE_OPENBANK',item);
+    this.$router.go(-1)
+  }
 }
 };
 </script>

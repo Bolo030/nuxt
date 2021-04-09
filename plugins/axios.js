@@ -1,3 +1,4 @@
+import { Toast } from "vant";
 export default function({ app: { $axios, $cookies },redirect }) {
   $axios.defaults.baseURL = process.env.baseUrl;
   $axios.defaults.timeout = 50000;
@@ -12,8 +13,11 @@ export default function({ app: { $axios, $cookies },redirect }) {
       return Promise.reject(response.statusText);
     }
     console.log(response.data,'response.data')
-    if (response.data.status==-1||response.data.message == "请先登录") {
-      redirect("/login");
+    if(response.data.status!=1){
+      Toast(response.data.message);
+      if (response.data.message == "请先登录") {
+        redirect("/login");
+      }
       return false;
     }
     return response.data;

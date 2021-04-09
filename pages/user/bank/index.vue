@@ -3,46 +3,109 @@
     <van-nav-bar title="银行卡管理" left-arrow @click-left="$router.go(-1)" />
     <main class="bank">
       <ul class="bank-list">
-        <li class="bank-list-item" v-for="(item, index) in list" :key="index">
-          <img class="bank-icon" :src="item.bank_data.logo" alt="九九牛银行" />
-          <div class="bank-list-left">
-            <p class="name">{{ item.bank_data.name }}</p>
-            <p>{{ item.bank }}</p>
-          </div>
-          <span class="code">**** {{ item.simple_number }}</span>
-        </li>
+        <van-swipe-cell  v-for="(item, index) in list" :key="index">
+          <li class="bank-list-item">
+            <img
+              class="bank-icon"
+              :src="item.bank_data.logo"
+              alt="九九牛银行"
+            />
+            <div class="bank-list-left">
+              <p class="name">{{ item.bank_data.name }}</p>
+              <p>{{ cardType[item.cardType] || "" }}</p>
+            </div>
+            <span class="code">**** {{ item.simple_number }}</span>
+          </li>
+          <template #right>
+            <van-button
+              square
+              text="删除"
+              type="danger"
+              class="delete-button"
+              @click="delCard(item)"
+            />
+          </template>
+        </van-swipe-cell>
       </ul>
       <div class="btn-box">
-        <button @click="$router.push('/user/addBankCard')">
+        <button @click="$router.push('/user/bank/addBankCard')">
           <i class="icontianjia iconfont"></i>
           <span>添加银行卡</span>
         </button>
       </div>
     </main>
+    <footer class="mask" v-if="real.need_confirm">
+      <div class="bank-confirm">
+        <p>
+          检测到您当前添加的<span>银行卡信息</span>与当前<span>账号手机信息</span>一
+          致，是否利用此信息完成账号实名认证；
+        </p>
+        <div class="bank-confirm-btn">
+          <button class="active" @click="authentication">是</button>
+          <button @click="real.need_confirm = false">否</button>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script>
 export default {
-  async asyncData({ app }) {
+  async asyncData({ app, store }) {
+    let real = store.state.auth.real;
+    console.log(real,'real')
     let list = await app.$api
       .getMyBank()
       .then(res => (res.status == 1 ? res.data.list : []));
     return {
-      list
+      list,
+      real
     };
   },
   data() {
     return {
-      list: []
+      list: [],
+      cardType: {
+        DC: "储蓄卡",
+        CC: "信用卡"
+      },
+      real: {
+        need_confirm: false
+      }
     };
   },
-  methods: {}
+  methods: {
+    authentication() {
+      this.$api.bindReal(this.real.real_id).then(res => {
+        if (res.status == 1) {
+          this.$toast.success("实名认证完成");
+          this.real.need_confirm = false;
+        }
+      });
+    },
+    getData(){
+      this.$api
+      .getMyBank()
+      .then(res => {
+        if(res.status==1){
+          this.list=res.data.list
+        }
+      });
+    },
+    delCard(item){
+      this.$api.bankDel({id:item.id}).then(res=>{
+        if(res.status==1){
+          this.$toast.success('删除成功');
+          this.getData()
+        }
+      })
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.container{
+.container {
   height: 100%;
 }
 .bank {
@@ -170,5 +233,8 @@ export default {
   font-size: 4vw;
   color: #ffffff;
   margin-top: 3.6vw;
+}
+.delete-button {
+  height: 100%;
 }
 </style>

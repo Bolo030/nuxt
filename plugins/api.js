@@ -339,16 +339,52 @@ export default ({ app: { $request, $axios } }, inject) => {
       return $request.post("/assets/cashrecords", data);
     },
     /*
-    *资金记录
-    */
+     *资金记录
+     */
     assetsCashDetails(data) {
       return $request.get("/assets/cash-details", data);
     },
     /*
-    *银行卡列表
+    *提现
     */
-   getMyBank(){
-     return $request.get('/user/bank/index')
-   }
+    withdraw(data){
+      return $request.post('/assets/cash',data)
+    },
+    /*
+     *银行卡列表
+     */
+    getMyBank() {
+      return $request.get("/user/bank/index");
+    },
+    /*
+     *所属银行列表
+     */
+    getOpenBank(data) {
+      return $request.get("/user/bank/banks", data);
+    },
+    /*
+     *银行卡所属银行
+     */
+    getBankType(data) {
+      return $request.get("/user/bank/get-type", data);
+    },
+    /*
+     *添加银行卡
+     */
+    addBankCard(data) {
+      return $request.post("/user/bank/store", data);
+    },
+    /*
+    *绑定账号实名认证
+    */
+   bindReal(data){
+      return $request.post('/user/real/bind-real/'+data)
+   },
+   /*
+   *删除银行卡
+   */
+  bankDel(data){
+    return $request.post('/user/bank/del',data)
+  }
   });
 };

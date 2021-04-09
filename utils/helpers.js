@@ -248,44 +248,76 @@ export default {
     // null or undefined
     if (val == null) return true;
 
-    if (typeof val === 'boolean') return false;
+    if (typeof val === "boolean") return false;
 
-    if (typeof val === 'number') return !val;
+    if (typeof val === "number") return !val;
 
-    if (val instanceof Error) return val.message === '';
+    if (val instanceof Error) return val.message === "";
 
     switch (Object.prototype.toString.call(val)) {
-        // String or Array
-        case '[object String]':
-        case '[object Array]':
-            return !val.length;
+      // String or Array
+      case "[object String]":
+      case "[object Array]":
+        return !val.length;
 
-        // Map or Set or File
-        case '[object File]':
-        case '[object Map]':
-        case '[object Set]': {
-            return !val.size;
-        }
-        // Plain Object
-        case '[object Object]': {
-            return !Object.keys(val).length;
-        }
+      // Map or Set or File
+      case "[object File]":
+      case "[object Map]":
+      case "[object Set]": {
+        return !val.size;
+      }
+      // Plain Object
+      case "[object Object]": {
+        return !Object.keys(val).length;
+      }
     }
 
     return false;
-},
-// 是否登录
-isLogin(ctx) {
-  return ! this.isEmpty(ctx.$cookies.get('token'));
-},
-/**
-     * 占位符号
-     *
-     * @param data
-     * @param symbol
-     * @returns {*}
-     */
- placeholder(data, symbol = '-') {
-  return this.isEmpty(data) ? symbol : data;
-}
+  },
+  // 是否登录
+  isLogin(ctx) {
+    return !this.isEmpty(ctx.$cookies.get("token"));
+  },
+  /**
+   * 占位符号
+   *
+   * @param data
+   * @param symbol
+   * @returns {*}
+   */
+  placeholder(data, symbol = "-") {
+    return this.isEmpty(data) ? symbol : data;
+  },
+  bankCardLuhn(card) {
+    let arr_no = card.split("");
+    let last_n = arr_no[arr_no.length - 1];
+    let pattern = /^([1-9]{1})(\d{15}|\d{16}|\d{18}|\d{19})$/;
+    if (!pattern.test(card)) {
+      return false;
+    }
+    arr_no = arr_no.reverse();
+
+    let i = 1;
+    let total = 0;
+    for (let j = 0; j < arr_no.length; j++) {
+      let n = Number(arr_no[j]);
+      if (i % 2 == 0) {
+        let ix = n * 2;
+        if (ix >= 10) {
+          let nx = 1 + Number(ix % 10);
+          total += Number(nx);
+        } else {
+          total += Number(ix);
+        }
+      } else {
+        total += n;
+      }
+      i++;
+    }
+
+    total -= last_n;
+    total *= 9;
+
+    return last_n == total % 10;
+  }
 };

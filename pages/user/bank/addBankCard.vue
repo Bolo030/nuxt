@@ -4,11 +4,21 @@
     <main class="add-bank">
       <div class="ab-item">
         <p class="ab-label"><span>*</span>银行卡号</p>
-        <input type="text" placeholder="请填您的真实姓名" />
+        <input
+          v-model="formData.bank_number"
+          @input="getCardInfo"
+          type="text"
+          placeholder="请输入您认证的银行卡号"
+        />
       </div>
-      <div class="ab-item">
+      <div class="ab-item" @click="$router.push('/user/bank/openBank')">
         <p class="ab-label"><span>*</span>所属银行</p>
-        <input disabled type="text" placeholder="请选择银行" />
+        <input
+          disabled
+          v-model="openBank.name"
+          type="text"
+          placeholder="请选择银行"
+        />
         <div class="choose">
           选择银行
           <van-icon name="arrow" size="13px" color="#4c58b3" />
@@ -16,27 +26,101 @@
       </div>
       <div class="ab-item">
         <p class="ab-label">开户分支银行 <span>（选填）</span></p>
-        <input type="text" placeholder="请填您开户分支银行名称" />
+        <input
+          v-model="formData.bank_name"
+          type="text"
+          placeholder="请填您开户分支银行名称"
+        />
       </div>
       <div class="ab-item">
         <p class="ab-label"><span>*</span>银行预留手机号</p>
-        <input type="text" placeholder="请填写该银行卡的预留手机号" />
+        <input
+          v-model="formData.phone"
+          type="number"
+          placeholder="请填写该银行卡的预留手机号"
+        />
       </div>
       <div class="ab-item">
         <p class="ab-label"><span>*</span>持卡人真实姓名</p>
-        <input type="text" placeholder="请填您持卡人真实姓名" />
+        <input
+          type="text"
+          v-model="formData.realname"
+          placeholder="请填您持卡人真实姓名"
+        />
       </div>
       <div class="ab-item">
         <p class="ab-label"><span>*</span>持卡人身份证号码</p>
-        <input type="text" placeholder="请填您本人的真实身份证号码" />
+        <input
+          v-model="formData.identity"
+          type="text"
+          placeholder="请填您本人的真实身份证号码"
+        />
       </div>
-      <button class="ab-btn">立即添加</button>
+      <button class="ab-btn" @click="onSubmit">立即添加</button>
     </main>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  asyncData({ app, store }) {
+    let openBank = store.state.auth.openBank;
+    console.log(openBank, "openBank");
+    return {
+      openBank
+    };
+  },
+  data() {
+    return {
+      formData: {
+        bank_number: "",
+        bank: "",
+        bank_name: "",
+        phone: "",
+        realname: "",
+        identity: "",
+        card_type:"DC"
+      },
+      openBank: {}
+    };
+  },
+  methods: {
+    getCardInfo() {
+      if (this.$utils.bankCardLuhn(this.formData.bank_number)) {
+        this.cardInfo();
+      }
+    },
+    cardInfo() {
+      this.$api
+        .getBankType({ bank_number: this.formData.bank_number })
+        .then(res => {
+          if (res.status == 1) {
+            this.openBank = res.data.bank;
+            this.formData.card_type = res.data.card_type;
+          }
+        });
+    },
+    onSubmit() {
+      this.formData.bank = this.openBank.code;
+      if (!this.formData.bank_number) return this.$toast("请输入银行卡号");
+      if (!this.formData.bank) return this.$toast("请选择所属银行");
+      if (!this.formData.bank_name)
+        return this.$toast("请填写您的开户分支行银行名称");
+      if (!/(^1[3|4|5|7|8][0-9]{9}$)/.test(this.formData.phone))
+        return this.$toast("请您输入正确的手机号码");
+      if (!this.formData.realname) return this.$toast("请填您持卡人真实姓名");
+      if (!/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(this.formData.identity))
+        return this.$toast("请输入身份证号");
+      this.$api.addBankCard(this.formData).then(res => {
+        if (res.status == 1) {
+          this.$toast.success("添加成功");
+          this.$store.commit('auth/UPDATE_REAL',res.data)
+          this.$router.go(-1);
+        }
+      });
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
