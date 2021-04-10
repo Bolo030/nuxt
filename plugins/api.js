@@ -345,10 +345,10 @@ export default ({ app: { $request, $axios } }, inject) => {
       return $request.get("/assets/cash-details", data);
     },
     /*
-    *提现
-    */
-    withdraw(data){
-      return $request.post('/assets/cash',data)
+     *提现
+     */
+    withdraw(data) {
+      return $request.post("/assets/cash", data);
     },
     /*
      *银行卡列表
@@ -375,16 +375,46 @@ export default ({ app: { $request, $axios } }, inject) => {
       return $request.post("/user/bank/store", data);
     },
     /*
-    *绑定账号实名认证
-    */
-   bindReal(data){
-      return $request.post('/user/real/bind-real/'+data)
-   },
-   /*
-   *删除银行卡
-   */
-  bankDel(data){
-    return $request.post('/user/bank/del',data)
-  }
+     *绑定账号实名认证
+     */
+    bindReal(data) {
+      return $request.post("/user/real/bind-real/" + data);
+    },
+    /*
+     *删除银行卡
+     */
+    bankDel(data) {
+      return $request.post("/user/bank/del", data);
+    },
+    /*
+     *消息列表
+     */
+    getMessage(data) {
+      return $request.get("/user/notifications", data);
+    },
+    /*
+     *实名认证列表
+     */
+    getRealList() {
+      return $request.get("/user/real/index");
+    },
+    /*
+     *银行卡认证
+     */
+    realBank(data) {
+      return $request.post("/user/real/bank-real", data);
+    },
+    /*
+     *手机号认证
+     */
+    realPhone(data) {
+      return $request.post("/user/real/phone-real", data);
+    },
+    /*
+     *跟换手机号
+     */
+    editPhone(data) {
+      return $request.post("/user/change-phone", data);
+    }
   });
 };

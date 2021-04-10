@@ -14,20 +14,20 @@
     <main>
       <div class="setting-box">
         <ul class="setting-list bg-main-color">
-          <li class="list-item d-f d-f-between font-size-30">
+          <li class="list-item d-f d-f-between font-size-30" @click="$router.push('/user/auth')">
             <span>实名验证</span>
             <div class="right">
               <i class="iconfont iconjinru1"></i>
             </div>
           </li>
-          <li class="list-item d-f d-f-between font-size-30">
+          <li class="list-item d-f d-f-between font-size-30" @click="$router.push('/user/editPhone')">
             <span>修改手机号码</span>
             <div class="right">
-              <span class="font-size-26 font-main-color2">18282678181</span>
+              <span class="font-size-26 font-main-color2">{{$cookies.get('phone')}}</span>
               <i class="iconfont iconjinru1"></i>
             </div>
           </li>
-          <li class="list-item d-f d-f-between font-size-30">
+          <li class="list-item d-f d-f-between font-size-30" @click="$router.push('/forget')">
             <span>修改密码</span>
             <div class="right">
               <i class="iconfont iconjinru1"></i>
@@ -39,7 +39,7 @@
               <i class="iconfont iconjinru1"></i>
             </div>
           </li>
-          <li class="list-item d-f d-f-between font-size-30">
+          <li class="list-item d-f d-f-between font-size-30" @click="$router.push('/user/aboutUs')">
             <span>关于我们</span>
             <div class="right">
               <i class="iconfont iconjinru1"></i>
@@ -61,14 +61,14 @@
 export default {
     data(){
         return {
-           
+
         }
     },
     methods:{
         exitLogin(){
             this.$cookies.remove('token');
             this.$toast('退出成功')
-            this.$router.push('/user')
+            this.$router.push('/')
         }
     }
 };

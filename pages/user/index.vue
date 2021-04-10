@@ -3,13 +3,13 @@
     <!-- 顶部区域 -->
     <header>
       <div class="header-top d-f d-f-end">
-        <div class="icon-img">
+        <div class="icon-img" @click="$router.push('/user/message')">
           <img
             src="~assets/imgs/icon-msg.png"
             alt="九九牛网店交易平台，消息提示"
           />
-          <span class="tag border-radius-50 font-main-color6 font-size-18"
-            >19</span
+          <span v-if="userInfo.user.notificationCount" class="tag border-radius-50 font-main-color6 font-size-18"
+            >{{userInfo.user.notificationCount}}</span
           >
         </div>
         <div class="icon-img">
