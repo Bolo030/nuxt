@@ -33,7 +33,7 @@
               <i class="iconfont iconjinru1"></i>
             </div>
           </li>
-          <li class="list-item d-f d-f-between font-size-30">
+          <li class="list-item d-f d-f-between font-size-30" @click="$router.push('/user/suggest')">
             <span>投诉建议</span>
             <div class="right">
               <i class="iconfont iconjinru1"></i>

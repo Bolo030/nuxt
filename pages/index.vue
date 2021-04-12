@@ -282,8 +282,7 @@
           </div>
           <div class="look-more font-main-color  ">
             <a
-              href=""
-              target="_blanck"
+              href="/about"
               class="d-block bg-main-color font-size-24 "
               title="九九牛网店交易平台，查看更多"
               >查看更多></a

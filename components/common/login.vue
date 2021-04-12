@@ -161,7 +161,6 @@ export default {
     },
     // 发送登录请求
     loginButton() {
-      this.$cookies.set("name", "value1234334");
       if (this.isLoginType) {
         // 验证码登录
         if (this.user.userPhone.length !== 0 &&this.user.userCode.length !== 0) {
@@ -176,7 +175,8 @@ export default {
               if (res.status !== 1) {
                 return this.$toast("登录失败");
               } else {
-                this.$cookies.set("token", res.data.token,{expires:this.$store.state.auth.cookieMaxExpires});
+                this.$cookies.set("token", res.data.token,{expires:this.$store.state.auth.cookieMaxExpires,path:'/'});
+                 this.$cookies.set("phone", res.data.phone,{expires:this.$store.state.auth.cookieMaxExpires,path:'/'});
                 this.$toast("登录成功");
                 this.$router.push("/user");
               }
@@ -197,8 +197,8 @@ export default {
               if (res.status !== 1) {
                 return this.$toast(res.message);
               } else {
-                 this.$cookies.set("token", res.data.token,{expires:this.$store.state.auth.cookieMaxExpires});
-                 this.$cookies.set("phone", res.data.phone,{expires:this.$store.state.auth.cookieMaxExpires});
+                 this.$cookies.set("token", res.data.token,{expires:this.$store.state.auth.cookieMaxExpires,path:'/'});
+                 this.$cookies.set("phone", res.data.phone,{expires:this.$store.state.auth.cookieMaxExpires,path:'/'});
                 this.$toast("登录成功");
                 this.$router.push("/user");
               }

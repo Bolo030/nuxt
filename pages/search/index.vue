@@ -87,7 +87,7 @@ export default {
       if (save) {
         this.history.unshift(value);
         if (this.history.length > 10) this.history = this.history.slice(0, 12);
-        this.$cookies.set("history", JSON.stringify(this.history));
+        this.$cookies.set("history", JSON.stringify(this.history),{expires:this.$store.state.auth.cookieMaxExpires,path:'/'});
       }
       this.$router.push(`/${this.platform}/w${value}`);
     },

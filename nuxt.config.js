@@ -103,11 +103,11 @@ export default {
           path: "/article/detail-:id",
           component: resolve(__dirname, "pages/article/detail.vue")
         },
-        {
-          name: "article-index",
+     /*    {
+          name: "article",
           path: "/article/list-:id",
           component: resolve(__dirname, "pages/article/index.vue")
-        },
+        }, */
         {
           name: "interview",
           path: "/article/interview-:id",

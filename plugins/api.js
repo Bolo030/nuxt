@@ -415,6 +415,12 @@ export default ({ app: { $request, $axios } }, inject) => {
      */
     editPhone(data) {
       return $request.post("/user/change-phone", data);
+    },
+    /*
+    *投诉建议
+    */
+    proposal(data){
+      return $request.post('/feedback/proposal-simple',data)
     }
   });
 };

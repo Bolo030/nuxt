@@ -138,7 +138,7 @@ export default {
     });
     let hotInfo = res.data.slice(0, 2);
     let hotInfoList = res.data.splice(2);
-   
+
     if (cid == 1) {
       cuurentActive = 0;
     } else if (cid == 2) {
@@ -157,7 +157,7 @@ export default {
     return { hotInfo, hotInfoList, cuurentActive,clientShow,cid };
   },
   created() {
-   
+
   },
   methods: {
     async articleMessage() {

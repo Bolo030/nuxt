@@ -1,9 +1,9 @@
 import { Toast } from "vant";
-export default function({ app: { $axios, $cookies },redirect }) {
+export default function({ app: { $axios, $cookies }, redirect }) {
   $axios.defaults.baseURL = process.env.baseUrl;
   $axios.defaults.timeout = 50000;
   $axios.interceptors.request.use(config => {
-    config.headers["Authorization"] = $cookies.get("token")||'';
+    config.headers["Authorization"] = $cookies.get("token") || "";
     config.headers["Content-Type"] = "application/json";
     return config;
   });
@@ -12,10 +12,13 @@ export default function({ app: { $axios, $cookies },redirect }) {
     if (/^[4|5]/.test(response.status)) {
       return Promise.reject(response.statusText);
     }
-    console.log(response.data,'response.data')
-    if(response.data.status!=1){
+    console.log(response.data, "response.data");
+    if (response.data.status != 1) {
       Toast(response.data.message);
-      if (response.data.message == "请先登录") {
+      if (response.data.message == "请先登录" || response.data.status == -1) {
+        redirect("/login");
+      } else if (response.data.message == "请重新登录") {
+        // $cookies.remove("token");
         redirect("/login");
       }
       return false;
