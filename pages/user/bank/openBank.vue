@@ -55,8 +55,8 @@ methods:{
 
 <style lang="scss" scoped>
 .selectBank-box .selectBank-header {
-  position: fixed;
-  top: 11.7333vw;
+  /* position: fixed;
+  top: 11.7333vw; */
   height: 17.3333vw;
   width: 100%;
   padding: 2.6667vw 3.2vw;
@@ -79,11 +79,10 @@ methods:{
 }
 
 .bank-list {
-  position: fixed;
+ /*  position: fixed;
   top: 31.7333vw;
-  bottom: 0;
+  bottom: 0; */
   width: 100%;
-  overflow: hidden;
 }
 
 .bank-list .bankList-item {

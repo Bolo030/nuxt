@@ -301,7 +301,7 @@ export default {
   position: sticky;
   left: 0;
   top: var(--window-top);
-  z-index: 100000;
+  z-index: 1000;
 
   .nav,
   .filters {
@@ -313,7 +313,7 @@ export default {
     width: 100vw;
     position: absolute;
     left: 0;
-    z-index: 9999;
+    z-index: 999;
   }
 
   .nav-box {

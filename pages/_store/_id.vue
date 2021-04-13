@@ -103,6 +103,7 @@ const searchStatic = {
   per_page: 15,
   page: 1
 };
+import { Toast } from "vant";
 export default {
   head() {
     return {
@@ -124,6 +125,12 @@ export default {
     };
   },
   async asyncData({ app, params }) {
+    Toast.loading({
+      message: "加载中...",
+      forbidClick: true,
+      overlay: true,
+      duration:1500
+    });
     let search = { ...searchStatic };
     search.platform = params.store || "tm";
     console.log(params.id);
@@ -144,6 +151,7 @@ export default {
       default:
         type = "jdCategory";
     }
+
     let [list, categoryList] = await Promise.all([
       app.$api
         .getStoreList(search)
@@ -155,6 +163,7 @@ export default {
     categoryList.forEach(e => {
       e.selected = false;
     });
+    // Toast.clear()
     return {
       list,
       categoryList,
@@ -189,14 +198,14 @@ export default {
       finished: false
     };
   },
-  	filters: {
-			fourFormat(str) {
-				if (str) {
-					str = str.replace(/\s/g, '').replace(/(.{4})/g, "$1 ");
-				}
-				return str
-			}
-		},
+  filters: {
+    fourFormat(str) {
+      if (str) {
+        str = str.replace(/\s/g, "").replace(/(.{4})/g, "$1 ");
+      }
+      return str;
+    }
+  },
   methods: {
     onLoad() {
       this.search.page++;

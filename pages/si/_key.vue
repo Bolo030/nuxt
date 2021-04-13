@@ -388,7 +388,7 @@
             :key="index"
             class="screenshot-item"
           >
-            <img :src="item.thumb" @click="predivImg(index)" />
+            <img :src="item.thumb" @click="previewImg(screenshotList,index)" />
           </div>
         </div>
       </card>
@@ -518,6 +518,7 @@
 
 <script>
 import CustomerService from "../../components/store-info/customer-service";
+import { ImagePreview } from 'vant';
 export default {
   async asyncData({ app, params }) {
     let key = params.key || "";
@@ -702,7 +703,8 @@ export default {
         forbidClick: true,
         loadingType: "spinner"
       });
-      this.$api.CreateOrder(this.key)
+      this.$api
+        .CreateOrder(this.key)
         .then(res => {
           if (res.status == 1) {
             this.$toast.success("订单创建成功");
@@ -747,6 +749,14 @@ export default {
             }
           }
         ]
+      });
+    },
+    // 图片预览
+    previewImg(val,index) {
+     ImagePreview({
+        images:val ,
+        closeable: true,
+        startPosition:index,
       });
     }
   }

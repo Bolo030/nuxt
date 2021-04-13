@@ -2,7 +2,7 @@
   <div>
     <header id="header">
       <div class="header-content">
-        <a href="javascript:history.go(-1)">
+        <a href="/user">
           <img
             class="back"
             src="~assets/imgs/store/rectangle.png"

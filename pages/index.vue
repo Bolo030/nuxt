@@ -277,9 +277,7 @@
               <span class="font-main-color font-weight">网店转让</span>
               等电商综合服务于一体的交易服务平台，
               旗下业务覆盖淘宝、天猫、京东、拼多多、亚马逊、
-              洋码头等电商平台，首创
-              <span class="font-main-color font-weight">0佣金0差价</span>
-              的服务体系，以
+              洋码头等电商平台，以
               <span class="font-main-color font-weight"
                 >资金安全、流程简单、交易透明、专业高效</span
               >

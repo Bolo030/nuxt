@@ -119,9 +119,7 @@ export default {
           key: this.user.storeKey
         })
         .then(res => {
-          if (res.status != 1) {
-            return this.$toast("下单失败！");
-          } else {
+          if (res.status == 1) {
             this.$toast("下单成功！");
             this.$router.push("/order-success/" + res.data.key);
           }

@@ -97,7 +97,7 @@ export default {
     padding: 0 24px;
     box-sizing: border-box;
     position: fixed;
-    z-index: 9999;
+    z-index: 999;
     bottom: 0;
     left: 0;
   }

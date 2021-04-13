@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <van-nav-bar title="游客下单" left-arrow @click-left="$router.go(-1)" />
+    <van-nav-bar title="订单支付" left-arrow @click-left="$router.go(-1)" />
     <div class="main">
       <div class="pay-head">
         <div class="pay-head-price">

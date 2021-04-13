@@ -160,7 +160,8 @@ export default {
       this.$api.myOrders(this.search).then(res => {
         if (res.status === 1) {
           if (remove) {
-            this.list = res.data.data;
+            this.list = [...res.data.data];
+            console.log('1221212')
           } else {
             this.list.push(...res.data.data);
           }
