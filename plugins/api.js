@@ -313,7 +313,12 @@ export default ({ app: { $request, $axios } }, inject) => {
       $axios.defaults.headers["Content-Type"] = "application/json";
       return res;
     },
-
+    /*
+    *是否实名认证
+    */
+    isReal(){
+      return $request.get('/user/real/whether-real')
+    },
     /*
      *提交充值信息
      */

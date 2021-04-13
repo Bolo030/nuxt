@@ -2,7 +2,7 @@
   <main :class="isInfo ? '' : 'pd-22'">
     <a
       class="shopList"
-      :href="isInfo?'#':`/si/${item.key}`"
+      :href="isInfo?'javascript:void(0);':`/si/${item.key}`"
       v-for="(item, index) in storeList"
       :key="index"
       @click="navItemClick(item.key)"

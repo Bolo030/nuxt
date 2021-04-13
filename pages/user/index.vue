@@ -83,7 +83,7 @@
       <div class="my-account bg-main-color">
         <div class="my-account-top d-f d-f-between">
           <h3 class="font-size-28 font-weight">我的账户</h3>
-          <span class="font-size-24 font-main-color2">
+          <span class="font-size-24 font-main-color2" @click="$router.push('/assets')">
             管理我的账户
             <img
               src="~assets/imgs/icon-entry2.png"

@@ -1,63 +1,124 @@
 <template>
-<div class="container">
- <header>
-        <div class="header-top">
-            <van-icon class="icon" name="arrow-left" color="#fff" @click="$router.go(-1)" />
-            <h3 class="font-size-32 font-main-color6 font-weight">资金管理</h3>
+  <div class="container">
+    <header>
+      <div class="header-top">
+        <van-icon
+          class="icon"
+          name="arrow-left"
+          color="#fff"
+          @click="$router.go(-1)"
+        />
+        <h3 class="font-size-32 font-main-color6 font-weight">资金管理</h3>
+      </div>
+      <div class="header-middle">
+        <div class="middle-item">
+          <span class="font-size-24 font-main-color6">账户余额 (元) </span>
+          <img
+            src="../../assets/imgs/hiddle-icon1.png"
+            v-if="isShow"
+            alt="显示"
+            @click="isShow = false"
+          />
+          <img
+            src="../../assets/imgs/hiddle-icon2.png"
+            v-else
+            alt="隐藏"
+            @click="isShow = true"
+          />
         </div>
-        <div class="header-middle">
-            <div class="middle-item">
-                <span class="font-size-24 font-main-color6">账户余额 (元) </span>
-                <img src="../../assets/imgs/hiddle-icon1.png" v-if="isShow" alt="显示" @click="isShow=false">
-                <img src="../../assets/imgs/hiddle-icon2.png" v-else  alt="隐藏" @click="isShow=true">
-            </div>
-            <div class="balance font-size-46 font-main-color6 font-weight">{{isShow?'￥'+info.balance:'******'}}</div>
+        <div class="balance font-size-46 font-main-color6 font-weight">
+          {{ isShow ? "￥" + info.balance : "******" }}
         </div>
-        <div class="header-bottom d-f-flex d-f-center font-main-color6 font-size-24">
-            <h5>可用余额 ￥{{info.available}}</h5>
-            <span>|</span>
-            <h5>冻结余额 ￥{{info.frozenBalance}}</h5>
-        </div>
+      </div>
+      <div
+        class="header-bottom d-f-flex d-f-center font-main-color6 font-size-24"
+      >
+        <h5>可用余额 ￥{{ info.available }}</h5>
+        <span>|</span>
+        <h5>冻结余额 ￥{{ info.frozenBalance }}</h5>
+        buz
+      </div>
     </header>
     <main id="moneyManagement">
-        <div class="many-way d-f d-f-between font-size-30">
-            <nuxt-link to='/assets/rh' class="way-item bg-main-color d-f d-f-center" id="recharge" >
-                <img src="../../assets/imgs/many-way-icon1.png" alt="充值">
-                充值
-            </nuxt-link>
-            <nuxt-link to='/assets/wd' class="way-item bg-main-color d-f d-f-center" id="withdraw-btn">
-                <img src="../../assets/imgs/many-way-icon2.png" alt="提现">
-                提现
-            </nuxt-link>
+      <div class="many-way d-f d-f-between font-size-30">
+        <nuxt-link
+          to="/assets/rh"
+          class="way-item bg-main-color d-f d-f-center"
+          id="recharge"
+        >
+          <img src="../../assets/imgs/many-way-icon1.png" alt="充值" />
+          充值
+        </nuxt-link>
+        <div
+          @click="gotoWd"
+          class="way-item bg-main-color d-f d-f-center"
+          id="withdraw-btn"
+        >
+          <img src="../../assets/imgs/many-way-icon2.png" alt="提现" />
+          提现
         </div>
+      </div>
 
-        <!-- 详情查看区域 -->
-        <div class="look-msg">
-            <nuxt-link to="/assets/rw" class="item d-f d-f-between bg-main-color font-size-28">
-                    <div class="left">
-                    <img src="../../assets/imgs/money-info1.png" class="left-icon" alt="流水明细">
-                    流水明细
-                </div>
-                <img class="right-icon" alt="箭头" src="../../assets/imgs/icon-entry2.png" />
-            </nuxt-link>
-            <nuxt-link to="/assets/frozen" class="item d-f d-f-between bg-main-color font-size-28">
-                <div class="left">
-                    <img src="../../assets/imgs/money-info2.png" class="left-icon" alt="流水明细">
-                    冻结资金
-                </div>
-                <img class="right-icon" alt="箭头" src="../../assets/imgs/icon-entry2.png" />
-            </nuxt-link>
-            <nuxt-link to='/assets/rm' class="item d-f d-f-between bg-main-color font-size-28">
-                <div class="left">
-                    <img src="../../assets/imgs/money-info3.png" class="left-icon" alt="流水明细">
-                    资金记录
-                </div>
-                <img class="right-icon" alt="箭头" src="../../assets/imgs/icon-entry2.png" />
-            </nuxt-link>
-        </div>
+      <!-- 详情查看区域 -->
+      <div class="look-msg">
+        <nuxt-link
+          to="/assets/rw"
+          class="item d-f d-f-between bg-main-color font-size-28"
+        >
+          <div class="left">
+            <img
+              src="../../assets/imgs/money-info1.png"
+              class="left-icon"
+              alt="流水明细"
+            />
+            流水明细
+          </div>
+          <img
+            class="right-icon"
+            alt="箭头"
+            src="../../assets/imgs/icon-entry2.png"
+          />
+        </nuxt-link>
+        <nuxt-link
+          to="/assets/frozen"
+          class="item d-f d-f-between bg-main-color font-size-28"
+        >
+          <div class="left">
+            <img
+              src="../../assets/imgs/money-info2.png"
+              class="left-icon"
+              alt="流水明细"
+            />
+            冻结资金
+          </div>
+          <img
+            class="right-icon"
+            alt="箭头"
+            src="../../assets/imgs/icon-entry2.png"
+          />
+        </nuxt-link>
+        <nuxt-link
+          to="/assets/rm"
+          class="item d-f d-f-between bg-main-color font-size-28"
+        >
+          <div class="left">
+            <img
+              src="../../assets/imgs/money-info3.png"
+              class="left-icon"
+              alt="流水明细"
+            />
+            资金记录
+          </div>
+          <img
+            class="right-icon"
+            alt="箭头"
+            src="../../assets/imgs/icon-entry2.png"
+          />
+        </nuxt-link>
+      </div>
 
-        <!-- 充值弹框 -->
-     <!--    <div class="mask" id="recharge-mask" v-if="isActionSheet" >
+      <!-- 充值弹框 -->
+      <!--    <div class="mask" id="recharge-mask" v-if="isActionSheet" >
             <ul class="mask-in font-size-30 font-main-color4">
                 <li class="mask-in-item bg-main-color">
                     <p>快捷支付</p>
@@ -71,43 +132,65 @@
             </ul>
         </div> -->
 
-        <!-- 未认证提现弹框 -->
-        <div class="mask2" id="noRecharge-mask">
-            <ul class="mask2-in">
-                <li class="mask2-item1">请先完成账号认证再申请提现</li>
-                <li class="mask2-item2">
-                    <button class="cancel-btn2">取消</button>
-                    <div class="line"></div>
-                    <button class="font-main-color">确定</button>
-                </li>
-            </ul>
-        </div>
+      <!-- 未认证提现弹框 -->
+      <div class="mask2" id="noRecharge-mask">
+        <ul class="mask2-in">
+          <li class="mask2-item1">请先完成账号认证再申请提现</li>
+          <li class="mask2-item2">
+            <button class="cancel-btn2">取消</button>
+            <div class="line"></div>
+            <button class="font-main-color">确定</button>
+          </li>
+        </ul>
+      </div>
     </main>
     <footer class="font-size-24 font-main-color2">
-        九九网络科技保留向公安机关进行反洗钱的举报可能性
+      九九网络科技保留向公安机关进行反洗钱的举报可能性
     </footer>
-</div>
+  </div>
 </template>
 
 <script>
 export default {
-  async asyncData ({app}){
-    let info=await app.$api.getCapital().then(res=>res.status==1?res.data:{})
-    console.log(info)
-    return{
-        info
-    }
+  async asyncData({ app }) {
+    let info = await app.$api
+      .getCapital()
+      .then(res => (res.status == 1 ? res.data : {}));
+    console.log(info);
+    return {
+      info
+    };
   },
-  data(){
-    return{
-      isShow:false,
+  data() {
+    return {
+      isShow: false
       // isActionSheet:false
+    };
+  },
+  methods: {
+    gotoWd() {
+      this.$api.isReal().then(res => {
+        if (res.status == 1) {
+          this.$router.push("/assets/wd");
+        } else {
+          this.$dialog
+            .confirm({
+              message: "请先完成账号认证再申请提现"
+            })
+            .then(() => {
+              this.$router.push("/user/auth");
+            })
+            .catch(() => {
+              // on cancel
+            });
+        }
+      });
     }
   }
-}
+};
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 body {
   position: relative;
 }
@@ -256,5 +339,4 @@ footer {
   width: 100%;
   text-align: center;
 }
-
 </style>

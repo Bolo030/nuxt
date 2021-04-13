@@ -9,7 +9,7 @@
           finished-text="没有更多了"
           @load="onLoad"
         >
-          <li class="message-item" v-for="(item, index) in list" :key="index">
+          <li class="message-item" v-for="(item, index) in list" :key="index" @click="$router.push(`/article/detail-${item.id}.html`)">
             <h5 class="message-time font-size-222 font-main-color2">
               {{ item.created_at }}
             </h5>

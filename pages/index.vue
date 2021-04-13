@@ -12,7 +12,11 @@
             v-for="(item, index) in info.banner"
             :key="index"
           >
-            <img :src="item.thumb" alt="九九牛网店交易平台，banner图" />
+            <img
+              :src="item.thumb"
+              alt="九九牛网店交易平台，banner图"
+              @click="event(item)"
+            />
           </van-swipe-item>
         </van-swipe>
         <!-- 交易快报区域 -->
@@ -44,13 +48,13 @@
         </div>
         <!-- 购买店铺区域 -->
         <div class="buyStore-box bg-main-color d-f d-f-between">
-          <a href="" target="_blanck" title="九九牛网店交易平台，我要买店">
+          <a href="/tm" title="九九牛网店交易平台，我要买店">
             <img
               src="~assets/imgs/icon_homeShop.png"
               alt="九九牛网店交易平台，我要买店"
             />
           </a>
-          <a href="" target="_blanck" title="九九牛网店交易平台，我要卖店">
+          <a href="/zur" title="九九牛网店交易平台，我要卖店">
             <img
               src="~assets/imgs/icon_sellShop.png"
               alt="九九牛网店交易平台，我要卖点"
@@ -60,35 +64,35 @@
 
         <!-- 快速入口区域 -->
         <div class="entryNav bg-main-color d-f d-f-around font-size-24">
-          <div class="entryNav-item d-f-column">
+          <div class="entryNav-item d-f-column" @click="$router.push('/tm')">
             <img
               src="~assets/imgs/ic_home_classification_tianmao@2x.png"
               alt=""
             />
             天猫店
           </div>
-          <div class="entryNav-item d-f-column">
+          <div class="entryNav-item d-f-column" @click="$router.push('/tb')">
             <img
               src="~assets/imgs/ic_home_classification_taobao@2x.png"
               alt=""
             />
             淘宝店
           </div>
-          <div class="entryNav-item d-f-column">
+          <div class="entryNav-item d-f-column" @click="$router.push('/pd')">
             <img
               src="~assets/imgs/ic_home_classification_pinduoduo@2x.png"
               alt=""
             />
             拼多多店
           </div>
-          <div class="entryNav-item d-f-column">
+          <div class="entryNav-item d-f-column" @click="$router.push('/jd')">
             <img
               src="~assets/imgs/ic_home_classification_jindong@2x.png"
               alt=""
             />
             京东店
           </div>
-          <div class="entryNav-item d-f-column">
+          <div class="entryNav-item d-f-column" @click="$router.push('/qt')">
             <img src="~assets/imgs/ic_home_classification_qita@2x.png" alt="" />
             其他
           </div>
@@ -137,25 +141,25 @@
             >
           </div>
           <div class="store-bottom d-f-between d-f">
-            <a href="" target="_blanck" title="九九网店交易平台，天猫入驻">
+            <a href="/enter" title="九九网店交易平台，天猫入驻">
               <img
                 src="~assets/imgs/bg_home_settlement_tianmao@2x.png"
                 alt=""
               />
             </a>
-            <a href="" target="_blanck" title="九九网店交易平台，京东入驻">
+            <a href="/enter?p=jd" title="九九网店交易平台，京东入驻">
               <img
                 src="~assets/imgs/bg_home_settlement_jindong@2x.png"
                 alt=""
               />
             </a>
-            <a href="" target="_blanck" title="九九网店交易平台，拼多多入驻">
+            <a href="/enter?p=pd" title="九九网店交易平台，拼多多入驻">
               <img
                 src="~assets/imgs/bg_home_settlement_pinduoduo@2x.png"
                 alt=""
               />
             </a>
-            <a href="" target="_blanck" title="九九网店交易平台，其他入驻">
+            <a href="/enter?p=qt" title="九九网店交易平台，其他入驻">
               <img src="~assets/imgs/bg_home_settlement_qita@2x.png" alt="" />
             </a>
           </div>
@@ -183,7 +187,7 @@
             >
               <div class="swiper-slide d-f  d-f-wrap">
                 <img
-                  v-for="(v, i) in info.great.slice(index*8,8*(index+1))"
+                  v-for="(v, i) in info.great.slice(index * 8, 8 * (index + 1))"
                   :key="i"
                   :src="v.thumb"
                   alt="九九牛网店交易平台，大牌精选"
@@ -221,8 +225,7 @@
         <div class="storeVip d-f d-f-between">
           <a
             class="vip-left d-block"
-            href=""
-            target="_blanck"
+            href="/tm"
             title="九九牛网店交易平台，店铺精选"
           >
             <img
@@ -230,28 +233,32 @@
               alt="九九网店交易平台，天猫精选"
             />
           </a>
-          <a
-            class="vip-right d-block"
-            href=""
-            target="_blanck"
-            title="九九牛网店交易平台，店铺精选"
-          >
-            <img
-              src="~assets/imgs/bg_home_Porcelain_vip@2x.png"
-              alt="九九牛网店交易平台，洋码头精选"
-            />
-            <img
-              src="~assets/imgs/bg_home_Porcelain_xiangbao@2x.png"
-              alt="九九牛网店交易平台，亚马逊精选"
-            />
-          </a>
+          <div class="vip-right d-block">
+            <a href="/ym"
+              ><img
+                src="~assets/imgs/bg_home_Porcelain_vip@2x.png"
+                alt="九九牛网店交易平台，洋码头精选"
+            /></a>
+            <a href="/yx"
+              ><img
+                src="~assets/imgs/bg_home_Porcelain_xiangbao@2x.png"
+                alt="九九牛网店交易平台，亚马逊精选"
+            /></a>
+          </div>
         </div>
       </div>
       <!-- 店铺平台选择 -->
-      <div class="platformSelect d-f d-f-between" >
-        <h4  v-for="(item,index) in platformList" :key="index" @click="choosePlatform(item.value)" :class="item.value==pType?'font-size-32 font-weight':'font-size-28'">
-          {{item.name}}
-          <div v-if="item.value==pType" class="active-line"></div>
+      <div class="platformSelect d-f d-f-between">
+        <h4
+          v-for="(item, index) in platformList"
+          :key="index"
+          @click="choosePlatform(item.value)"
+          :class="
+            item.value == pType ? 'font-size-32 font-weight' : 'font-size-28'
+          "
+        >
+          {{ item.name }}
+          <div v-if="item.value == pType" class="active-line"></div>
         </h4>
       </div>
 
@@ -293,16 +300,16 @@
 
       <!-- 版权 -->
       <div class="copyright d-f d-f-between">
-        <a href="" title="九九牛网店交易平台" target="_blanck">
+        <a href="http://www.beian.gov.cn/portal/registerSystemInfo" title="九九牛网店交易平台" target="_blanck">
           <img src="~assets/imgs/draw1.png" alt="九九牛网店交易平台" />
         </a>
-        <a href="" title="九九牛网店交易平台" target="_blanck">
+        <a href="https://xinyong.yunaq.com/certificate?domain=%E5%9B%9B%E5%B7%9D%E4%B9%9D%E4%B9%9D%E7%89%9B%E7%BD%91%E7%BB%9C%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8" title="九九牛网店交易平台" target="_blanck">
           <img src="~assets/imgs/draw2.png" alt="九九牛网店交易平台" />
         </a>
-        <a href="" title="九九牛网店交易平台" target="_blanck">
+        <a href="https://www.qcc.com/company_qichachacert?keyno=c309ec5d039d6de4b270584813cc08cd" title="九九牛网店交易平台" target="_blanck">
           <img src="~assets/imgs/draw3.png" alt="九九牛网店交易平台" />
         </a>
-        <a href="" title="九九牛网店交易平台" target="_blanck">
+        <a href="http://www.cyberpolice.cn/wfjb/" title="九九牛网店交易平台" target="_blanck">
           <img src="~assets/imgs/draw4.png" alt="九九牛网店交易平台" />
         </a>
       </div>
@@ -337,16 +344,16 @@ export default {
   },
   data() {
     return {
-      platformList:[
-         { value:'normal',name:"推荐"},
-         { value:'tm',name:"天猫"},
-         { value:'tb',name:"淘宝"},
-         { value:'jd',name:"京东"},
-         { value:'pdd',name:"拼多多"},
-         { value:'qt',name:"其他"},
+      platformList: [
+        { value: "normal", name: "推荐" },
+        { value: "tm", name: "天猫" },
+        { value: "tb", name: "淘宝" },
+        { value: "jd", name: "京东" },
+        { value: "pdd", name: "拼多多" },
+        { value: "qt", name: "其他" }
       ],
-      pType:'normal',
-      list:[]
+      pType: "normal",
+      list: []
     };
   },
   head() {
@@ -368,21 +375,32 @@ export default {
       ]
     };
   },
-  methods:{
-    choosePlatform(v){
-      this.pType=v;
-      this.$api.getBoutique({
-          platform:this.pType,
+  methods: {
+    choosePlatform(v) {
+      this.pType = v;
+      this.$api
+        .getBoutique({
+          platform: this.pType,
           limit: 6
         })
         .then(res => {
-          if(res.status==1){
-            this.list=res.data.store;
+          if (res.status == 1) {
+            this.list = res.data.store;
           }
-        })
+        });
+    },
+    event(val) {
+      if (!val.content) {
+        return;
+      } else {
+        let data = JSON.parse(val.content);
+        this.$router.push({
+          url: data.href
+        });
+      }
     }
   },
-  mounted(){
+  mounted() {
     // console.log(info)
   }
 };
@@ -532,13 +550,13 @@ main {
   background: #fff;
 }
 
-.bigSelection .bigSelection-bottom  .swiper-slide {
+.bigSelection .bigSelection-bottom .swiper-slide {
   height: 24.8vw;
-  img{
+  img {
     margin-right: 10px;
   }
-  img:nth-child(4n+4){
-    margin-right: 0 ;
+  img:nth-child(4n + 4) {
+    margin-right: 0;
   }
 }
 

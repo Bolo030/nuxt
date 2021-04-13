@@ -58,7 +58,7 @@
             </a>
           </div>
           <!-- 服务页banner -->
-          <a class="coverImg">
+          <a class="coverImg" href="/activity/rulesDetails">
             <img src="~assets/imgs/store/bg_shop_fuwurukou.png" />
           </a>
         </div>

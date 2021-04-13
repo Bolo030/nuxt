@@ -1,5 +1,6 @@
 <template>
   <div class="company">
+      <van-nav-bar title="关于我们" left-arrow @click-left="$router.go(-1)" />
     <img src="~/assets/imgs/banner_icon.png" />
     <div class="title">
       <div>关于我们</div>

@@ -1,182 +1,197 @@
 <template>
-<main>
-  <van-nav-bar :title="platform[platformType].name" left-arrow @click-left="$router.go(-1)" />
-  <div class="store-in" :class="platformType">
-    <div class="store-banner">
-      <div class="enter-nav">
-        <a
-          v-for="(item, index) in platform"
-          v-if="index!=platformType"
-          :key="index"
-          :href="'/enter?p=' + index"
-        >
-          <span>{{ item.name }}</span>
-          <van-icon name="arrow" color="#fff" size="15" />
-        </a>
-      </div>
-      <img class="banner" :src="platform[platformType].banner" />
-      <!-- 公告 -->
-      <div class="notice">
-        <div class="notice-content">
-          <img :src="platform[platformType].notice" />
-          <div class="notice-text">
-            <img src="../assets/imgs/store/enter-horn.png" />
-            <van-swipe
-              class="swiper"
-              :autoplay="2000"
-              vertical
-              loop
-              :show-indicators="false"
-            >
-              <van-swipe-item>
-                <div class="swiper-slide flex-vertical">
-                  恭喜<span>人**梦</span>成功入驻天猫店铺
-                </div>
-              </van-swipe-item>
-              <van-swipe-item>
-                <div class="swiper-slide flex-vertical">
-                  恭喜<span>人**梦</span>成功入驻天猫店铺
-                </div>
-              </van-swipe-item>
-              <van-swipe-item>
-                <div class="swiper-slide flex-vertical">
-                  恭喜<span>人**梦</span>成功入驻天猫店铺
-                </div>
-              </van-swipe-item>
-            </van-swipe>
+  <main>
+    <van-nav-bar
+      :title="platform[platformType].name"
+      left-arrow
+      @click-left="$router.go(-1)"
+    />
+    <div class="store-in" :class="platformType">
+      <div class="store-banner">
+        <div class="enter-nav">
+          <a
+            v-for="(item, index) in platform"
+            v-if="index != platformType"
+            :key="index"
+            :href="'/enter?p=' + index"
+          >
+            <span>{{ item.name }}</span>
+            <van-icon name="arrow" color="#fff" size="15" />
+          </a>
+        </div>
+        <img class="banner" :src="platform[platformType].banner" />
+        <!-- 公告 -->
+        <div class="notice">
+          <div class="notice-content">
+            <img :src="platform[platformType].notice" />
+            <div class="notice-text">
+              <img src="../assets/imgs/store/enter-horn.png" />
+              <van-swipe
+                class="swiper"
+                :autoplay="2000"
+                vertical
+                loop
+                :show-indicators="false"
+              >
+                <van-swipe-item>
+                  <div class="swiper-slide flex-vertical">
+                    恭喜<span>人**梦</span>成功入驻天猫店铺
+                  </div>
+                </van-swipe-item>
+                <van-swipe-item>
+                  <div class="swiper-slide flex-vertical">
+                    恭喜<span>人**梦</span>成功入驻天猫店铺
+                  </div>
+                </van-swipe-item>
+                <van-swipe-item>
+                  <div class="swiper-slide flex-vertical">
+                    恭喜<span>人**梦</span>成功入驻天猫店铺
+                  </div>
+                </van-swipe-item>
+              </van-swipe>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- 提交信息 -->
-      <div class="enter-form com-width">
+        <!-- 提交信息 -->
+        <div class="enter-form com-width">
+          <img
+            class="ef-title"
+            :src="platform[platformType].comIcon"
+            alt="九九牛标题"
+          />
+          <h3 class="ef-title-text">提交需求 等待顾问来电</h3>
+          <div class="ef-input-box">
+            <span class="w-iconfont">&#xe604;</span>
+            <input
+              type="text"
+              v-model="formData.product"
+              placeholder="你的店铺主打产品是什么？"
+            />
+          </div>
+          <div class="ef-input-box">
+            <span class="w-iconfont">&#xe6e0;</span>
+            <input
+              type="text"
+              v-model="formData.mobile"
+              placeholder="请输入您的联系方式"
+            />
+          </div>
+          <div class="ef-input-box more">
+            <span class="w-iconfont">&#xe840;</span>
+            <textarea placeholder="你还可以留言您的要求或疑问 …"></textarea>
+          </div>
+          <button class="ef-btn" @click="onSubmit">立即提交</button>
+        </div>
+        <!-- 类目入驻 -->
+        <div class="enter-category com-width">
+          <div class="enter-category-title">
+            <text class="red">全类目</text>皆可入驻
+          </div>
+          <div>可入驻的类目不止这些哦，详细请联系客服</div>
+          <div class="enter-type-list">
+            <div>
+              <img src="../assets/imgs/store/enter-fz.png" />
+              <div>服饰</div>
+            </div>
+            <div>
+              <img src="../assets/imgs/store/enter-hzp.png" />
+              <div>母婴</div>
+            </div>
+            <div>
+              <img src="../assets/imgs/store/enter-fz.png" />
+              <div>化妆品</div>
+            </div>
+            <div>
+              <img src="../assets/imgs/store/enter-sp.png" />
+              <div>食品</div>
+            </div>
+            <div>
+              <img src="../assets/imgs/store/enter-xz.png" />
+              <div>鞋类箱包</div>
+            </div>
+            <div>
+              <img src="../assets/imgs/store/enter-qc.png" />
+              <div>汽车配件</div>
+            </div>
+            <div>
+              <img src="../assets/imgs/store/enter-hw.png" />
+              <div>户外运动</div>
+            </div>
+            <div>
+              <img src="../assets/imgs/store/enter-yl.png" />
+              <div>保健医疗</div>
+            </div>
+          </div>
+          <div class="ec-more">
+            <img class="ec-more-kf" src="../assets/imgs/store/enter-kf.png" />
+            <span>咨询客服</span>
+            <img
+              class="ec-more-into"
+              src="../assets/imgs/store/enter-into.png"
+            />
+          </div>
+        </div>
         <img
-          class="ef-title"
-          :src="platform[platformType].comIcon"
-          alt="九九牛标题"
+          class="enter-line"
+          src="../assets/imgs/store/enter-line.png"
+          mode="widthFix"
         />
-        <h3 class="ef-title-text">提交需求 等待顾问来电</h3>
-        <div class="ef-input-box">
-          <span class="w-iconfont">&#xe604;</span>
-          <input type="text" v-model="formData.product" placeholder="你的店铺主打产品是什么？" />
-        </div>
-        <div class="ef-input-box">
-          <span class="w-iconfont">&#xe6e0;</span>
-          <input type="text" v-model="formData.mobile" placeholder="请输入您的联系方式" />
-        </div>
-        <div class="ef-input-box more">
-          <span class="w-iconfont">&#xe840;</span>
-          <textarea placeholder="你还可以留言您的要求或疑问 …"></textarea>
-        </div>
-        <button class="ef-btn" @click="onSubmit">立即提交</button>
       </div>
-      <!-- 类目入驻 -->
-      <div class="enter-category com-width">
-        <div class="enter-category-title">
-          <text class="red">全类目</text>皆可入驻
-        </div>
-        <div>可入驻的类目不止这些哦，详细请联系客服</div>
-        <div class="enter-type-list">
-          <div>
-            <img src="../assets/imgs/store/enter-fz.png" />
-            <div>服饰</div>
+      <!-- 专业顾问 -->
+      <div class="enter-service">
+        <div class="es-list">
+          <div
+            class="es-list-item"
+            v-for="(item, index) in counselorList"
+            :key="index"
+          >
+            <img :src="item.thumb" />
+            <div class="experience">{{ item.year }}年天猫入驻经验</div>
+            <div>
+              成功入驻<span>{{ item.number }}</span
+              >家店铺
+            </div>
           </div>
-          <div>
-            <img src="../assets/imgs/store/enter-hzp.png" />
-            <div>母婴</div>
-          </div>
-          <div>
-            <img src="../assets/imgs/store/enter-fz.png" />
-            <div>化妆品</div>
-          </div>
-          <div>
-            <img src="../assets/imgs/store/enter-sp.png" />
-            <div>食品</div>
-          </div>
-          <div>
-            <img src="../assets/imgs/store/enter-xz.png" />
-            <div>鞋类箱包</div>
-          </div>
-          <div>
-            <img src="../assets/imgs/store/enter-qc.png" />
-            <div>汽车配件</div>
-          </div>
-          <div>
-            <img src="../assets/imgs/store/enter-hw.png" />
-            <div>户外运动</div>
-          </div>
-          <div>
-            <img src="../assets/imgs/store/enter-yl.png" />
-            <div>保健医疗</div>
-          </div>
-        </div>
-        <div class="ec-more">
-          <img class="ec-more-kf" src="../assets/imgs/store/enter-kf.png" />
-          <span>咨询客服</span>
-          <img class="ec-more-into" src="../assets/imgs/store/enter-into.png" />
         </div>
       </div>
+      <!-- 优势 -->
+      <div class="enter-strength com-width">
+        <div class="enter-strength-title">
+          选择我们的<text class="red">优势</text>
+        </div>
+        <div class="enter-strength-subtitle">多年代入驻经验，所以更专业</div>
+        <div class="es-list">
+          <div v-for="(item, index) in strengthList">
+            <img :src="require(`../assets/imgs/store/${index + 1}.png`)" />
+            <span></span>
+            <div>{{ item }}</div>
+          </div>
+        </div>
+      </div>
+      <!-- 服务 -->
       <img
-        class="enter-line"
-        src="../assets/imgs/store/enter-line.png"
+        class="com-width enter-news"
+        src="../assets/imgs/store/enter-service.png"
         mode="widthFix"
       />
-    </div>
-    <!-- 专业顾问 -->
-    <div class="enter-service">
-      <div class="es-list">
-        <div
-          class="es-list-item"
-          v-for="(item, index) in counselorList"
-          :key="index"
-        >
-          <img :src="item.thumb" />
-          <div class="experience">{{ item.year }}年天猫入驻经验</div>
-          <div>
-            成功入驻<span>{{ item.number }}</span
-            >家店铺
-          </div>
+      <!-- 案例 -->
+      <div class="enter-case com-width enter-strength">
+        <div class="enter-case-title">
+          天猫入驻<text class="red">成功案例</text>
         </div>
+        <div class="sub-title">经验丰富 获得得10万+用户好评</div>
+        <van-swipe class="enter-case-sw" indicator-color="#fe6508">
+          <van-swipe-item v-for="(item, index) in caseList" :key="index">
+            <img :src="item.thumb" />
+          </van-swipe-item>
+        </van-swipe>
+      </div>
+      <!-- 底部 -->
+      <div class="footer">
+        <img src="../assets/imgs/store/enter-logo.png" />
+        <div>四川九九牛网络科技有限公司</div>
       </div>
     </div>
-    <!-- 优势 -->
-    <div class="enter-strength com-width">
-      <div class="enter-strength-title">
-        选择我们的<text class="red">优势</text>
-      </div>
-      <div class="enter-strength-subtitle">多年代入驻经验，所以更专业</div>
-      <div class="es-list">
-        <div v-for="(item, index) in strengthList">
-          <img :src="require(`../assets/imgs/store/${index + 1}.png`)" />
-          <text></text>
-          <div>{{ item }}</div>
-        </div>
-      </div>
-    </div>
-    <!-- 服务 -->
-    <img
-      class="com-width enter-news"
-      src="../assets/imgs/store/enter-service.png"
-      mode="widthFix"
-    />
-    <!-- 案例 -->
-    <div class="enter-case com-width enter-strength">
-      <div class="enter-case-title">
-        天猫入驻<text class="red">成功案例</text>
-      </div>
-      <div class="sub-title">经验丰富 获得得10万+用户好评</div>
-      <van-swipe class="enter-case-sw" indicator-color="#fe6508">
-        <van-swipe-item v-for="(item, index) in caseList" :key="index">
-          <img :src="item.thumb" />
-        </van-swipe-item>
-      </van-swipe>
-    </div>
-    <!-- 底部 -->
-    <div class="footer">
-      <img src="../assets/imgs/store/enter-logo.png" />
-      <div>四川九九牛网络科技有限公司</div>
-    </div>
-  </div>
-</main>
+  </main>
 </template>
 
 <script>
@@ -205,29 +220,25 @@ export default {
       platform: {
         tm: {
           name: "天猫入驻",
-          banner:
-            "https://img.996110.com/imgs-202102-52e623c2840efbb6aa24599a210f2434-20592.png!quality",
+          banner: require("../assets/imgs/store/enter-banner.png"),
           notice: require("../assets/imgs/store/enter-notice.png"),
           comIcon: require("../assets/imgs/store/enter-com-icon.png")
         },
         jd: {
           name: "京东入驻",
-          banner:
-            "https://img.996110.com/imgs-202102-106d352949464c1113db7a5dc79eb73a-32263.png!quality",
+          banner: require("../assets/imgs/store/enter-banner4.png"),
           notice: require("../assets/imgs/store/enter-notice4.png"),
           comIcon: require("../assets/imgs/store/enter-com-icon4.png")
         },
         pd: {
           name: "拼多多入驻",
-          banner:
-            "https://img.996110.com/imgs-202102-8ea454f25c2404f5e24f1bad061a603c-99143.png!quality",
+          banner: require("../assets/imgs/store/enter-banner3.png"),
           notice: require("../assets/imgs/store/enter-notice3.png"),
           comIcon: require("../assets/imgs/store/enter-com-icon3.png")
         },
         qt: {
           name: "其他入驻",
-          banner:
-            "https://img.996110.com/imgs-202102-17d8dfca6fb8ed1857ac35a4524f7001-83165.png!quality",
+          banner: require("../assets/imgs/store/enter-banner2.png"),
           notice: require("../assets/imgs/store/enter-notice.png"),
           comIcon: require("../assets/imgs/store/enter-com-icon2.png")
         }
@@ -241,30 +252,30 @@ export default {
         "正规有效的法律合同，保障权益，信息资料绝对保密"
       ],
       platformType: "tm",
-      formData:{
-        product:"",
-        mobile:"",
-        origin:3
+      formData: {
+        product: "",
+        mobile: "",
+        origin: 3
       }
     };
   },
-  methods:{
-    	onSubmit() {
-				let form = {...this.formData};
-        form.platform=this.platformType;
-				if (!form.product) {
-					return this.$toast("请输入您选择的主打产品");
-				}
-				if (!/(^1[3|4|5|7|8][0-9]{9}$)/.test(form.mobile)) {
-					return this.$toast("请输入正确的联系电话");
-				}
+  methods: {
+    onSubmit() {
+      let form = { ...this.formData };
+      form.platform = this.platformType;
+      if (!form.product) {
+        return this.$toast("请输入您选择的主打产品");
+      }
+      if (!/(^1[3|4|5|7|8][0-9]{9}$)/.test(form.mobile)) {
+        return this.$toast("请输入正确的联系电话");
+      }
 
-				this.$api.RosterAdd(form).then((res) => {
-					if (res.status == 1) {
-						this.$toast("您的入驻申请提交成功，请耐心等待我们和您联系");
-					}
-				});
-			},
+      this.$api.RosterAdd(form).then(res => {
+        if (res.status == 1) {
+          this.$toast("您的入驻申请提交成功，请耐心等待我们和您联系");
+        }
+      });
+    }
   }
   /* 	onLoad(option) {
 			if(option.p)
