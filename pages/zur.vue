@@ -2,18 +2,20 @@
   <div class="container">
     <van-nav-bar title="网店出售" left-arrow @click-left="$router.go(-1)" />
     <main>
-      <p class="submitareport">*提交完成后，您最快在五分钟收到店铺估价</p>
+      <p class="submitareport"><span>*</span> 提交完成后，您最快在五分钟收到店铺估价</p>
       <van-cell-group>
         <van-field
           v-model="formData.name"
-          label="店铺名称"
+          left-icon="shop-o"
           placeholder="请输入您的店铺名称"
+          class="van-input"
         />
         <van-field
           v-model="formData.mobile"
           type="tel"
-          label="电话"
+          left-icon="phone-o"
           placeholder="请输入您的电话"
+          class="van-input"
         />
       </van-cell-group>
       <h4>选择店铺类型</h4>
@@ -87,7 +89,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   height: 100%;
-  background: #fff;
+  background: #f4f4f4;
   font-weight: 500;
   font-family: Source Han Sans CN;
   color: #333;
@@ -95,8 +97,22 @@ export default {
 .submitareport {
   padding: 30px 0 30px 30px;
   font-size: 24px;
-  color: #f4632c;
+  color: #c8c8c8;
+  span {
+    color: #f4632c;
+  }
+ 
 }
+.van-input {
+    margin-bottom: 20px;
+    padding: 30px!important;
+    border-radius: 16px;
+}
+.van-cell-group {
+  background: #f4f4f4;
+  padding: 0 20px;
+}
+
 h4 {
   margin: 20px 0;
   line-height: 60px;
@@ -118,6 +134,8 @@ h4 {
   padding: 0 30px;
   button {
     margin-top: 60px;
+    height: 100px;
+    border-radius: 16px;
   }
 }
 </style>

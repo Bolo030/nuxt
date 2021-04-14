@@ -11,7 +11,7 @@
     <main class="my-contract">
         <!-- 店铺合同列表区域 -->
         <!-- 签署中状态 -->
-        <ul class="my-contract-list bg-main-color" v-for="item in contractLists" :key="item.id">
+        <ul class="my-contract-list bg-main-color" v-for="item in contractLists" :key="item.id" >
             <li class="contract-title d-f d-f-between font-main-color6 font-size-26"
              :class="item.parse_status == '正常'? ' bg-gradient-color3': item.parse_status == '已取消'? 'bg-main-color8':'bg-gradient-color2' ">
                 <span>{{item.name}}</span>
@@ -33,7 +33,7 @@
                         <span>{{item.outTradeNo}}</span>
                     </div>
                     <div class="order-number-r font-main-color">
-                        <span>查看订单</span>
+                        <span @click="jumpOrderInfo(item)">查看订单</span>
                         <i class="iconfont iconjinru1 font-size-26"></i>
                     </div>
                 </div>
@@ -116,6 +116,10 @@ export default {
     lookCantract(downpath){
       if(!downpath) return this.$toast('暂无合同');
       console.log(downpath);  
+    },
+    jumpOrderInfo(item) {
+      if(!item.outTradeNo) return this.$toast('暂无改订单')
+      //this.$router.push(`/si/${item}`)
     }
     
   }

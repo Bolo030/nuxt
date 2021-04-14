@@ -8,7 +8,7 @@
             src="~/assets/imgs/store/rectangle.png"
             alt="九九牛返回"
         /></a>
-        <span class="title" @click="demo">我的收藏</span>
+        <span class="title">我的收藏</span>
         <button class="font-size-28 edit" @click="editor">
           {{ isEditor ? "完成" : "编辑" }}
         </button>
@@ -26,6 +26,7 @@
           class="favorite-store-list bg-main-color"
           v-for="(item, index) in storeList"
           :key="item.id"
+          @click="jumpInfo(item)"
         >
           <li class="d-f d-f-between">
             <span class="font-size-24 font-main-color2"
@@ -191,8 +192,9 @@ export default {
          this.aginRequest(true)
        }
     },
-    demo(){
-      console.log(1234,this.storeList);
+    jumpInfo(item) {
+      if(item.store.status !== '4') return this.$toast('该店铺已下架')
+      this.$router.push(`/si/${item.store.key}`);
     }
   },
   computed: {

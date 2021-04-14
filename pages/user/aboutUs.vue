@@ -12,38 +12,58 @@
         </div>
 
         <ul class="aboutUs-middle bg-main-color font-size-28">
-            <li class="middle-item d-f d-f-between">
+            <nuxt-link to="/about">
+              <li class="middle-item d-f d-f-between">
                 <span class="">公司简介</span>
-                <!-- <img src="/imgs/icon-entry2.png" alt="箭头"> -->
                 <i class="iconfont iconjinru1 font-main-color2"></i>
-            </li>
-            <li class="middle-item d-f d-f-between">
+              </li>
+            </nuxt-link>
+            <a href="https://www.996110.com/html/privacy.html">
+              <li class="middle-item d-f d-f-between">
                 <span class="">隐私条款</span>
                 <i class="iconfont iconjinru1 font-main-color2"></i>
-            </li>
-            <li class="middle-item d-f d-f-between">
+              </li>
+            </a>
+            <a href="https://www.996110.com/html/agreement.html">
+              <li class="middle-item d-f d-f-between">
                 <span class="">用户协议</span>
                 <i class="iconfont iconjinru1 font-main-color2"></i>
-            </li>
-            <li class="middle-item d-f d-f-between">
+              </li>
+            </a>
+            <a href="https://image.996110.com/images-202104-8218f9d58b6cc0bcf718cd10427db778-98323.png!quality">
+              <li class="middle-item d-f d-f-between">
                 <span class="">企业资质</span>
                 <i class="iconfont iconjinru1 font-main-color2"></i>
-            </li>
-            <li class="middle-item d-f d-f-between">
+              </li>
+            </a>
+            <li class="middle-item d-f d-f-between" v-if="false">
                 <span class="">特别申明</span>
                 <i class="iconfont iconjinru1 font-main-color2"></i>
             </li>
         </ul>
     </main>
     <footer class="footer position-a1  ">
-        <p class="font-main-color2 font-size-24">Copyright © 2019 - 2020 九九牛网络科技 版权所有</p>
+        <p class="font-main-color2 font-size-24">Copyright © 2018 - {{newYears}} 九九牛网络科技 版权所有</p>
     </footer>
 </div>
 </template>
 
 <script>
 export default {
-
+  data(){
+    return {
+      years: 2020
+    }
+  },
+  computed:{
+    newYears() {
+      let date=new Date;
+      let y = date.getFullYear();
+      console.log(y);
+      return y
+      
+    }
+  }
 }
 </script>
 
