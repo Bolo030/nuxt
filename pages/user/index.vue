@@ -138,7 +138,7 @@
         </span>
       </div>
       <!-- 广告区域 -->
-      <div class="ad">
+      <div class="ad" @click='jumpCustomer'>
         <img src="~assets/imgs/icon-ad.png" alt="咨询客服" />
       </div>
 
@@ -235,6 +235,10 @@ export default {
     },
     goto(idx){
       this.$router.push({name:'user-order',query:{tab:idx}})
+    },
+    // 跳转客服
+    jumpCustomer(){
+    this.$utils.consultCudtomer()
     }
   }
 };
@@ -260,7 +264,12 @@ header {
           position: absolute;
           top: -30px;
           right: -15px;
-          padding: 8px 8px;
+          // padding: 10px 10px;
+          width: 40px;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          box-sizing: border-box;
           background: #f51b1b;
         }
       }

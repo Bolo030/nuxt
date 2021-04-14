@@ -319,5 +319,10 @@ export default {
     total *= 9;
 
     return last_n == total % 10;
+  },
+  // 跳转客服
+  consultCudtomer() {
+    // this.$router.push()
+    window.location.href = 'http://dgt.zoosnet.net/LR/Chatpre.aspx?id=DGT54828764&lng=cn&oname=000'
   }
 };

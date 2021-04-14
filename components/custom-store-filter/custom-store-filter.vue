@@ -18,7 +18,7 @@
             :class="{ active: item.value == search.platform }"
             :key="index"
           >
-            <span>{{ item.name }}</span>
+            <span>{{ item.name}}</span>
             <div class="line" v-if="item.value == search.platform"></div>
           </nuxt-link>
         </div>
@@ -107,6 +107,7 @@
                 :class="{ active: item.selected }"
                 v-for="(item, index) in priceList"
                 @click="chooseItem('priceList', index, 'price', true)"
+                :key="index"
               >
                 {{ item.name }}
               </div>

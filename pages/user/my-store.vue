@@ -25,7 +25,7 @@
           
           <!-- 店铺状态列表 -->
           <div class="store-status-box">
-            <ul class="store-list bg-main-color" v-for="(item,index) in storeList" :key="index">
+            <ul class="store-list bg-main-color" v-for="(item,index) in storeList" :key="index" @click="jumpInfo(item)">
                 <li class="d-f d-f-between">
                     <span class="font-size-24 font-main-color2">店铺编号: {{item.code}}</span>
                     <span class="font-main-color font-size-28 font-weight">{{storeStatus[item.status].name}}</span>
@@ -170,6 +170,14 @@ export default {
          this.page++;
          this.tabBarDataSwitch(this.tabBarMold)
        }
+      },
+      // 销售中跳转
+      jumpInfo(item){
+        if(item.status === '4') {
+          this.$router.push(`/si/${item.key}`)
+        }
+        return;
+        
       }
 
     }

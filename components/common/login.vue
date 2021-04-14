@@ -2,10 +2,10 @@
   <!-- 手机号登录 -->
   <div class="login-box" style="display: block;" id="phoneLoginbox">
     <div class="login-top-title d-f d-f-between" v-if="isShow">
-      <h3 class=" active" >
+      <h3 class=" active">
         {{ isLoginType ? "验证码登录" : "密码登录" }}
       </h3>
-      <h3 class="" v-show="false">游客下单</h3>
+      <h3 class="" v-show="true" @click="placeOrder">游客下单</h3>
     </div>
     <ul class="login-middle">
       <li>
@@ -19,6 +19,7 @@
           placeholder="请输入你的手机号"
           maxlength="11"
           v-model="user.userPhone"
+          @input="change('phone')"
         />
         <img
           v-show="false"
@@ -38,7 +39,7 @@
           placeholder="请输入你验证码"
           maxlength="6"
           v-model="user.userCode"
-          @focus="chekData('code')"
+          @input="change('code')"
         />
         <span
           class="getCode d-block font-size-22 font-main-color "
@@ -55,7 +56,6 @@
           id="markImg"
         />
       </li>
-
       <li v-else>
         <img
           src="~assets/imgs/ic_sign_in_password.png"
@@ -68,7 +68,7 @@
           maxlength="16"
           minlength="8"
           v-model="user.userPwd"
-          @focus="chekData('pwd')"
+          @input="change('pwd')"
         />
         <img
           v-show="false"
@@ -114,12 +114,12 @@ export default {
       isShowBtn: true
     };
   },
-   props: {
-      isShow:{
-          require: true,
-          default: () => true,
-          type: Boolean
-      }
+  props: {
+    isShow: {
+      require: true,
+      default: () => true,
+      type: Boolean
+    }
   },
   asyncData(context) {
     // called every time before loading the component
@@ -136,12 +136,12 @@ export default {
     // 获取验证码
     getCodeMsg() {
       if (this.isShowCode) return;
-      if (this.user.userPhone.length !== 0) {
-        if(!/^1[3456789]\d{9}$/.test(this.user.userPhone)) return this.$toast("请输入正确的手机格式");
-        this.isShowCode = true;
-        this.$api.sendMsg({ type: 6, phone: this.user.userPhone }).then(res => {
+      if (this.user.userPhone.length === 0) return this.$toast("手机号不能为空");
+      if (!/^1[3456789]\d{9}$/.test(this.user.userPhone)) return this.$toast("请输入正确的手机格式");
+      this.isShowCode = true;
+       this.$api.sendMsg({ type: 6, phone: this.user.userPhone }).then(res => {
           if (res.status !== 1) {
-            return this.$toast("服务器繁忙，请稍后发送");
+           // return this.$toast("服务器繁忙，请稍后发送");
           } else {
             this.$toast(res.message);
           }
@@ -155,16 +155,15 @@ export default {
             this.countdown--;
           }
         }, 1000);
-      } else {
-        return this.$toast("请填写账号");
-      }
+     
     },
     // 发送登录请求
     loginButton() {
       if (this.isLoginType) {
         // 验证码登录
-        if (this.user.userPhone.length !== 0 &&this.user.userCode.length !== 0) {
-          // 具体业务逻辑
+        if(!this.user.userPhone) return this.$toast("手机号不能为空！！！");
+        if(!this.user.userCode) return this.$toast("验证码不能为空！！！");
+        // 具体业务逻辑
           this.$api
             .codeLogin({
               username: this.user.userPhone,
@@ -173,60 +172,73 @@ export default {
             })
             .then(res => {
               if (res.status !== 1) {
-                return this.$toast("登录失败");
+                // return this.$toast("登录失败");
               } else {
-                this.$cookies.set("token", res.data.token,{expires:this.$store.state.auth.cookieMaxExpires,path:'/'});
-                 this.$cookies.set("phone", res.data.phone,{expires:this.$store.state.auth.cookieMaxExpires,path:'/'});
+                this.$cookies.set("token", res.data.token, {
+                  expires: this.$store.state.auth.cookieMaxExpires,
+                  path: "/"
+                });
+                this.$cookies.set("phone", res.data.phone, {
+                  expires: this.$store.state.auth.cookieMaxExpires,
+                  path: "/"
+                });
                 this.$toast("登录成功");
                 this.$router.push("/user");
+               
               }
             });
-        } else {
-          return this.$toast("账号或验证码不能为空");
-        }
       } else {
         // 密码登录
-        if (this.user.userPhone.length !== 0 &&this.user.userPwd.length !== 0) {
-          // 具体业务逻辑
-          this.$api
-            .pwdLogin({
-              username: this.user.userPhone,
-              password: this.user.userPwd
-            })
-            .then(res => {
-              if (res.status !== 1) {
-                return this.$toast(res.message);
-              } else {
-                 this.$cookies.set("token", res.data.token,{expires:this.$store.state.auth.cookieMaxExpires,path:'/'});
-                 this.$cookies.set("phone", res.data.phone,{expires:this.$store.state.auth.cookieMaxExpires,path:'/'});
-                this.$toast("登录成功");
-                this.$router.push("/user");
-              }
-            });
-        } else {
-          return this.$toast("账号或密码不能为空");
-        }
+        if (!this.user.userPhone) return this.$toast("账号不能为空！！！");
+        if (!this.user.userPwd)  return this.$toast("密码不能为空！！！");
+        this.$api.pwdLogin({
+            username: this.user.userPhone,
+            password: this.user.userPwd
+          }).then(res => {
+            if (res.status !== 1) {
+              // return this.$toast('账号或密码不正确');
+            } else {
+              this.$cookies.set("token", res.data.token, {
+                expires: this.$store.state.auth.cookieMaxExpires,
+                path: "/"
+              });
+              this.$cookies.set("phone", res.data.phone, {
+                expires: this.$store.state.auth.cookieMaxExpires,
+                path: "/"
+              });
+              this.$toast("登录成功");
+              this.$router.push("/user");
+            }
+          });
+         
+          
       }
     },
     // 监听输入框变化
-    chekData(value) {
-      if (value === "code") {
-        if (this.user.userPhone.length !== 0 && this.isShowCode) {
-          this.isShowBtn = false;
-        } else {
+    change(value) {
+      if (value === "code") {  
+        if(!this.user.userPhone) return this.$toast("账号不能为空！！！");
+        if(!this.isShowCode) return this.$toast("获取验证码！！！");
+        if(!this.user.userCode) {
           this.isShowBtn = true;
-          return this.$toast("请输入账号和获取验证码");
+        }else {
+          this.isShowBtn = false;
         }
       } else if (value === "pwd") {
-        if (this.user.userPhone.length !== 0 && this.user.userPwd.length === 0) {
-          if(!/^1[3456789]\d{9}$/.test(this.user.userPhone)) return this.$toast("请输入正确的手机格式");
-          this.isShowBtn = false;
-        } else {
-          this.isShowBtn = true;
-          return this.$toast("请输入账号");
-        }
+        if(!this.user.userPhone) return this.$toast("账号不能为空！！！");
+        if (!/^1[3456789]\d{9}$/.test(this.user.userPhone)) return this.$toast("请输入正确的手机格式");
+         if(!this.user.userPwd) {
+            this.isShowBtn = true;
+         }else {
+            this.isShowBtn = false;
+         }
+        
+      } else if (value === 'phone') {
+        if(!this.user.userPhone)   this.isShowBtn = true;
       }
-    }
+    },
+    // 判断是否0元下单
+   
   }
 };
 </script>
