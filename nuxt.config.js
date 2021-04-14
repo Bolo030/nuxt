@@ -103,7 +103,7 @@ export default {
           path: "/article/detail-:id",
           component: resolve(__dirname, "pages/article/detail.vue")
         },
-     /*    {
+        /*{
           name: "article",
           path: "/article/list-:id",
           component: resolve(__dirname, "pages/article/index.vue")
@@ -113,7 +113,6 @@ export default {
           path: "/article/interview-:id",
           component: resolve(__dirname, "pages/article/interview.vue")
         }
-
       );
     }
   }

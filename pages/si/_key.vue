@@ -445,7 +445,7 @@
       <!-- 交易流程 -->
       <card title="交易流程">
         <div class="trade-process">
-          <block v-for="(item, index) in tradeList" :key="index">
+          <div v-for="(item, index) in tradeList" :key="index">
             <div class="trade-item">
               <div>
                 <img :src="item.src" />
@@ -459,7 +459,7 @@
                 class="arrow-img"
               />
             </div>
-          </block>
+          </div>
         </div>
         <div class="divider">
           <img src="../../assets/imgs/ic_shop_details_process_zhishitiao.png" />
@@ -693,6 +693,10 @@ export default {
     },
     immediatelypurchase() {
       if (!this.$utils.isLogin(this)) {
+        // 存储判断0元下单信息
+        sessionStorage.setItem('customer',1);
+        sessionStorage.setItem('key',this.key)
+        console.log(123);
         return this.$router.push("/login/visitorsOrder?key=" + this.key);
       }
       if (this.storeInfo.status != "4") {

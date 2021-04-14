@@ -163,7 +163,8 @@ export default {
             this.list = [...res.data.data];
             console.log('1221212')
           } else {
-            this.list.push(...res.data.data);
+            // this.list.push(...res.data.data);
+            this.list.concat(res.data.data)
           }
            if (res.data.data.length == 0) {
             this.finished = true;

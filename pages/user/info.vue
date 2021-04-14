@@ -183,13 +183,9 @@ export default {
   border-radius: 50%;
 }
 
-// .editData-in .editaData-item .right-editData input {
-//   background: pink;
-//   width: 76px;
-//   height: 76px;
-//   border-radius: 50%;
-//   opacity: 0;
-// }
+.editData-in .editaData-item .right-editData input {
+  text-align: right;
+}
 
 .editData-in .editaData-item .right-editData .font-size {
   font-size: 20px;

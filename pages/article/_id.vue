@@ -234,6 +234,7 @@ export default {
   height: 298px;
 }
 .article .article-row a img {
+  object-fit: cover;
   width: 310px;
   height: 200px;
   background-color: #f4f4f4;
@@ -320,6 +321,7 @@ export default {
 .article .article-list .interview .article-item img {
   height: 150px;
   width: 150px;
+  object-fit: cover;
 }
 .article .article-list .interview .article-item .article-list-info h3 {
   margin-top: 15px;
