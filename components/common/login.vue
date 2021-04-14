@@ -5,7 +5,6 @@
       <h3 class=" active">
         {{ isLoginType ? "验证码登录" : "密码登录" }}
       </h3>
-      <h3 class="" v-show="true" @click="placeOrder">游客下单</h3>
     </div>
     <ul class="login-middle">
       <li>
