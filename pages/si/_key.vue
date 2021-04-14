@@ -27,7 +27,7 @@
       <!-- 店铺详情 -->
       <div class="storeMsg">
         <div class="storeMsg-top">
-          <div @click="event(0)" class="text">
+          <div @click="event(0)" class="text"  :class="{active: activeIndex === 0}">
             店铺信息
             <div v-if="activeIndex === 0"></div>
           </div>
@@ -35,11 +35,12 @@
             @click="event(1)"
             class="text"
             v-if="storeInfo.storeType != 200 || storeInfo.platform != 'tb'"
+            :class="{active: activeIndex === 1}"
           >
             企业信息
             <div v-if="activeIndex === 1"></div>
           </div>
-          <div @click="event(2)" class="text" v-if="storeInfo.platform != 'tb'">
+          <div @click="event(2)" class="text" v-if="storeInfo.platform != 'tb'" :class="{active: activeIndex === 2}">
             商标信息
             <div v-if="activeIndex === 2"></div>
           </div>
@@ -695,7 +696,6 @@ export default {
         // 存储判断0元下单信息
         sessionStorage.setItem('customer',1);
         sessionStorage.setItem('key',this.key)
-        console.log(123);
         return this.$router.push("/login/visitorsOrder?key=" + this.key);
       }
       if (this.storeInfo.status != "4") {
@@ -913,7 +913,6 @@ export default {
     background: #fff;
     padding: 0 24px;
     margin-bottom: 20px;
-
     .storeMsg-top {
       height: 109px;
       display: flex;
@@ -921,12 +920,14 @@ export default {
       justify-content: space-around;
       font-size: 28px;
       border-bottom: 1px solid #ededed;
-
+      .active {
+        font-weight: 700;
+      }
       .text {
         height: 109px;
         line-height: 109px;
         position: relative;
-
+       
         div {
           position: absolute;
           width: 42px;

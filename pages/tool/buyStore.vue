@@ -274,4 +274,8 @@ export default {
     visibility: hidden;
   }
 }
+.van-button {
+  height: 100px;
+  border-radius: 16px;
+}
 </style>

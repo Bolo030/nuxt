@@ -5,7 +5,8 @@
         <van-swipe
           class="banner bg-main-color"
           :autoplay="2000"
-          :show-indicators="false"
+          :show-indicators="true"
+          indicator-color="white"
         >
           <van-swipe-item
             class="swiper-container"

@@ -6,7 +6,7 @@
       <div class="login-center">
         <div class="title">
           <span @click="selectLogin('login')" :class="{ actives: select == 0 }"
-            >验证码登录</span
+            >{{loginType?'验证码登录':'密码登录'}}</span
           >
           <span
             @click="selectLogin('visitor')"
@@ -53,7 +53,7 @@
           >
         </div>
       </div>
-      <login :isShow="false" v-else></login>
+      <login :isShow="false" v-else @fn="switchLogin"></login>
     </div>
   </main>
 </template>
@@ -72,7 +72,8 @@ export default {
       active: false,
       time: 60,
       isShow: false,
-      select: 0
+      select: 0,
+      loginType: true
     };
   },
   methods: {
@@ -145,6 +146,9 @@ export default {
         return this.$toast("请先获取验证码！");
       }
       this.active = true;
+    },
+    switchLogin(options){
+       this.loginType = options;
     }
   },
   asyncData({ query }) {

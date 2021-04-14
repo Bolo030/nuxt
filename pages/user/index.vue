@@ -37,7 +37,7 @@
               class="middle-info-desc d-f"
             >
             <!-- 已实名 -->
-              <span class="bg-gradient-color font-main-color6" v-if="userInfo.user.hasRealName === 1">
+              <span class="bg-gradient-color font-main-color6" v-if="userInfo.user.hasRealName === 1" @click="$router.push('/user/auth')">
                 <img
                   src="~assets/imgs/icon-realName1.png"
                   alt="九九牛网店交易平台，实名图标"
@@ -45,7 +45,7 @@
                 已实名
               </span>
                <!-- 未实名 -->
-              <span class="bg-main-color font-size-20 d-f" v-else>
+              <span class="bg-main-color font-size-20 d-f" v-else @click="$router.push('/user/auth')">
                 <img
                   src="~assets/imgs/icon-realName2.png"
                   alt="九九牛网店交易平台，实名图标"
@@ -220,14 +220,13 @@ export default {
     // 获取个人中心数据
     let userInfo = await app.$api.getUserInfo();
     console.log(userInfo)
-    if (userInfo.status !== 1) {
-      return;
-    } else {
+    if (userInfo.status !== 1) return;
       userInfo.data.status = 1;
       userInfo = userInfo.data;
-
       return { userInfo };
-    }
+  },
+  created(){
+    this.init()
   },
   methods: {
     functionInfo(path){
@@ -238,7 +237,13 @@ export default {
     },
     // 跳转客服
     jumpCustomer(){
-    this.$utils.consultCudtomer()
+      this.$utils.consultCudtomer()
+    },
+    init(){
+      this.$cookies.set("phone", this.userInfo.user.parse_account, {
+                expires: this.$store.state.auth.cookieMaxExpires,
+                path: "/"
+      });
     }
   }
 };
@@ -276,11 +281,16 @@ header {
     }
   }
   .header-middle {
-    margin-top: 30px;
+    margin-top: 0px;
     .middle-item1 {
       width: 120px;
       height: 120px;
       margin-right: 20px;
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
     }
     .middle-item2 {
       height: 120px;
@@ -314,7 +324,7 @@ header {
   .my-account {
     padding: 34px 30px 50px;
     border-radius: 16px;
-    margin-top: -125px;
+    margin-top: -160px;
     .my-account-top {
       img {
         width: 16px;

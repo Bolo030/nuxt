@@ -33,10 +33,9 @@
       <div
         class="header-bottom d-f-flex d-f-center font-main-color6 font-size-24"
       >
-        <h5>可用余额 ￥{{ info.available }}</h5>
+        <h5>可用余额 ￥{{ isShow ? "￥" + info.available: "******" }}</h5>
         <span>|</span>
-        <h5>冻结余额 ￥{{ info.frozenBalance }}</h5>
-        buz
+        <h5>冻结余额 ￥{{isShow ? "￥" +  info.frozenBalance: "******"  }}</h5>
       </div>
     </header>
     <main id="moneyManagement">

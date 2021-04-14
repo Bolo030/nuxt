@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <van-nav-bar title="游客下单" left-arrow @click-left="$router.go(-1)" />
+    <van-nav-bar title="订单详情" left-arrow @click-left="$router.go(-1)" />
     <main>
       <div class="orderDetails-top font-main-color6">
         <h5 class=" font-size-34 font-weight">{{ status[info.status] }}</h5>

@@ -242,8 +242,11 @@ export default {
 
 .order-tabbar .tabbar-item {
   position: relative;
+  
 }
-
+.order-tabbar .tabbar-item-active {
+  font-weight: 700;
+}
 .order-tabbar .tabbar-item-active::after {
   content: "";
   position: absolute;

@@ -30,6 +30,9 @@
     <main id="login-main">
       <!-- 登录注册区域 -->
       <login></login>
+      <div class="login-bottom">
+	  	   新用户登录即代表注册，并同意九九牛<span @click="goto(0)">《用户协议》</span><span @click="goto(1)">《隐私政策》</span>
+	    </div>
     </main>
   </div>
 </template>
@@ -40,6 +43,14 @@ export default {
    goBack() {
       history.back();
     },
+    // 用户隐私协议
+    goto(type){
+		  if(type=='0'){
+		  	window.location.href ='https://www.996110.com/html/agreement.html'
+		  }else{
+		  	window.location.href ='https://www.996110.com/html/privacy.html'
+		  }
+	  }
   }
 }
 </script>
@@ -160,7 +171,13 @@ header .bgImg img {
   background: #f4632c;
   border-radius: 8px;
 }
-
+.login-bottom {
+    position: relative;
+    bottom: -170px;
+    span {
+      color: #f4632c;
+    }
+}
 .login-box {
   .login-top-title {
     h3 {

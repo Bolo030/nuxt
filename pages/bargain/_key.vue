@@ -69,7 +69,8 @@
         <div class="serial-xian"></div>
         <van-button
           :loading="loading"
-          type="info"
+          color="#f4632c"
+          type=""
           loading-text="提交中..."
           block
           @click="onSubmit()"

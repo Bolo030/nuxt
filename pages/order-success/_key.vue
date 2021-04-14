@@ -8,7 +8,7 @@
       <div class="btn-box">
         <button @click="goto('home')">回到首页</button>
         <button v-if="$utils.isLogin" @click="goto('order')" class="active">
-          查看订单
+          订单详情
         </button>
         <button v-else @click="goto('back')" class="active">返回详情</button>
       </div>
@@ -39,7 +39,7 @@ export default {
       if (type === "home") {
         this.$router.push("/");
       } else if (type === "order") {
-        this.$router.push("/user/order");
+        this.$router.push("/user/order-info/buy?key=" + this.storeKey);
       } else {
         this.$router.push("/si/" + this.storeKey);
       }

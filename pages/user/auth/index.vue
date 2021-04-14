@@ -33,7 +33,7 @@
             <li class="realName-middle-item bg-gradient-color2 d-f position-r"  v-for="(item,index) in list" :key="index">
                 <div class="position-right position-a1 font-main-color6 font-size-20 d-f" v-if="item.isBind==2">
                     <img src="../../../assets/imgs/icon-realName1.png" alt="">
-                    <sapn>已绑定为账号实名</sapn>
+                    <span>已绑定为账号实名</span>
                 </div>
                 <div class="middle-item-left">
                     <img src="../../../assets/imgs/photo-img.png" alt="" style="width: 10.6667vw; height: 10.6667vw; border-radius: 50%;">
