@@ -142,8 +142,6 @@ export default {
         this.$api.sendMsg({ type: 6, phone: this.user.userPhone }).then(res => {
           if (res.status !== 1) {
             return this.$toast("服务器繁忙，请稍后发送");
-          } else {
-            this.$toast(res.message);
           }
         });
         let timer = setInterval(() => {
@@ -194,9 +192,7 @@ export default {
               password: this.user.userPwd
             })
             .then(res => {
-              if (res.status !== 1) {
-                return this.$toast(res.message);
-              } else {
+             if(res.status==1){
                  this.$cookies.set("token", res.data.token,{expires:this.$store.state.auth.cookieMaxExpires,path:'/'});
                  this.$cookies.set("phone", res.data.phone,{expires:this.$store.state.auth.cookieMaxExpires,path:'/'});
                 this.$toast("登录成功");
@@ -218,7 +214,7 @@ export default {
           return this.$toast("请输入账号和获取验证码");
         }
       } else if (value === "pwd") {
-        if (this.user.userPhone.length !== 0 && this.user.userPwd.length === 0) {
+        if (this.user.userPhone) {
           if(!/^1[3456789]\d{9}$/.test(this.user.userPhone)) return this.$toast("请输入正确的手机格式");
           this.isShowBtn = false;
         } else {

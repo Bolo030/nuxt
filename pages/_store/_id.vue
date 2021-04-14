@@ -129,7 +129,7 @@ export default {
       message: "加载中...",
       forbidClick: true,
       overlay: true,
-      duration:1500
+      duration:500
     });
     let search = { ...searchStatic };
     search.platform = params.store || "tm";

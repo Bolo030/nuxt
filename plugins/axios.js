@@ -15,10 +15,7 @@ export default function({ app: { $axios, $cookies }, redirect }) {
     console.log(response.data, "response.data");
     if (response.data.status != 1) {
       Toast(response.data.message);
-      if (response.data.message == "请先登录" || response.data.status == -1) {
-        redirect("/login");
-      } else if (response.data.message == "请重新登录") {
-        // $cookies.remove("token");
+      if (response.data.message == "请先登录"||response.data.message == "请重新登录") {
         redirect("/login");
       }
       return false;
