@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <van-nav-bar title="订单管理" left-arrow @click-left="$router.go(-1)" />
+    <van-nav-bar title="订单管理" left-arrow @click-left="$router.push('/user')" />
     <main class="orderManagement-box">
       <div class="order-tabbar bg-main-color d-f d-f-between font-size-28">
         <span

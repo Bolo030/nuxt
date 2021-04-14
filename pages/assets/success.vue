@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <van-nav-bar title="提现申请详情" left-arrow @click-left="$router.go(-1)" />
+    <van-nav-bar :title="type=='wd'?'提现申请详情':'充值信息提交成功'" left-arrow @click-left="$router.go(-1)" />
     <main id="withdrawInfo">
       <div class="withdraw-info-box bg-main-color">
         <div class="withdraw-top">
           <img src="../../assets/imgs/withdraw-bg.png" alt="提现申请背景图片" />
         </div>
         <div class="withdraw-middle">
-          <h3 class="font-size-30 font-weight">您的提现申请已递交</h3>
+          <h3 class="font-size-30 font-weight">{{type=='wd'?'您的提现申请已递交':'您的充值信息提交成功'}}</h3>
           <p class="font-size-24">
             平台将在72小时内对您的提现进行处理，请耐心等待
             如有疑问请拨打客服热线
@@ -21,12 +21,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  asyncData({app,query}){
+    let type=query.type
+    return{
+      type
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
 #withdrawInfo {
-  padding: 11.7333vw 3.2vw 0;
+  padding: 0 3.2vw 0;
 }
 
 .withdraw-info-box {

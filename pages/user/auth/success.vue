@@ -4,7 +4,7 @@
     <main class="realNameSuccess-box">
 
         <!-- 账号实名认证1-->
-        <div class="realNameSuccess-in bg-main-color" style="display: none;" v-if="type">
+        <div class="realNameSuccess-in bg-main-color" style="display: none;" v-if="type=='true'">
             <img src="../../../assets/imgs/realNameSuccess-icon.png" alt="实名认证通过图标" class="realNmae-img">
             <h4 class=" font-size-30 font-weight">恭喜你！你的账号已通过实名认证</h4>
             <p class="font-size-24">您还可以前往实名中心为自己添加多个实名身份呢!

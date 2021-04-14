@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <van-nav-bar
-      title="银行卡号验证实名"
+      title="手机号验证实名"
       left-arrow
       @click-left="$router.go(-1)"
     />
@@ -45,6 +45,7 @@
 export default {
   asyncData({ app, store, query }) {
     let openBank = store.state.auth.openBank;
+    console.log(query,'query')
     let type = query.type || false;
     console.log(openBank, "openBank");
     return {
@@ -81,7 +82,7 @@ export default {
         });
     },
     onSubmit() {
-      this.formData.is_account_real_name = Boolean(this.type);
+      this.formData.is_account_real_name = this.type=='true'?true:false;
       if (!/(^1[3|4|5|7|8][0-9]{9}$)/.test(this.formData.phone))
         return this.$toast("请您输入正确的手机号码");
       if (!this.formData.realname) return this.$toast("请填您持卡人真实姓名");

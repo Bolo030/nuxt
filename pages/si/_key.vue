@@ -520,12 +520,15 @@
 import CustomerService from "../../components/store-info/customer-service";
 import { ImagePreview } from 'vant';
 export default {
-  async asyncData({ app, params }) {
+  async asyncData({ app, params,error }) {
     let key = params.key || "";
     let [storeInfo, recommendList] = await Promise.all([
       app.$api.getStoreInfo(key).then(res => (res.status == 1 ? res.data : {})),
-      app.$api.StoreList(key).then(res => (res.status == 1 ? res.data : {}))
+      app.$api.StoreList(key).then(res => (res.status == 1 ? res.data : []))
     ]);
+    if(JSON.stringify(storeInfo)==="{}"){
+      error({ message: 'This page could not be found.', statusCode: 404 })
+    }
     let customerService = storeInfo.customer_service;
     let storeList = [];
     storeList.push(storeInfo);

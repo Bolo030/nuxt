@@ -59,8 +59,8 @@ export default {
     z-index: 666;
     color: #fff;
     img {
-      width: 200px;
-      height: 120px;
+      width: 160px;
+     	height: 66px;
       vertical-align: middle;
     }
   }
@@ -82,8 +82,8 @@ export default {
     align-items: center;
     padding: 0 135px 0 164px;
     img {
-      width: 203px;
-      height: 90px;
+      width:200px;
+      height: 80px;
       display: block;
     }
   }

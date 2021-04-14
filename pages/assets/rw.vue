@@ -116,7 +116,7 @@ export default {
         "提现失败",
         "其他"
       ],
-      minDate: new Date(2021, 0, 1)
+      minDate: new Date(2018, 0, 1)
     };
   },
   methods: {

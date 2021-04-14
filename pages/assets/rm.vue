@@ -107,7 +107,7 @@ export default {
         "提现",
       ],
       typeName:"",
-      minDate: new Date(2021, 0, 1)
+      minDate: new Date(2018, 0, 1)
     };
   },
   methods: {

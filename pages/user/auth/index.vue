@@ -13,7 +13,7 @@
                         <p class="font-size-24 font-main-color2">完成账号实名认证，提高账户安全度</p>
                     </div>
                     <!-- <div class="right-info font-size-24 bg-main-color6 font-main-color9">已实名</div> -->
-                    <div class="right-info font-size-24 bg-gradient-color2 font-main-color6" id="realName" @click="goto(false)">去实名</div>
+                    <button :disabled="isReal" :class="isReal?'bg-opacity':''"  class="right-info font-size-24  bg-gradient-color2 font-main-color6" id="realName" @click="goto(true)" >去实名</button>
                 </div>
             </li>
             <li class="realName-top-item d-f-flex d-f-between">
@@ -25,15 +25,16 @@
                         <h4 class="font-size-28 font-weight">多身份认证</h4>
                         <p class="font-size-24 font-main-color2">创建多身份，安全高效签署合同</p>
                     </div>
-                    <div class="right-info font-size-24 bg-gradient-color2 font-main-color6" @click="goto(true)">创建身份</div>
+                    <div class="right-info font-size-24 bg-gradient-color2 font-main-color6" @click="goto(false)">创建身份</div>
                 </div>
             </li>
         </ul>
-        <ul class="realName-middle bg-main-color">
-            <li class="realName-middle-item bg-gradient-color2 d-f position-r"  v-for="(item,index) in list" :key="index">
+        <ul class="realName-middle bg-main-color"  v-if="list.length>0">
+           <van-swipe-cell  v-for="(item, index) in list" :key="index">
+            <li class="realName-middle-item bg-gradient-color2 d-f position-r" >
                 <div class="position-right position-a1 font-main-color6 font-size-20 d-f" v-if="item.isBind==2">
                     <img src="../../../assets/imgs/icon-realName1.png" alt="">
-                    <sapn>已绑定为账号实名</sapn>
+                    <span>已绑定为账号实名</span>
                 </div>
                 <div class="middle-item-left">
                     <img src="../../../assets/imgs/photo-img.png" alt="" style="width: 10.6667vw; height: 10.6667vw; border-radius: 50%;">
@@ -43,6 +44,16 @@
                     <span class="font-size-28">{{item.show_identity}}</span>
                 </div>
             </li>
+            <template #right>
+            <van-button
+              square
+              text="删除"
+              type="danger"
+              class="delete-button"
+              @click="del(item)"
+            />
+          </template>
+        </van-swipe-cell>
          <!--    <li class="realName-middle-item bg-main-color7 d-f position-r">
                 <div class="middle-item-left">
                     <img src="../../../assets/imgs/photo-img.png" alt="">
@@ -90,15 +101,19 @@
 export default {
 async asyncData({app}){
   let list=await app.$api.getRealList().then(res=>res.status==1?res.data.list:[]);
+  let isReal=list.some(e=>{
+    return e.isBind==2
+  })
   console.log(list,'list')
   return{
-  list
+  list,
+  isReal
   }
 },
 data(){
   return{
     type:false,
-    isShow:false
+    isShow:false,
   }
 
 },
@@ -106,12 +121,32 @@ methods:{
   goto(type){
     this.type=type;
     this.isShow=true;
+  },
+    getData(){
+      this.$api
+      .getRealList()
+      .then(res => {
+        if(res.status==1){
+          this.list=res.data.list
+        }
+      });
+    },
+  del(item){
+     this.$api.realDel({id:item.id}).then(res=>{
+        if(res.status==1){
+          this.$toast.success('删除成功');
+          this.getData()
+        }
+      })
   }
 }
 }
 </script>
 
 <style lang="scss" scoped>
+.delete-button {
+  height: 100%;
+}
 .realName-top {
   padding-left: 3.2vw;
 }
@@ -261,6 +296,9 @@ methods:{
   height: 14.6667vw;
   border-radius: 2.1333vw;
   margin-bottom: 4vw;
-}
 
+}
+.bg-opacity{
+opacity: .5;
+}
 </style>

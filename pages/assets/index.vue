@@ -36,7 +36,6 @@
         <h5>可用余额 ￥{{ info.available }}</h5>
         <span>|</span>
         <h5>冻结余额 ￥{{ info.frozenBalance }}</h5>
-        buz
       </div>
     </header>
     <main id="moneyManagement">

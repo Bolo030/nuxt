@@ -1,6 +1,6 @@
 <template>
   <main>
-     <van-nav-bar title="支付成功" left-arrow @click-left="$router.go(-1)" />
+     <van-nav-bar title="支付成功" left-arrow @click-left="$router.push('/user/order')" />
     <div class="main">
       <div class="pf">
         <span class="iconfont iconzhifuchenggong"></span>

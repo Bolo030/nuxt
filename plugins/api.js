@@ -415,6 +415,10 @@ export default ({ app: { $request, $axios } }, inject) => {
     realPhone(data) {
       return $request.post("/user/real/phone-real", data);
     },
+    /* 实名认证删除 */
+    realDel(data){
+      return $request.post('user/real/del',data)
+    },
     /*
      *跟换手机号
      */

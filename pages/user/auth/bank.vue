@@ -116,7 +116,7 @@ export default {
     },
     onSubmit() {
       this.formData.bank = this.openBank.code;
-      this.formData.is_account_real_name = Boolean(this.type);
+      this.formData.is_account_real_name = this.type=='true'?true:false;
       if (!this.formData.bank_number) return this.$toast("请输入银行卡号");
       if (!this.formData.bank) return this.$toast("请选择所属银行");
       if (!this.formData.bank_name)

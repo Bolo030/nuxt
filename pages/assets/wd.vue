@@ -169,7 +169,7 @@ export default {
       this.$api.subWithdrawal(data).then(res => {
         if (res.status == 1) {
           this.$toast.success("提交成功");
-          this.$router.push("/assets/wdSuccess");
+          this.$router.push("/assets/success?type=wd");
         }
       });
     },

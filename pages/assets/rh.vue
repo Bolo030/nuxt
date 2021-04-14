@@ -130,6 +130,7 @@ export default {
   },
   methods: {
     async onSubmit() {
+      let that=this;
       if (!this.formData.username) return this.$toast("请填写汇款人");
       if (!this.formData.username) return this.$toast("请输入汇款金额");
       if (this.fileList.length > 0) {
@@ -142,11 +143,9 @@ export default {
       await this.$api.assetsRecharge(this.formData).then(res => {
         if (res.status == 1) {
           this.$toast("您的充值记录已成功提交，请等待财务人员审核");
-          /*  setTimeout(function() {
-            uni.redirectTo({
-              url: "/pages/user-detail/user-detail?tab=records"
-            });
-          }, 2000); */
+           setTimeout(function() {
+            that.$router.push('/assets/success?type=rh');
+          }, 2000);
         }
       });
     }
