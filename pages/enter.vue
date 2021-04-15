@@ -123,7 +123,7 @@
           </div>
           <div class="ec-more">
             <img class="ec-more-kf" src="../assets/imgs/store/enter-kf.png" />
-            <span>咨询客服</span>
+            <span >咨询客服</span>
             <img
               class="ec-more-into"
               src="../assets/imgs/store/enter-into.png"
@@ -172,6 +172,7 @@
         class="com-width enter-news"
         src="../assets/imgs/store/enter-service.png"
         mode="widthFix"
+        @click="jumpCustomer" 
       />
       <!-- 案例 -->
       <div class="enter-case com-width enter-strength">
@@ -275,6 +276,9 @@ export default {
           this.$toast("您的入驻申请提交成功，请耐心等待我们和您联系");
         }
       });
+    },
+    jumpCustomer(){
+       this.$utils.consultCudtomer()
     }
   }
   /* 	onLoad(option) {
