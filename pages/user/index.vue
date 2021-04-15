@@ -101,15 +101,19 @@
             >
             <i></i>
           </nuxt-link>
-          <div class="account-item d-f d-f-direction">
-            <span class="font-main-color font-weight">0</span>
-            <span class="font-size-20 font-main-color7">我的优惠券</span>
-            <i></i>
-          </div>
-          <div class="account-item d-f d-f-direction">
-            <span class="font-main-color font-weight">0</span>
-            <span class="font-size-20 font-main-color7">我的积分</span>
-          </div>
+          <nuxt-link to="/user/coupon">
+            <div class="account-item d-f d-f-direction">
+                <span class="font-main-color font-weight">0</span>
+                <span class="font-size-20 font-main-color7">我的优惠券</span>
+                <i></i>
+            </div>
+          </nuxt-link>
+          <nuxt-link to="/user/integral"> 
+            <div class="account-item d-f d-f-direction">
+              <span class="font-main-color font-weight">0</span>
+              <span class="font-size-20 font-main-color7">我的积分</span>
+            </div>
+          </nuxt-link>
         </div>
       </div>
       <!-- 我的订单信息 -->
@@ -230,6 +234,8 @@ export default {
   },
   methods: {
     functionInfo(path){
+      console.log(path);
+      
       this.$router.push(path)
     },
     goto(idx){
@@ -240,7 +246,7 @@ export default {
       this.$utils.consultCudtomer()
     },
     init(){
-      this.$cookies.set("phone", this.userInfo.user.parse_account, {
+      this.$cookies.set("phoneHide", this.userInfo.user.parse_account, {
                 expires: this.$store.state.auth.cookieMaxExpires,
                 path: "/"
       });

@@ -33,7 +33,7 @@
                         <span>{{item.outTradeNo}}</span>
                     </div>
                     <div class="order-number-r font-main-color">
-                        <span @click="jumpOrderInfo(item)">查看订单</span>
+                        <span @click="jumpOrderInfo(item)">{{item.storeCode !== ''? '查看店铺':'查看订单'}}</span>
                         <i class="iconfont iconjinru1 font-size-26"></i>
                     </div>
                 </div>
@@ -115,11 +115,13 @@ export default {
     },
     lookCantract(downpath){
       if(!downpath) return this.$toast('暂无合同');
+      location.href=downpath;
       console.log(downpath);  
     },
     jumpOrderInfo(item) {
-      if(!item.outTradeNo) return this.$toast('暂无改订单')
-      //this.$router.push(`/si/${item}`)
+      console.log(item);
+      if(!item.outTradeNo && !item.storeCode) return this.$toast('暂无改订单');
+      item.store_key?this.$router.push(`/si/${item.store_key}`): this.$router.push("/user/order-info/buy?key=" + item.order_key) 
     }
     
   }

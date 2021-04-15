@@ -99,11 +99,6 @@ export default {
     extendRoutes(routes, resolve) {
       routes.push(
         {
-          name: "store",
-          path: "/:store/:id?",
-          component: resolve(__dirname, "pages/store/index.vue")
-        },
-        {
           name: "detail",
           path: "/article/detail-:id",
           component: resolve(__dirname, "pages/article/detail.vue")
@@ -117,7 +112,12 @@ export default {
           name: "interview",
           path: "/article/interview-:id",
           component: resolve(__dirname, "pages/article/interview.vue")
-        }
+        },
+        {
+          name: "store",
+          path: "/:store/:id?",
+          component: resolve(__dirname, "pages/store/index.vue")
+        },
       );
     }
   }

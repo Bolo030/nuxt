@@ -55,7 +55,7 @@
           <li class="withdraw-item4 d-f d-f-between font-size-24">
             <p class=" font-main-color2">
               <span>可提现金额 </span>
-              <sapn>￥{{ capital.available }}</sapn>
+              <span>￥{{ capital.available }}</span>
             </p>
             <span class=" font-main-color" @click="all">全部提现</span>
           </li>

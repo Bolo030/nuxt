@@ -12,7 +12,7 @@
           <li class="modifyInfo-item1 bg-main-color">
             <h6 class="font-size-24">
               已绑定手机号
-              <span>{{ $cookies.get("phone") }}</span>
+              <span>{{ $cookies.get("phoneHide") }}</span>
             </h6>
             <div class="get-code position-r">
               <img src="../../assets/imgs/msg-code-icon.png" alt="信息图标" />
@@ -23,7 +23,7 @@
               />
               <span
                 class="font-size-24"
-                @click="getCodeMsg($cookies.get('phone'), 1 + index)"
+                @click="getCodeMsg($cookies.get('phone'), 1)"
                 >{{
                   isShowCode1 ? "重新获取" + countdown1 : "获取验证码"
                 }}</span
@@ -48,9 +48,9 @@
               />
               <span
                 class="font-size-24"
-                @click="getCodeMsg($cookies.get('phone'), 1 + index)"
+                @click="getCodeMsg(formData.phone_new, 2)"
                 >{{
-                  isShowCode1 ? "重新获取" + countdown1 : "获取验证码"
+                  isShowCode2 ? "重新获取" + countdown2 : "获取验证码"
                 }}</span
               >
             </div>
@@ -104,33 +104,33 @@ export default {
         code: "",
         phone_new: "",
         code_new: ""
-      }
+      },
     };
   },
   methods: {
     // 获取验证码
-    getCodeMsg(phone, index) {
-      if (this["isShowCode" + index]) return;
-      if (phone.length !== 0) {
-        if (!/^1[3456789]\d{9}$/.test(phone))
-          return this.$toast("请输入正确的手机格式");
+    getCodeMsg(phone, index) { 
+      if (this["isShowCode" + index]) return this.$toast('请不要频繁操作！！！');
+      if (phone) {
+        if (!/^1[3456789]\d{9}$/.test(phone)) return this.$toast("请输入正确的手机格式");
         this["isShowCode" + index] = true;
         this.$api.sendMsg({ type: 9, phone: phone }).then(res => {
           if (res.status !== 1) {
-            return this.$toast("服务器繁忙，请稍后发送");
+            //return this.$toast("服务器繁忙，请稍后发送");
+            this["isShowCode" + index] = false;
           } else {
-            this.$toast(res.message);
+            this.$toast('短信验证码发送成功');
+            let timer = setInterval(() => {
+              if (this["countdown" + index] === 0) {
+                this["countdown" + index] = 60;
+                this["isShowCode" + index] = false;
+                clearInterval(timer);
+              } else {
+                this["countdown" + index]--;
+              }
+            }, 1000);
           }
         });
-        let timer = setInterval(() => {
-          if (this["countdown" + index] === 0) {
-            this["countdown" + index] = 60;
-            this["isShowCode" + index] = false;
-            clearInterval(timer);
-          } else {
-            this["countdown" + index]--;
-          }
-        }, 1000);
       } else {
         return this.$toast("请填写手机号");
       }
@@ -149,7 +149,10 @@ export default {
           that.$api.editPhone(this.formData).then(res => {
             if (res.status == 1) {
               that.$toast.success("更换成功");
-              that.$cookies.set("phone", this.formData.phone_new,{expires:this.$store.state.auth.cookieMaxExpires,path:'/'});
+              that.$cookies.set("phone", this.formData.phone_new, {
+                expires: this.$store.state.auth.cookieMaxExpires,
+                path: "/"
+              });
               this.$router.go(-1);
             } else {
               this.$dialog
