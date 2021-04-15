@@ -31,7 +31,7 @@
             <div class="item-right font-size-32 d-f">
               <span class="font-main-color2">暂未绑定银行卡</span>
             </div>
-            <div class="item-left font-size-24 font-main-color d-f">
+            <div class="item-left font-size-24 font-main-color d-f"  @click="isShow = true">
               <span>去绑定银行卡</span>
               <img src="../../assets/imgs/icon-entry2.png" alt="箭头" />
             </div>
@@ -189,7 +189,7 @@ export default {
       this.$api.withdraw(this.formData).then(res => {
         if (res.status == 1) {
           this.$toast.success("提交成功");
-           that.$router.push('/assets/success?type=wd');
+           this.$router.push('/assets/success?type=wd');
         }
       });
     }
