@@ -106,7 +106,7 @@ export default {
           contract:this.contractId,
           email: this.userEmail
         });
-        if(res.status !== 1) return this.$toast(res.message);
+        if(res.status !== 1) return //this.$toast(res.message);
         this.$toast(res.message);
         done();
       } else {

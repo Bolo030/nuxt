@@ -148,7 +148,7 @@ export default {
             page: this.page,
             per_page: this.per_page
         });
-        if(res.status !== 1) return this.$toast(res.message);
+        if(res.status !== 1) //return this.$toast(res.message);
         this.loading = false;
         if(this.page === 1) {
           this.storeList =  res.data.data;

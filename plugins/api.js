@@ -430,6 +430,12 @@ export default ({ app: { $request, $axios } }, inject) => {
     */
     proposal(data){
       return $request.post('/feedback/proposal-simple',data)
+    },
+    /**
+     * 登录后修改密码
+     */
+    loginModfiy(data) {
+      return $request.post('/user/update-password',data)
     }
   });
 };

@@ -88,12 +88,12 @@
       </li>
       <li class="font-size-24 d-f d-f-between" v-if="isLoginType">
         <span id="loginPwd" @click="switchLogin(false)">密码登录</span>
-        <NuxtLink to="/forget">
-          <span class="font-main-color" id="forgetPwd">忘记密码？</span>
-        </NuxtLink>
       </li>
       <li class="font-size-24 d-f d-f-between" v-else>
         <span id="loginPhone" @click="switchLogin(true)">手机验证码登录</span>
+        <NuxtLink to="/forget">
+          <span class="font-main-color" id="forgetPwd">忘记密码？</span>
+        </NuxtLink>
       </li>
     </ul>
   </div>

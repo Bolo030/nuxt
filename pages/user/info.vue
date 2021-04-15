@@ -23,7 +23,7 @@
           <span class="font-size-28">昵称</span>
           <div class="right-editData font-size-28">
             <!-- 新用户_8181 -->
-            <input type="text" v-model="userInfoBackfill.name" @blur="changNickname">
+            <input type="text" maxlength="8" v-model="userInfoBackfill.name" @blur="changNickname" @input="niNameChange()">
           </div>
         </li>
         <li class="d-f d-f-between editaData-item">
@@ -126,6 +126,11 @@ export default {
     changNickname(){
       if(this.userInfoBackfill.name.trim().length === 0 ) this.$toast('昵称不能为空！')
     },
+    niNameChange(){
+      if(this.userInfoBackfill.name.length >= 8) {
+        this.$toast('昵称请勿超过8个字');
+      }
+    },
     saveBtn(){
       if(this.userInfoBackfill.avatar.length ===0 )  return this.$toast('头像不能为空');
       if(this.userInfoBackfill.name.trim().length === 0)  return this.$toast('昵称不能为空')
@@ -134,7 +139,7 @@ export default {
         gender:this.userInfoBackfill.sex,
         name: this.userInfoBackfill.name
       }).then( res=>{
-        if(res.status !== 1) return this.$toast(res.message);
+        if(res.status !== 1) //return this.$toast(res.message);
          this.$toast(res.message);
          this.$router.push('/user')
       })

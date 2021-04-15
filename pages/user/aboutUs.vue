@@ -18,24 +18,24 @@
                 <i class="iconfont iconjinru1 font-main-color2"></i>
               </li>
             </nuxt-link>
-            <a href="https://www.996110.com/html/privacy.html">
-              <li class="middle-item d-f d-f-between">
+           
+              <li class="middle-item d-f d-f-between" @click="goto(1)">
                 <span class="">隐私条款</span>
                 <i class="iconfont iconjinru1 font-main-color2"></i>
               </li>
-            </a>
-            <a href="https://www.996110.com/html/agreement.html">
-              <li class="middle-item d-f d-f-between">
+           
+            
+              <li class="middle-item d-f d-f-between" @click="goto(0)">
                 <span class="">用户协议</span>
                 <i class="iconfont iconjinru1 font-main-color2"></i>
               </li>
-            </a>
-            <a href="https://image.996110.com/images-202104-8218f9d58b6cc0bcf718cd10427db778-98323.png!quality">
-              <li class="middle-item d-f d-f-between">
+           
+            
+              <li class="middle-item d-f d-f-between" @click="goto(3)">
                 <span class="">企业资质</span>
                 <i class="iconfont iconjinru1 font-main-color2"></i>
               </li>
-            </a>
+           
             <li class="middle-item d-f d-f-between" v-if="false">
                 <span class="">特别申明</span>
                 <i class="iconfont iconjinru1 font-main-color2"></i>
@@ -54,6 +54,24 @@ export default {
     return {
       years: 2020
     }
+  },
+  methods:{
+     // 用户隐私协议
+    goto(type){
+		  if(type=='0'){
+        sessionStorage.setItem('path','https://www.996110.com/html/agreement.html');
+        sessionStorage.setItem('pathNmae','用户协议')
+		  	// window.location.href ='https://www.996110.com/html/agreement.html'
+		  }else if(type=='2'){
+        sessionStorage.setItem('path','https://www.996110.com/html/privacy.html') 
+        sessionStorage.setItem('pathNmae','隐私政策')
+		  	// window.location.href ='https://www.996110.com/html/privacy.html'
+      } else {
+        sessionStorage.setItem('path','https://image.996110.com/images-202104-8218f9d58b6cc0bcf718cd10427db778-98323.png!quality') 
+        sessionStorage.setItem('pathNmae','企业资质')
+      }
+      this.$router.push('/user/userAgreement')
+	  }
   },
   computed:{
     newYears() {

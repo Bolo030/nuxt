@@ -157,7 +157,7 @@ export default {
         mode: "more",
         keys: this.deleteList
       });
-      if (res.status != 1) return this.$toast("删除失败！");
+      if (res.status != 1) //return this.$toast("删除失败！");
       this.$toast(res.message);
       this.aginRequest(false);
     },

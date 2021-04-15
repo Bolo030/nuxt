@@ -30,10 +30,10 @@
     <main id="login-main">
       <!-- 登录注册区域 -->
       <login></login>
-      <div class="login-bottom">
-	  	   新用户登录即代表注册，并同意九九牛<span @click="goto(0)">《用户协议》</span><span @click="goto(1)">《隐私政策》</span>
-	    </div>
     </main>
+    <div class="login-bottom">
+	  	   新用户登录即代表注册，并同意九九牛<span @click="goto(0)">《用户协议》</span><span @click="goto(1)">《隐私政策》</span>
+	  </div>
   </div>
 </template>
 
@@ -46,10 +46,15 @@ export default {
     // 用户隐私协议
     goto(type){
 		  if(type=='0'){
-		  	window.location.href ='https://www.996110.com/html/agreement.html'
+        sessionStorage.setItem('path','https://www.996110.com/html/agreement.html');
+        sessionStorage.setItem('pathNmae','用户协议')
+		  	// window.location.href ='https://www.996110.com/html/agreement.html'
 		  }else{
-		  	window.location.href ='https://www.996110.com/html/privacy.html'
-		  }
+        sessionStorage.setItem('path','https://www.996110.com/html/privacy.html') 
+        sessionStorage.setItem('pathNmae','隐私政策')
+		  	// window.location.href ='https://www.996110.com/html/privacy.html'
+      }
+      this.$router.push('/user/userAgreement')
 	  }
   }
 }
@@ -58,6 +63,7 @@ export default {
 
 <style lang="scss" scoped>
 #login{
+  position: relative;
   height: 100%;
   background: #fff;
 }
@@ -172,8 +178,12 @@ header .bgImg img {
   border-radius: 8px;
 }
 .login-bottom {
-    position: relative;
-    bottom: -170px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+    bottom: 40px;
     span {
       color: #f4632c;
     }
