@@ -27,7 +27,11 @@
       <!-- 店铺详情 -->
       <div class="storeMsg">
         <div class="storeMsg-top">
-          <div @click="event(0)" class="text"  :class="{active: activeIndex === 0}">
+          <div
+            @click="event(0)"
+            class="text"
+            :class="{ active: activeIndex === 0 }"
+          >
             店铺信息
             <div v-if="activeIndex === 0"></div>
           </div>
@@ -35,12 +39,17 @@
             @click="event(1)"
             class="text"
             v-if="storeInfo.storeType != 200 || storeInfo.platform != 'tb'"
-            :class="{active: activeIndex === 1}"
+            :class="{ active: activeIndex === 1 }"
           >
             企业信息
             <div v-if="activeIndex === 1"></div>
           </div>
-          <div @click="event(2)" class="text" v-if="storeInfo.platform != 'tb'" :class="{active: activeIndex === 2}">
+          <div
+            @click="event(2)"
+            class="text"
+            v-if="storeInfo.platform != 'tb'"
+            :class="{ active: activeIndex === 2 }"
+          >
             商标信息
             <div v-if="activeIndex === 2"></div>
           </div>
@@ -389,7 +398,7 @@
             :key="index"
             class="screenshot-item"
           >
-            <img :src="item.thumb" @click="previewImg(screenshotList,index)" />
+            <img :src="item.thumb" @click="previewImg(screenshotList, index)" />
           </div>
         </div>
       </card>
@@ -403,6 +412,7 @@
           <span>{{ item.title }}</span>
           <div class="progress">
             <van-progress
+              color="#f4632c"
               :show-pivot="false"
               :percentage="percent[item.keys]"
             />
@@ -519,16 +529,16 @@
 
 <script>
 import CustomerService from "../../components/store-info/customer-service";
-import { ImagePreview } from 'vant';
+import { ImagePreview } from "vant";
 export default {
-  async asyncData({ app, params,error }) {
+  async asyncData({ app, params, error }) {
     let key = params.key || "";
     let [storeInfo, recommendList] = await Promise.all([
       app.$api.getStoreInfo(key).then(res => (res.status == 1 ? res.data : {})),
       app.$api.StoreList(key).then(res => (res.status == 1 ? res.data : []))
     ]);
-    if(JSON.stringify(storeInfo)==="{}"){
-      error({ message: 'This page could not be found.', statusCode: 404 })
+    if (JSON.stringify(storeInfo) === "{}") {
+      error({ message: "This page could not be found.", statusCode: 404 });
     }
     let customerService = storeInfo.customer_service;
     let storeList = [];
@@ -698,8 +708,8 @@ export default {
     immediatelypurchase() {
       if (!this.$utils.isLogin(this)) {
         // 存储判断0元下单信息
-        sessionStorage.setItem('customer',1);
-        sessionStorage.setItem('key',this.key)
+        sessionStorage.setItem("customer", 1);
+        sessionStorage.setItem("key", this.key);
         return this.$router.push("/login/visitorsOrder?key=" + this.key);
       }
       if (this.storeInfo.status != "4") {
@@ -759,11 +769,11 @@ export default {
       });
     },
     // 图片预览
-    previewImg(val,index) {
-     ImagePreview({
-        images:val ,
+    previewImg(val, index) {
+      ImagePreview({
+        images: val,
         closeable: true,
-        startPosition:index,
+        startPosition: index
       });
     }
   }
@@ -834,8 +844,8 @@ export default {
     }
 
     .evaluate-3 {
-      color: #ffffff;
-      background-color: #ff0000;
+      color: #f4632c;
+      background-color: #fff1eb;
     }
   }
 
@@ -940,7 +950,7 @@ export default {
         height: 109px;
         line-height: 109px;
         position: relative;
-       
+
         div {
           position: absolute;
           width: 42px;

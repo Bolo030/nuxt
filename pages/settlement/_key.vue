@@ -112,7 +112,7 @@ export default {
       radio = "1";
       total=info.order.waitPay;
     } else {
-      let total = parseFloat(
+      total = parseFloat(
         (info.order.amount * (depositRate / 100)).toFixed(2)
       );
     }

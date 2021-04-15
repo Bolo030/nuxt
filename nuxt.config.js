@@ -1,6 +1,6 @@
 export default {
-  env:{
-    baseUrl: 'https://api.testing.996110.com/api'
+  env: {
+    baseUrl: "https://api.testing.996110.com/api"
     // baseUrl: process.env.NODE_ENV=='pro'?'https://api.996110.com/api':'https://api.testing.996110.com/api'
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -22,7 +22,10 @@ export default {
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       { rel: "stylesheet", href: "/css/common.css" },
       { rel: "stylesheet", href: "/css/reset.css" },
-      { rel: "stylesheet" , href:'//at.alicdn.com/t/font_2353350_bdz183nryxm.css'}
+      {
+        rel: "stylesheet",
+        href: "//at.alicdn.com/t/font_2353350_bdz183nryxm.css"
+      }
     ]
   },
 
@@ -31,12 +34,12 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/axios.js',
-    '~/plugins/request.js',
-    '~/plugins/api.js',
-    '~/plugins/vue-global.js',
+    "~/plugins/axios.js",
+    "~/plugins/request.js",
+    "~/plugins/api.js",
+    "~/plugins/vue-global.js",
     { src: "@/plugins/lib-flexible", ssr: false },
-    { src: '@/plugins/vue-mavon-editor', ssr: false }
+    { src: "@/plugins/vue-mavon-editor", ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -49,11 +52,13 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios", "cookie-universal-nuxt","@nuxtjs/style-resources"],
+  modules: [
+    "@nuxtjs/axios",
+    "cookie-universal-nuxt",
+    "@nuxtjs/style-resources"
+  ],
   styleResources: {
-    scss: [
-      '~/assets/css/variable.scss'
-    ]
+    scss: ["~/assets/css/variable.scss"]
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -93,21 +98,22 @@ export default {
       }
     }
   },
-  loading: { color: '#ff5722', height: ' 3px' },
+  loading: { color: "#ff5722", height: " 3px" },
   router: {
     middleware: ["device"],
     extendRoutes(routes, resolve) {
       routes.push(
         {
-          name: "detail",
-          path: "/article/detail-:id",
-          component: resolve(__dirname, "pages/article/detail.vue")
-        },
-        {
           name: "article",
           path: "/article/list-:id",
           component: resolve(__dirname, "pages/article/index.vue")
         },
+        {
+          name: "detail",
+          path: "/article/detail-:id",
+          component: resolve(__dirname, "pages/article/detail.vue")
+        },
+
         {
           name: "interview",
           path: "/article/interview-:id",
@@ -117,7 +123,7 @@ export default {
           name: "store",
           path: "/:store/:id?",
           component: resolve(__dirname, "pages/store/index.vue")
-        },
+        }
       );
     }
   }
