@@ -537,8 +537,8 @@ export default {
       app.$api.getStoreInfo(key).then(res => (res.status == 1 ? res.data : {})),
       app.$api.StoreList(key).then(res => (res.status == 1 ? res.data : []))
     ]);
-    if (JSON.stringify(storeInfo) === "{}") {
-      error({ message: "This page could not be found.", statusCode: 404 });
+    if (JSON.stringify(storeInfo) == "{}") {
+     return error({ message: "This page could not be found.", statusCode: 404 });
     }
     let customerService = storeInfo.customer_service;
     let storeList = [];

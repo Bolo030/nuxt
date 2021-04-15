@@ -44,11 +44,12 @@
       </div>
       <div class="ab-item">
         <p class="ab-label"><span>*</span>银行预留手机号</p>
-        <input
+        <input v-if="type!='true'"
           v-model="formData.phone"
           type="number"
           placeholder="请填写该银行卡的预留手机号"
         />
+        <p style="padding:10px 0" v-else>{{$cookies.get('phoneHide')}}</p>
       </div>
       <div class="ab-item">
         <p class="ab-label"><span>*</span>持卡人真实姓名</p>
@@ -119,8 +120,8 @@ export default {
       this.formData.is_account_real_name = this.type=='true'?true:false;
       if (!this.formData.bank_number) return this.$toast("请输入银行卡号");
       if (!this.formData.bank) return this.$toast("请选择所属银行");
-      if (!this.formData.bank_name)
-        return this.$toast("请填写您的开户分支行银行名称");
+    /*   if (!this.formData.bank_name)
+        return this.$toast("请填写您的开户分支行银行名称"); */
       if (!/(^1[3|4|5|7|8][0-9]{9}$)/.test(this.formData.phone))
         return this.$toast("请您输入正确的手机号码");
       if (!this.formData.realname) return this.$toast("请填您持卡人真实姓名");

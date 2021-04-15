@@ -25,11 +25,11 @@
                     <p class="font-size-26">检测到您当前认证的
                         <span class="font-main-color">身份信息</span>与
                         <span class="font-main-color">账号手机信息</span>
-                        一致，是否同时采用此身份完成账号实名认证；
+                        一致，已为您完成账号实名认证；
                     </p>
                     <div class="warmInfo-btn font-size-24 font-main-color6">
-                        <button class="realName-btn1" @click="real.need_confirm = false">否</button>
-                        <button class="realName-btn2" @click="authentication">是</button>
+                        <!-- <button class="realName-btn1" @click="real.need_confirm = false">否</button> -->
+                        <button class="realName-btn2" @click="real.need_confirm = false">是</button>
                     </div>
                 </div>
             </div>

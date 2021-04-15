@@ -189,7 +189,7 @@ export default {
       this.$api.withdraw(this.formData).then(res => {
         if (res.status == 1) {
           this.$toast.success("提交成功");
-          this.$router.go(-1);
+           that.$router.push('/assets/success?type=wd');
         }
       });
     }

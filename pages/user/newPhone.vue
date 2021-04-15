@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <van-nav-bar title="修改手机号" left-arrow @click-left="$router.go(-1)" />
+    <van-nav-bar title="设置新手机号" left-arrow @click-left="$router.go(-1)" />
     <main class="modifyPhoneNumber-box">
       <p class="modifyWarmInfo font-size-24">
         <span class="font-main-color">*</span>
@@ -9,13 +9,17 @@
       </p>
       <div>
         <ul class="modifyInfo-box">
-          <li class="modifyInfo-item1 bg-main-color">
-            <h6 class="font-size-24">
-              已绑定手机号
-              <span>{{ $cookies.get("phoneHide") }}</span>
-            </h6>
-            <div class="get-code position-r">
-              <img src="../../assets/imgs/msg-code-icon.png" alt="信息图标" />
+          <li class="modifyInfo-item2 bg-main-color">
+            <div class="modifyNewPhone position-r">
+              <img src="../../assets/imgs/phone_icon.png" alt="手机图标" />
+              <input
+                v-model="formData.phone"
+                type="tel"
+                placeholder="请输入您要修改的新手机号码"
+              />
+            </div>
+            <div class="modifyNewPhone position-r">
+              <img src="../../assets/imgs/msg-code-icon.png" alt="手机图标" />
               <input
                 type="number"
                 v-model="formData.code"
@@ -23,50 +27,61 @@
               />
               <span
                 class="font-size-24"
-                @click="getCodeMsg($cookies.get('phone'), 1)"
+                @click="getCodeMsg(formData.phone, 2)"
                 >{{
-                  isShowCode1 ? "重新获取" + countdown1 : "获取验证码"
+                  isShowCode2 ? "重新获取" + countdown2 : "获取验证码"
                 }}</span
               >
             </div>
-            <van-button class="btn" block color="#f4632c" @click="onSubmit">下一步</van-button>
+            <button
+              class="font-size-30 font-weight font-main-color6"
+              @click="onSubmit"
+            >
+              确认更换
+            </button>
           </li>
         </ul>
       </div>
-
     </main>
   </div>
 </template>
 
 <script>
 export default {
-  async asyncData() {
-    return {};
+  async asyncData({ query }) {
+    let formData = {
+      code: "",
+      phone: "",
+      request_id: query.request_id
+    };
+    return {formData};
   },
   data() {
     return {
-      isShowCode1: false,
       isShowCode2: false,
-      countdown1: 60,
       countdown2: 60,
       formData: {
         code: "",
-      },
+        phone: "",
+        request_id: ""
+      }
     };
   },
   methods: {
     // 获取验证码
     getCodeMsg(phone, index) {
-      if (this["isShowCode" + index]) return this.$toast('请不要频繁操作！！！');
+      if (this["isShowCode" + index])
+        return this.$toast("请不要频繁操作！！！");
       if (phone) {
-        if (!/^1[3456789]\d{9}$/.test(phone)) return this.$toast("请输入正确的手机格式");
+        if (!/^1[3456789]\d{9}$/.test(phone))
+          return this.$toast("请输入正确的手机格式");
         this["isShowCode" + index] = true;
-        this.$api.sendMsg({ type: 9, phone: phone }).then(res => {
+        this.$api.sendMsg({ type: 10, phone: phone }).then(res => {
           if (res.status !== 1) {
             //return this.$toast("服务器繁忙，请稍后发送");
             this["isShowCode" + index] = false;
           } else {
-            this.$toast('短信验证码发送成功');
+            this.$toast("短信验证码发送成功");
             let timer = setInterval(() => {
               if (this["countdown" + index] === 0) {
                 this["countdown" + index] = 60;
@@ -85,20 +100,41 @@ export default {
     // 更换手机号
     onSubmit() {
       if (!this.formData.code) return this.$toast("请输入验证码");
-          this.$api.editPhoneOne(this.formData).then(res => {
+      if (!this.formData.phone) return this.$toast("请输入新手机号");
+      let that = this;
+      this.$dialog
+        .confirm({
+          message: "是否确认更换新的手机号"
+        })
+        .then(() => {
+          that.$api.editPhone(this.formData).then(res => {
             if (res.status == 1) {
-              this.$router.push('user/newPhone?request_id='+res.data.request_id);
+              that.$toast.success("更换成功");
+              that.$cookies.set("phone", this.formData.phone, {
+                expires: this.$store.state.auth.cookieMaxExpires,
+                path: "/"
+              });
+              this.$router.go(-2);
+            } else {
+              this.$dialog
+                .alert({
+                  message: "实名信息不一致，修改失败"
+                })
+                .then(() => {
+                  // on close
+                });
             }
           });
+        })
+        .catch(() => {
+          // on cancel
+        });
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.btn{
-  margin-top:50px;
-}
 .modifyPhoneNumber-box {
   padding: 0 3.2vw;
 }
