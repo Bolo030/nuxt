@@ -23,7 +23,7 @@
           <li class="list-item d-f d-f-between font-size-30" @click="$router.push('/user/editPhone')">
             <span>修改手机号码</span>
             <div class="right">
-              <span class="font-size-26 font-main-color2">{{$cookies.get('phone')}}</span>
+              <span class="font-size-26 font-main-color2">{{$cookies.get('phoneHide')}}</span>
               <i class="iconfont iconjinru1"></i>
             </div>
           </li>
