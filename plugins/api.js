@@ -443,5 +443,11 @@ export default ({ app: { $request, $axios } }, inject) => {
     editPhoneTwo(data) {
       return $request.post("/user/change-phone-two", data);
     },
+    /**
+     * 登录后修改密码
+     */
+    loginModfiy(data) {
+      return $request.post('/user/update-password',data)
+    }
   });
 };

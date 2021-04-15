@@ -100,7 +100,7 @@ export default {
           .sendMsg({ phone: this.user.phone, type: 8 })
           .then(res => {
             if (res.status != 1) {
-              return this.$toast("验证码发送失败！");
+              //return this.$toast("验证码发送失败！");
             } else {
               this.$toast("验证码发送成功！");
             }

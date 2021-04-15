@@ -27,7 +27,7 @@
               <i class="iconfont iconjinru1"></i>
             </div>
           </li>
-          <li class="list-item d-f d-f-between font-size-30" @click="$router.push('/forget')">
+          <li class="list-item d-f d-f-between font-size-30" @click="$router.push({path:'/forget',query:{typeShow:1}})">
             <span>修改密码</span>
             <div class="right">
               <i class="iconfont iconjinru1"></i>

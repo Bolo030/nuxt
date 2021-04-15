@@ -36,7 +36,7 @@
               item.store.parse_status
             }}</span>
           </li>
-          <li class="middle-desc bg-main-color6 d-f">
+          <li class="middle-desc bg-main-color6 d-f"  >
             <img :src="item.store_icon_path" alt="店铺图标" />
             <p
               class="middle-desc-r font-weight font-size-26 text-wraps"
@@ -59,11 +59,11 @@
                 item.store.parse_price
               }}</span>
             </div>
-            <div class="bottmo-select-r" v-if="isEditor">
+            <div class="bottmo-select-r" v-if="isEditor" @click.stop="choose(item, index)">
               <van-checkbox
-                @click="choose(item, index)"
                 v-model="item.checked"
                 checked-color="#f4632c"
+                class="singleChose"
               ></van-checkbox>
             </div>
           </li>
@@ -129,13 +129,7 @@ export default {
       this.isEditor = !this.isEditor;
     },
     choose(item, index) {
-      let a = true;
-      this.storeList.forEach(e => {
-        if (e.checked === false) {
-          a = false;
-        }
-      });
-      this.checked = a;
+      this.storeList[index].checked=!item.checked
     },
     allCheck() {
       this.storeList.forEach(value => {
@@ -163,7 +157,7 @@ export default {
         mode: "more",
         keys: this.deleteList
       });
-      if (res.status != 1) return this.$toast("删除失败！");
+      if (res.status != 1) //return this.$toast("删除失败！");
       this.$toast(res.message);
       this.aginRequest(false);
     },
@@ -221,6 +215,7 @@ export default {
 }
 
 .my-favorite .favorite-store-list {
+  position: relative;
   margin-top: 20px;
   padding: 40px 30px;
   border-radius: 16px;
@@ -262,7 +257,18 @@ export default {
   background-size: cover;
   vertical-align: middle;
 }
-
+.my-favorite .favorite-store-list .bottmo-select-r {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.singleChose {
+  position: absolute;
+  right: 30px;
+  bottom: 55px;
+}
 .my-favorite
   .favorite-store-list
   .bottom-price

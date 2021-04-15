@@ -106,7 +106,7 @@ export default {
           contract:this.contractId,
           email: this.userEmail
         });
-        if(res.status !== 1) return this.$toast(res.message);
+        if(res.status !== 1) return //this.$toast(res.message);
         this.$toast(res.message);
         done();
       } else {
@@ -121,7 +121,7 @@ export default {
     jumpOrderInfo(item) {
       console.log(item);
       if(!item.outTradeNo && !item.storeCode) return this.$toast('暂无改订单');
-      item.store_key?this.$router.push(`/si/${item.store_key}`): this.$router.push("/user/order-info/buy?key=" + item.order_key) 
+      item.order_key? this.$router.push("/user/order-info/buy?key=" + item.order_key):this.$router.push(`/si/${item.store_key}`); 
     }
     
   }
