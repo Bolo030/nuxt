@@ -62,6 +62,7 @@
             <img src="~assets/imgs/store/bg_shop_fuwurukou.png" />
           </a>
         </div>
+        <van-sticky>
         <!-- 导航 -->
         <custom-store-filter
           :showBack="isSearch"
@@ -69,6 +70,7 @@
           @result="getSearch"
           :child="categoryList"
         ></custom-store-filter>
+        </van-sticky>
         <!-- 列表 -->
         <van-list
           v-model="loading"

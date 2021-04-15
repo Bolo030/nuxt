@@ -145,7 +145,7 @@ export default {
   },
   data() {
     return {
-      defaultBank:[],
+      defaultBank: [],
       capital: {},
       bankList: [],
       isShow: false,
@@ -166,6 +166,7 @@ export default {
       if (!data.price) return this.$toast("请输入提现金额");
       if (data.price <= 0 || data.price > Number(this.capital.available))
         return this.$toast("请输入正确的提现金额");
+      else if (data.price < 1) return this.$toast("提现金额最低为1元");
       this.$api.subWithdrawal(data).then(res => {
         if (res.status == 1) {
           this.$toast.success("提交成功");
@@ -175,22 +176,22 @@ export default {
     },
     chooseBank(index) {
       for (var i in this.bankList) {
-        this.bankList[i]['select'] = false;
+        this.bankList[i]["select"] = false;
       }
-      this.$set(this.bankList[index],'selected',true);
-      this.defaultBank[0]=this.bankList[index];
-      this.isShow=false
-      console.log(this.bankList,'this.bankList')
+      this.$set(this.bankList[index], "selected", true);
+      this.defaultBank[0] = this.bankList[index];
+      this.isShow = false;
+      console.log(this.bankList, "this.bankList");
     },
     // 提现
-    onSubmit(){
-      this.formData.bank=this.defaultBank[0].id;
-      this.$api.withdraw(this.formData).then(res=>{
-        if(res.status==1){
-          this.$toast.success('提交成功');
-          this.$router.go(-1)
+    onSubmit() {
+      this.formData.bank = this.defaultBank[0].id;
+      this.$api.withdraw(this.formData).then(res => {
+        if (res.status == 1) {
+          this.$toast.success("提交成功");
+          this.$router.go(-1);
         }
-      })
+      });
     }
   }
 };
