@@ -104,8 +104,8 @@ export default {
       this.formData.bank = this.openBank.code;
       if (!this.formData.bank_number) return this.$toast("请输入银行卡号");
       if (!this.formData.bank) return this.$toast("请选择所属银行");
-      if (!this.formData.bank_name)
-        return this.$toast("请填写您的开户分支行银行名称");
+      //if (!this.formData.bank_name)
+       // return this.$toast("请填写您的开户分支行银行名称");
       if (!/(^1[3|4|5|7|8][0-9]{9}$)/.test(this.formData.phone))
         return this.$toast("请您输入正确的手机号码");
       if (!this.formData.realname) return this.$toast("请填您持卡人真实姓名");
