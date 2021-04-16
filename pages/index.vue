@@ -428,12 +428,18 @@ main {
   box-sizing: border-box;
   .swiper-container {
     padding: 4vw 3.2vw;
+    img {
+      width: 702px;
+      height: 260px;
+      border-radius: 16px;
+      object-fit: cover;
+    }
+  }
+  /deep/.van-swipe__indicators {
+    bottom: 46px!important;
   }
 }
-.banner .swiper-container img {
-  width: 100%;
-  height: 100%;
-}
+
 
 .trade-box {
   padding: 0vw 3.2vw;

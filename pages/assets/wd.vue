@@ -31,7 +31,7 @@
             <div class="item-right font-size-32 d-f">
               <span class="font-main-color2">暂未绑定银行卡</span>
             </div>
-            <div class="item-left font-size-24 font-main-color d-f"  @click="isShow = true">
+            <div class="item-left font-size-24 font-main-color d-f"  @click="$router.push('/user/bank/addBankCard')">
               <span>去绑定银行卡</span>
               <img src="../../assets/imgs/icon-entry2.png" alt="箭头" />
             </div>
@@ -185,11 +185,14 @@ export default {
     },
     // 提现
     onSubmit() {
+      //console.log();
+      //if(!this.defaultBank) return
+     // if(!this.formData.price) return this.$toast('提现金额不能为空')
       this.formData.bank = this.defaultBank[0].id;
       this.$api.withdraw(this.formData).then(res => {
         if (res.status == 1) {
           this.$toast.success("提交成功");
-           this.$router.push('/assets/success?type=wd');
+          this.$router.push('/assets/success?type=wd');
         }
       });
     }

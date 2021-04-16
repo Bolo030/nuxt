@@ -710,6 +710,7 @@ export default {
         // 存储判断0元下单信息
         sessionStorage.setItem("customer", 1);
         sessionStorage.setItem("key", this.key);
+        //return this.redirect('"/login/visitorsOrder?key=" + this.key')
         return this.$router.push("/login/visitorsOrder?key=" + this.key);
       }
       if (this.storeInfo.status != "4") {

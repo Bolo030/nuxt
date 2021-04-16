@@ -5,7 +5,7 @@
       <div class="orderDetails-top font-main-color6">
         <h5 class=" font-size-34 font-weight">{{ status[info.status] }}</h5>
         <p class="font-size-24">
-          好店不等人，尽快完成付款，将心仪店铺带回家吧！
+          感谢您选择九九牛网店交易平台，有任何疑问请联系您的专属顾问
         </p>
       </div>
       <section class="orderDetails-box">
@@ -52,10 +52,10 @@
               </h4>
             </div>
           </div>
-          <div class="service-right font-main-color font-size-24">
-            <i class="iconfont icondianhua"></i>
-            <span>联系顾问</span>
-          </div>
+          <a class="service-right font-main-color font-size-24" href="tel:18981671049">
+            <i class="iconfont icondianhua font-main-color"></i>
+            <span class="font-main-color">联系顾问</span>
+          </a>
         </div>
         <!-- 下单店铺信息 -->
         <div class="order-info bg-main-color">

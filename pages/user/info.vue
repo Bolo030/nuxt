@@ -11,31 +11,47 @@
         <span class="title">编辑资料</span>
       </div>
     </header>
-    <main class="editData-box" >
+    <main class="editData-box">
       <ul class="editData-in bg-main-color">
         <li class="d-f d-f-between editaData-item">
           <span class="font-size-28">头像</span>
           <div class="right-editData position-a ">
-            <van-uploader v-model="userInfoBackfill.avatar" multiple :max-count="1" preview-size="60px"  :preview-full-image="false" :after-read="afterRead" />
+            <van-uploader
+              v-model="userInfoBackfill.avatar"
+              multiple
+              :max-count="1"
+              preview-size="60px"
+              :preview-full-image="false"
+              :after-read="afterRead"
+            />
           </div>
         </li>
         <li class="d-f d-f-between editaData-item">
           <span class="font-size-28">昵称</span>
           <div class="right-editData font-size-28">
             <!-- 新用户_8181 -->
-            <input type="text" maxlength="8" v-model="userInfoBackfill.name" @blur="changNickname" @input="niNameChange()">
+            <input
+              type="text"
+              maxlength="8"
+              v-model="userInfoBackfill.name"
+              @blur="changNickname"
+              
+            />
           </div>
         </li>
         <li class="d-f d-f-between editaData-item">
           <span class="font-size-28">性别</span>
           <div class="right-editData font-size-28" @click="selectSex">
-            {{userInfoBackfill.gender}}
+            {{ userInfoBackfill.gender }}
             <i class="iconfont iconjinru1 font-size"></i>
           </div>
         </li>
       </ul>
 
-      <div  @click="saveBtn" class="editData-btn bg-main-color2 font-size-30 font-main-color6">
+      <div
+        @click="saveBtn"
+        class="editData-btn bg-main-color2 font-size-30 font-main-color6"
+      >
         <button>保存</button>
       </div>
 
@@ -51,12 +67,12 @@
         </div>
       </div>
       <van-action-sheet
-          v-model="maskShow"
-          :actions="actions"
-          cancel-text="取消"
-          close-on-click-action
-          @cancel="onCancel"
-          @select="selectName"
+        v-model="maskShow"
+        :actions="actions"
+        cancel-text="取消"
+        close-on-click-action
+        @cancel="onCancel"
+        @select="selectName"
       />
     </main>
   </div>
@@ -64,82 +80,79 @@
 
 <script>
 export default {
-  async  asyncData({ params,query,app }) {
-
-     // 获取个人中心数据
+  async asyncData({ params, query, app }) {
+    // 获取个人中心数据
     let userInfo = await app.$api.getUserInfo();
     if (userInfo.status !== 1) {
       return;
     } else {
-       userInfo.data.status = 1;
-       userInfo = userInfo.data.user;
-       let userInfoBackfill = {}
-       userInfoBackfill.avatar = [];
-       userInfoBackfill.name = userInfo.name;
-       userInfoBackfill.avatar.push({url:userInfo.contact.avatar});
-       userInfoBackfill.gender = userInfo.contact.gender;
-       userInfoBackfill.gender = userInfoBackfill.gender === ''? 'u':userInfoBackfill.gender;
-       userInfoBackfill.sex = userInfoBackfill.gender;
-       if(userInfoBackfill.gender === 'u') {
-         userInfoBackfill.gender = '保密'
-       }else if (userInfoBackfill.gender === 'f') {
-         userInfoBackfill.gender = '女'
-       }else if (userInfoBackfill.gender === 'm') {
-         userInfoBackfill.gender = '男'
-       }
-       console.log(userInfoBackfill,111);
-       
-       return {userInfoBackfill}
+      userInfo.data.status = 1;
+      userInfo = userInfo.data.user;
+      let userInfoBackfill = {};
+      userInfoBackfill.avatar = [];
+      userInfoBackfill.name = userInfo.name;
+      userInfoBackfill.avatar.push({ url: userInfo.contact.avatar });
+      userInfoBackfill.gender = userInfo.contact.gender;
+      userInfoBackfill.gender =
+        userInfoBackfill.gender === "" ? "u" : userInfoBackfill.gender;
+      userInfoBackfill.sex = userInfoBackfill.gender;
+      if (userInfoBackfill.gender === "u") {
+        userInfoBackfill.gender = "保密";
+      } else if (userInfoBackfill.gender === "f") {
+        userInfoBackfill.gender = "女";
+      } else if (userInfoBackfill.gender === "m") {
+        userInfoBackfill.gender = "男";
+      }
+      console.log(userInfoBackfill, 111);
+
+      return { userInfoBackfill };
     }
   },
-  data(){
-     return {
+  data() {
+    return {
       fileList: [],
       maskShow: false,
-      actions: [{ name: '保密', value: 'u' }, { name: '男',value:'m' }, { name: '女',value:'f' }],
-      userInfoBackfill:{
-        name: '',
-        avatar:[],
-        gender: '',
-        sex: ''
+      actions: [
+        { name: "保密", value: "u" },
+        { name: "男", value: "m" },
+        { name: "女", value: "f" }
+      ],
+      userInfoBackfill: {
+        name: "",
+        avatar: [],
+        gender: "",
+        sex: ""
       }
     };
   },
-  methods:{
+  methods: {
     onCancel() {
-      this.$toast('已取消');
+      this.$toast("已取消");
     },
     selectSex() {
-      this.maskShow = true
+      this.maskShow = true;
     },
     selectName(sex) {
-      this.$set(this.userInfoBackfill,'gender',sex.name);
+      this.$set(this.userInfoBackfill, "gender", sex.name);
       this.userInfoBackfill.sex = sex.value;
     },
-    afterRead(file,b) {
+    afterRead(file, b) {
       // 此时可以自行将文件上传至服务器
-      let formData = new FormData()
-      formData.append('file', file.file);
-      this.$api.upload(formData).then(res=>{
-        if(res.status !== 1) this.$toast(res.message);
+      let formData = new FormData();
+      formData.append("file", file.file);
+      this.$api.upload(formData).then(res => {
+        if (res.status !== 1) this.$toast(res.message);
         this.userInfoBackfill.avatar[0] = res.data.url;
-      })
+      });
     },
-    changNickname(){
-      if(this.userInfoBackfill.name.trim().length === 0 ) this.$toast('昵称不能为空！')
+    changNickname() {
+      if (this.userInfoBackfill.name.trim().length === 0)
+        this.$toast("昵称不能为空！");
     },
-    niNameChange(){
-      if(this.userInfoBackfill.name.length >= 8) {
-        this.$toast('昵称请勿超过8个字');
-      }
-    },
-    saveBtn(){
-     this.userInfoBackfill.avatar[0] = (typeof this.userInfoBackfill.avatar[0]) === 'string'?this.userInfoBackfill.avatar[0]:JSON.parse(this.userInfoBackfill.avatar[0].url).url
-     
-      console.log(this.userInfoBackfill.avatar[0]);
-      
-      if(!this.userInfoBackfill.avatar )  return this.$toast('头像不能为空');
-      if(!this.userInfoBackfill.name.trim())  return this.$toast('昵称不能为空')
+    saveBtn() {
+      this.userInfoBackfill.avatar[0] = (typeof this.userInfoBackfill.avatar[0]) === 'object'?this.userInfoBackfill.avatar[0].url:this.userInfoBackfill.avatar[0]
+      if(!this.userInfoBackfill.avatar[0])  return this.$toast('头像不能为空');
+      if(this.userInfoBackfill.name.trim().length > 6)  return this.$toast('昵称请勿超过6个字')
       this.$api.modifyData({
         avatar: this.userInfoBackfill.avatar[0],
         gender:this.userInfoBackfill.sex,
@@ -147,13 +160,11 @@ export default {
       }).then( res=>{
         if(res.status !== 1) //return this.$toast(res.message);
          this.$toast(res.message);
-         this.$router.push('/user')
+         this.$router.push('/user');
+         
       })
-      
-      
     }
-  },
-  
+  }
 };
 </script>
 
