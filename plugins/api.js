@@ -431,6 +431,18 @@ export default ({ app: { $request, $axios } }, inject) => {
     proposal(data){
       return $request.post('/feedback/proposal-simple',data)
     },
+    /*
+    *更换手机号1
+    */
+    editPhoneOne(data) {
+      return $request.post("/user/change-phone-one", data);
+    },
+    /*
+    *更换手机号2
+    */
+    editPhoneTwo(data) {
+      return $request.post("/user/change-phone-two", data);
+    },
     /**
      * 登录后修改密码
      */

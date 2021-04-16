@@ -9,7 +9,7 @@
         <div class="withdraw-middle">
           <h3 class="font-size-30 font-weight">{{type=='wd'?'您的提现申请已递交':'您的充值信息提交成功'}}</h3>
           <p class="font-size-24">
-            平台将在72小时内对您的提现进行处理，请耐心等待
+            平台将在72小时内对您的{{type=='wd'?'提现':'充值'}}进行处理，请耐心等待
             如有疑问请拨打客服热线
             <span class="font-main-color8"> 400-0909-940</span>
           </p>

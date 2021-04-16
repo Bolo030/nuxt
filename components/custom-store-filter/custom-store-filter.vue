@@ -198,9 +198,7 @@ export default {
   methods: {
     // 返回店铺列表
     back() {
-      /* 	uni.reLaunch({
-					url: '/pages/shop/shop'
-				}) */
+      this.router.push("/tm")
     },
     clearSearch() {
       this.search.search = "";

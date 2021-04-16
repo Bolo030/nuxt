@@ -65,7 +65,7 @@
         <van-sticky>
         <!-- 导航 -->
         <custom-store-filter
-          :showBack="isSearch"
+          :showBack="this.search.search"
           :searchData="search"
           @result="getSearch"
           :child="categoryList"
@@ -83,7 +83,7 @@
       </div>
     </main>
     <!-- 底部tabbar -->
-    <custom-tabbar :active="4" />
+    <custom-tabbar :active="4" v-if="!this.search.search" />
   </div>
 </template>
 
