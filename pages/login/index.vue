@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <header style="display: block;" id="loginHeader">
+    <header  id="loginHeader">
       <div class="closeBtn d-f">
         <img
           src="~assets/imgs/icon_close.png"
@@ -17,23 +17,15 @@
         <p class="font-size-24">九九牛.专业的网店交易平台</p>
       </div>
     </header>
-    <div class="pwd-login-title" style="display: none;" id="pwdLoginHeader">
-      <div class="closeBtn d-f">
-        <img
-          src="~assets/imgs/icon_back1.png"
-          alt="九九牛网店交易平台，关闭按钮图标"
-          class="closeImg"
-          id="closePage"
-        />
-      </div>
-    </div>
+    
     <main id="login-main">
       <!-- 登录注册区域 -->
       <login></login>
-    </main>
-    <div class="login-bottom">
+      <div class="login-bottom">
 	  	   新用户登录即代表注册，并同意九九牛<span @click="goto(0)">《用户协议》</span><span @click="goto(1)">《隐私政策》</span>
-	  </div>
+	    </div>
+    </main>
+    
   </div>
 </template>
 
@@ -63,7 +55,8 @@ export default {
 
 <style lang="scss" scoped>
 #login{
-  position: relative;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   background: #fff;
 }
@@ -97,7 +90,11 @@ header .bgImg img {
 }
 
 #login-main {
+  position: relative;
   padding: 0 42px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 #login-main .login-box .login-top-title {
@@ -181,9 +178,10 @@ header .bgImg img {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    bottom: 30px;
     text-align: center;
     width: 100%;
-    bottom: 40px;
+    font-size: 12px;
     span {
       color: #f4632c;
     }

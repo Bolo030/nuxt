@@ -52,7 +52,7 @@
               </h4>
             </div>
           </div>
-          <a class="service-right font-main-color font-size-24" href="tel:18981671049">
+          <a class="service-right font-main-color font-size-24" :href="'tel:'+info.customer_service.workTel">
             <i class="iconfont icondianhua font-main-color"></i>
             <span class="font-main-color">联系顾问</span>
           </a>

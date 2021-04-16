@@ -1,5 +1,5 @@
 <template>
-  <div id="aside" @touchmove.stop.prevent>
+  <div id="aside" >
     <div class="aside-back" @click="colse">
       <van-icon name="arrow-left" size="20"></van-icon>
       <span>返回</span>
