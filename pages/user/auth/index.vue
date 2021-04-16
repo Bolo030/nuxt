@@ -30,7 +30,7 @@
             </li>
         </ul>
         <ul class="realName-middle bg-main-color"  v-if="list.length>0">
-           <van-swipe-cell  v-for="(item, index) in list" :key="index">
+           <van-swipe-cell  v-for="(item, index) in list" :key="index" :disabled="item.isBind==2">
             <li class="realName-middle-item bg-gradient-color2 d-f position-r" >
                 <div class="position-right position-a1 font-main-color6 font-size-20 d-f" v-if="item.isBind==2">
                     <img src="../../../assets/imgs/icon-realName1.png" alt="">
