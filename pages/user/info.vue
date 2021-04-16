@@ -87,6 +87,8 @@ export default {
        }else if (userInfoBackfill.gender === 'm') {
          userInfoBackfill.gender = '男'
        }
+       console.log(userInfoBackfill,111);
+       
        return {userInfoBackfill}
     }
   },
@@ -132,8 +134,12 @@ export default {
       }
     },
     saveBtn(){
-      if(this.userInfoBackfill.avatar.length ===0 )  return this.$toast('头像不能为空');
-      if(this.userInfoBackfill.name.trim().length === 0)  return this.$toast('昵称不能为空')
+     this.userInfoBackfill.avatar[0] = (typeof this.userInfoBackfill.avatar[0]) === 'string'?this.userInfoBackfill.avatar[0]:JSON.parse(this.userInfoBackfill.avatar[0].url).url
+     
+      console.log(this.userInfoBackfill.avatar[0]);
+      
+      if(!this.userInfoBackfill.avatar )  return this.$toast('头像不能为空');
+      if(!this.userInfoBackfill.name.trim())  return this.$toast('昵称不能为空')
       this.$api.modifyData({
         avatar: this.userInfoBackfill.avatar[0],
         gender:this.userInfoBackfill.sex,

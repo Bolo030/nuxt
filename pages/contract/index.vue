@@ -100,6 +100,7 @@ export default {
     async onBeforeClose(action, done) {
       if (action === "confirm") {
         if(this.userEmail.trim().length === 0) {
+          done(false)
           return this.$toast('邮箱不能为空!');
         } 
         let res = await this.$api.sendEmailContract(this.contractId,{
@@ -115,8 +116,7 @@ export default {
     },
     lookCantract(downpath){
       if(!downpath) return this.$toast('暂无合同');
-      location.href=downpath;
-      console.log(downpath);  
+      this.$router.push({path:'/contract/lookContract',query:{downpath:downpath}})
     },
     jumpOrderInfo(item) {
       console.log(item);

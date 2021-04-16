@@ -137,7 +137,11 @@ export default {
         this.page = 1;
         this.tabBarMold = statusMold;
         // this.loading = true;
+        // this.finished = false;
+        
         this.tabBarDataSwitch(statusMold)
+        
+        
       },
       // tabbar切换调用函数
       async tabBarDataSwitch(statusMold){
@@ -154,7 +158,7 @@ export default {
           this.storeList =  res.data.data;
         }else {
           this.loading = false;
-          this.resStoreList = res.data.data
+          this.resStoreList = res.data.data;
           if(this.resStoreList.length === 0) return this.finished = true;
           this.storeList = this.storeList.concat(res.data.data);
         };
