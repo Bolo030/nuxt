@@ -33,7 +33,7 @@
 export default {
   methods:{
    goBack() {
-      history.back();
+     this.$router.push('/')
     },
     // 用户隐私协议
     goto(type){
@@ -42,7 +42,7 @@ export default {
         sessionStorage.setItem('pathNmae','用户协议')
 		  	// window.location.href ='https://www.996110.com/html/agreement.html'
 		  }else{
-        sessionStorage.setItem('path','https://www.996110.com/html/privacy.html') 
+        sessionStorage.setItem('path','https://www.996110.com/html/privacy.html')
         sessionStorage.setItem('pathNmae','隐私政策')
 		  	// window.location.href ='https://www.996110.com/html/privacy.html'
       }
@@ -177,13 +177,14 @@ header .bgImg img {
   border-radius: 8px;
 }
 .login-bottom {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 30px;
+    // position: absolute;
+    // left: 50%;
+    // transform: translateX(-50%);
+    // bottom: 30px;
+    margin-top:70px;
     text-align: center;
     width: 100%;
-    font-size: 22px;
+    font-size: 20px;
     span {
       color: #f4632c;
     }

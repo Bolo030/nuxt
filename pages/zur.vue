@@ -1,6 +1,6 @@
 <template>
   <main>
-    <van-nav-bar title="网店出售" left-arrow @click-left="$router.go(-1)" />
+    <van-nav-bar title="网店出售" left-arrow @click-left="$router.push('/')" />
     <div class="buy">
       <div class="buy-hint">
         <span class="red">*</span>

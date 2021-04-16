@@ -119,13 +119,14 @@
           </ul>
         </div>
         <!-- 交易流程 -->
-        <!-- <div class="trade-process bg-main-color">
+<!--         <div class="trade-process bg-main-color">
           <div class="trade-process-top d-f d-f-between">
             <span class="font-size-28 font-weight">交易流程</span>
             <div class="swiper-pagination  myswiper-pagination">
               <van-swipe
                 class="my-swipe"
                 indicator-color="#f4632c"
+                :show-indicators='false'
               >
                 <van-swipe-item>1</van-swipe-item>
                 <van-swipe-item>2</van-swipe-item>
@@ -133,8 +134,8 @@
               </van-swipe>
             </div>
           </div>
-        </div>
- -->
+        </div> -->
+
         <!-- 底部定位 -->
         <div class="bottom-fixed bg-main-color d-f d-f-between">
           <div class="bottom-in-l font-main-color">

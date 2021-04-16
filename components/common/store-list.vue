@@ -5,7 +5,6 @@
       :href="isInfo?'javascript:void(0);':`/si/${item.key}`"
       v-for="(item, index) in storeList"
       :key="index"
-      @click="navItemClick(item.key)"
     >
       <div class="shopList-top ">
         <!--   <div class="left" v-if="item.showName == 2 && item.platform == 'tm'">

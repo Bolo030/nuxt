@@ -134,7 +134,7 @@ export default {
       for (var i in this.list[index].childList) {
         if (i == idx)
           this.$set(this.list[index].childList[i], "selected", true);
-       else this.$set(this.list[index].childList[i], "selected", false);
+        else this.$set(this.list[index].childList[i], "selected", false);
       }
     },
     setItem(index, value) {
@@ -154,12 +154,12 @@ export default {
         if (i == 0) this.chooseItem(0, 0);
         else this.chooseItem(i);
       }
-      let shortList=['n','u','c','r','x'];
-      for(var v of shortList){
-        this.path=this.$utils.delQuery(this.$route.params,v,this.path)
+      let shortList = ["n", "u", "c", "r", "x"];
+      for (var v of shortList) {
+        this.path = this.$utils.delQuery(this.$route.params, v, this.path);
       }
       this.search = { ...search };
-      this.path&&this.$router.push(this.path);
+      this.path && this.$router.push(this.path);
     },
     confirm() {
       this.$router.push(this.path);
@@ -203,7 +203,9 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100000;
+  bottom: 0;
+  right: 0;
+  z-index: 999;
   background-color: #ffffff;
   padding: 30px 24px 0;
   box-sizing: border-box;
@@ -223,7 +225,9 @@ export default {
 
   .aside-list {
     height: calc(100% - 220px);
+    overflow-x: hidden;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 

@@ -32,7 +32,7 @@
             <!-- 新用户_8181 -->
             <input
               type="text"
-              maxlength="8"
+              maxlength="6"
               v-model="userInfoBackfill.name"
               @blur="changNickname"
               

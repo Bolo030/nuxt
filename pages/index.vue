@@ -299,16 +299,32 @@
 
       <!-- 版权 -->
       <div class="copyright d-f d-f-between">
-        <a href="http://www.beian.gov.cn/portal/registerSystemInfo" title="九九牛网店交易平台" target="_blanck">
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo"
+          title="九九牛网店交易平台"
+          target="_blanck"
+        >
           <img src="~assets/imgs/draw1.png" alt="九九牛网店交易平台" />
         </a>
-        <a href="https://xinyong.yunaq.com/certificate?domain=%E5%9B%9B%E5%B7%9D%E4%B9%9D%E4%B9%9D%E7%89%9B%E7%BD%91%E7%BB%9C%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8" title="九九牛网店交易平台" target="_blanck">
+        <a
+          href="https://xinyong.yunaq.com/certificate?domain=%E5%9B%9B%E5%B7%9D%E4%B9%9D%E4%B9%9D%E7%89%9B%E7%BD%91%E7%BB%9C%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8"
+          title="九九牛网店交易平台"
+          target="_blanck"
+        >
           <img src="~assets/imgs/draw2.png" alt="九九牛网店交易平台" />
         </a>
-        <a href="https://www.qcc.com/company_qichachacert?keyno=c309ec5d039d6de4b270584813cc08cd" title="九九牛网店交易平台" target="_blanck">
+        <a
+          href="https://www.qcc.com/company_qichachacert?keyno=c309ec5d039d6de4b270584813cc08cd"
+          title="九九牛网店交易平台"
+          target="_blanck"
+        >
           <img src="~assets/imgs/draw3.png" alt="九九牛网店交易平台" />
         </a>
-        <a href="http://www.cyberpolice.cn/wfjb/" title="九九牛网店交易平台" target="_blanck">
+        <a
+          href="http://www.cyberpolice.cn/wfjb/"
+          title="九九牛网店交易平台"
+          target="_blanck"
+        >
           <img src="~assets/imgs/draw4.png" alt="九九牛网店交易平台" />
         </a>
       </div>
@@ -336,6 +352,7 @@ export default {
         })
         .then(res => (res.status === 1 ? res.data.store : []))
     ]);
+    console.log(info, "11111111111111111111");
     return {
       info,
       list
@@ -393,9 +410,7 @@ export default {
         return;
       } else {
         let data = JSON.parse(val.content);
-        this.$router.push({
-          url: data.href
-        });
+        this.$router.push(data.href);
       }
     }
   },

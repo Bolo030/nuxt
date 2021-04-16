@@ -198,7 +198,7 @@ export default {
   methods: {
     // 返回店铺列表
     back() {
-      this.router.push("/tm")
+      this.$router.push("/tm")
     },
     clearSearch() {
       this.search.search = "";

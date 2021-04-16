@@ -48,7 +48,7 @@
 
 <script>
 export default {
-  async asyncData({ query }) {
+   asyncData({ query }) {
     let formData = {
       code: "",
       phone: "",
@@ -107,7 +107,7 @@ export default {
           message: "是否确认更换新的手机号"
         })
         .then(() => {
-          that.$api.editPhone(this.formData).then(res => {
+          that.$api.editPhoneTwo(this.formData).then(res => {
             if (res.status == 1) {
               that.$toast.success("更换成功");
               that.$cookies.set("phone", this.formData.phone, {
