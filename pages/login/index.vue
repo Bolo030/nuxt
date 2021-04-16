@@ -92,6 +92,8 @@ header .bgImg img {
 #login-main {
   position: relative;
   padding: 0 42px;
+  box-sizing: border-box;
+  background: #fff;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -181,7 +183,7 @@ header .bgImg img {
     bottom: 30px;
     text-align: center;
     width: 100%;
-    font-size: 12px;
+    font-size: 22px;
     span {
       color: #f4632c;
     }
