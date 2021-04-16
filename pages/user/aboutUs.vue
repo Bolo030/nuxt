@@ -12,14 +12,13 @@
         </div>
 
         <ul class="aboutUs-middle bg-main-color font-size-28">
-            <nuxt-link to="/about">
-              <li class="middle-item d-f d-f-between">
+           
+              <li class="middle-item d-f d-f-between" @click="$router.push('/about')">
                 <span class="">公司简介</span>
                 <i class="iconfont iconjinru1 font-main-color2"></i>
               </li>
-            </nuxt-link>
            
-              <li class="middle-item d-f d-f-between" @click="goto(1)">
+              <li class="middle-item d-f d-f-between" @click="goto(2)">
                 <span class="">隐私条款</span>
                 <i class="iconfont iconjinru1 font-main-color2"></i>
               </li>
@@ -36,7 +35,7 @@
                 <i class="iconfont iconjinru1 font-main-color2"></i>
               </li>
            
-            <li class="middle-item d-f d-f-between" v-if="false">
+            <li class="middle-item  d-f d-f-between" v-if="false">
                 <span class="">特别申明</span>
                 <i class="iconfont iconjinru1 font-main-color2"></i>
             </li>
@@ -64,7 +63,7 @@ export default {
 		  	// window.location.href ='https://www.996110.com/html/agreement.html'
 		  }else if(type=='2'){
         sessionStorage.setItem('path','https://www.996110.com/html/privacy.html') 
-        sessionStorage.setItem('pathNmae','隐私政策')
+        sessionStorage.setItem('pathNmae','隐私条款')
 		  	// window.location.href ='https://www.996110.com/html/privacy.html'
       } else {
         sessionStorage.setItem('path','https://image.996110.com/images-202104-8218f9d58b6cc0bcf718cd10427db778-98323.png!quality') 
@@ -111,7 +110,7 @@ export default {
   border-bottom: 0.1333vw solid #ededed;
 }
 
-.aboutUs-middle .middle-item:last-child {
+.aboutUs-middle .middle-item:last-child() {
   border-bottom: none;
 }
 

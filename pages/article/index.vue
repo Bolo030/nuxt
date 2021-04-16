@@ -41,7 +41,7 @@
           <li>
             <a class="interview" :href="'interview-'+item.id+'.html'" v-for="item in hotInfoList" :key="item.id">
               <div class="article-item">
-                <img src="" alt="九九新闻资讯" />
+                <img :src="item.thumb" alt="九九新闻资讯" />
                 <div class="article-list-info">
                   <h3>{{item.title}}</h3>
                   <p>
@@ -262,6 +262,7 @@ export default {
   display: flex;
 }
 .article .article-list li img {
+  object-fit: cover;
   width: 180px;
   height: 180px;
   background-color: #f4f4f4;
