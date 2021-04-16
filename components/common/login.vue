@@ -185,24 +185,14 @@ export default {
                 path: "/"
               });
               this.$toast("登录成功");
-              let customer = sessionStorage.getItem("customer");
-              if (!customer) {
+              let customer = sessionStorage.getItem('customer');
+              let key = sessionStorage.getItem('key')
+              if(customer) {
+                this.$router.push(`/si/${key}`);
+                sessionStorage.clear('customer');
+                sessionStorage.clear('key');
+              }else {
                 this.$router.push("/user");
-              } else {
-                let key = sessionStorage.getItem("key");
-                this.$api.CreateOrder(this.key)
-                  .then(res => {
-                    if (res.status == 1) {
-                      this.$toast.success("订单创建成功");
-                      this.$router.push("/order-success/" + res.data.key);
-                      sessionStorage.clear("key");
-                      sessionStorage.clear("customer");
-                    }
-                    this.$toast.clear();
-                  })
-                  .catch(err => {
-                    this.$toast.clear();
-                  });
               }
             }
           });
@@ -228,27 +218,16 @@ export default {
                 path: "/"
               });
               this.$toast("登录成功");
-              let customer = sessionStorage.getItem("customer");
-              if (!customer) {
+              let customer = sessionStorage.getItem('customer');
+              let key = sessionStorage.getItem('key')
+              if(customer) {
+                this.$router.push(`/si/${key}`);
+                sessionStorage.clear('customer');
+                sessionStorage.clear('key');
+              }else {
                 this.$router.push("/user");
-              } else {
-                let key = sessionStorage.getItem("key");
-                this.$api.CreateOrder(key)
-                  .then(res => {
-                    console.log(res);
-
-                    if (res.status == 1) {
-                      this.$toast.success("订单创建成功");
-                      this.$router.push("/order-success/" + res.data.key);
-                      sessionStorage.clear("key");
-                      sessionStorage.clear("customer");
-                    }
-                    this.$toast.clear();
-                  })
-                  .catch(err => {
-                    this.$toast.clear();
-                  });
               }
+             
             }
           });
       }

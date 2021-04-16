@@ -138,6 +138,7 @@
             确认修改并登录
           </button>
         </li>
+        <li class="font-main-color" v-if="!typeShow" @click="typeShow=true">忘记密码？</li>
       </ul>
     </div>
   </div>

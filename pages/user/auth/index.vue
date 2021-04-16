@@ -31,7 +31,7 @@
         </ul>
         <ul class="realName-middle bg-main-color"  v-if="list.length>0">
            <van-swipe-cell  v-for="(item, index) in list" :key="index">
-            <li class="realName-middle-item bg-gradient-color2 d-f position-r" >
+            <li class="realName-middle-item  d-f position-r" :class="item.isBind==2? 'bg-gradient-color2':'bg-main-color7'" >
                 <div class="position-right position-a1 font-main-color6 font-size-20 d-f" v-if="item.isBind==2">
                     <img src="../../../assets/imgs/icon-realName1.png" alt="">
                     <span>已绑定为账号实名</span>
@@ -40,8 +40,8 @@
                     <img src="../../../assets/imgs/photo-img.png" alt="" style="width: 10.6667vw; height: 10.6667vw; border-radius: 50%;">
                 </div>
                 <div class="middle-item-right font-main-color6">
-                    <h4 class="font-size-30 font-weight">{{item.show_user_name}}</h4>
-                    <span class="font-size-28">{{item.show_identity}}</span>
+                    <h4 class="font-size-30 font-weight" :class="item.isBind==2? '':'font-main-color4'">{{item.show_user_name}}</h4>
+                    <span class="font-size-28" :class="item.isBind==2? '':'font-main-color2'">{{item.show_identity}}</span>
                 </div>
             </li>
             <template #right>
@@ -54,15 +54,7 @@
             />
           </template>
         </van-swipe-cell>
-         <!--    <li class="realName-middle-item bg-main-color7 d-f position-r">
-                <div class="middle-item-left">
-                    <img src="../../../assets/imgs/photo-img.png" alt="">
-                </div>
-                <div class="middle-item-right font-main-color6">
-                    <h4 class="font-size-30 font-weight font-main-color4">**强</h4>
-                    <span class="font-size-28 font-main-color2">5***************2</span>
-                </div>
-            </li> -->
+            
         </ul>
 
         <!-- 遮罩层 -->
