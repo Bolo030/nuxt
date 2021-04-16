@@ -41,7 +41,7 @@
 export default {
   methods:{
    goBack() {
-      history.back();
+     this.$router.push('/')
     },
     // 用户隐私协议
     goto(type){
@@ -50,7 +50,7 @@ export default {
         sessionStorage.setItem('pathNmae','用户协议')
 		  	// window.location.href ='https://www.996110.com/html/agreement.html'
 		  }else{
-        sessionStorage.setItem('path','https://www.996110.com/html/privacy.html') 
+        sessionStorage.setItem('path','https://www.996110.com/html/privacy.html')
         sessionStorage.setItem('pathNmae','隐私政策')
 		  	// window.location.href ='https://www.996110.com/html/privacy.html'
       }

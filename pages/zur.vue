@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <van-nav-bar title="网店出售" left-arrow @click-left="$router.go(-1)" />
+    <van-nav-bar title="网店出售" left-arrow @click-left="$router.push('/')" />
     <main>
       <p class="submitareport"><span>*</span> 提交完成后，您最快在五分钟收到店铺估价</p>
       <van-cell-group>
@@ -101,7 +101,7 @@ export default {
   span {
     color: #f4632c;
   }
- 
+
 }
 .van-input {
     margin-bottom: 20px;
