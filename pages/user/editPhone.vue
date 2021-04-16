@@ -87,7 +87,7 @@ export default {
       if (!this.formData.code) return this.$toast("请输入验证码");
           this.$api.editPhoneOne(this.formData).then(res => {
             if (res.status == 1) {
-              this.$router.push('user/newPhone?request_id='+res.data.request_id);
+              this.$router.push('/user/newPhone?request_id='+res.data.request_id);
             }
           });
     }

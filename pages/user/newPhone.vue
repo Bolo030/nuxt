@@ -48,7 +48,7 @@
 
 <script>
 export default {
-  async asyncData({ query }) {
+   asyncData({ query }) {
     let formData = {
       code: "",
       phone: "",

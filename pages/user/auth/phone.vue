@@ -15,10 +15,12 @@
       <div class="ab-item">
         <p class="ab-label"><span>*</span>手机号码</p>
         <input
+        v-if="type!='true'"
           v-model="formData.phone"
           type="number"
           placeholder="请填写该银行卡的预留手机号"
         />
+         <p style="padding:10px 0" v-else>{{$cookies.get('phoneHide')}}</p>
       </div>
       <div class="ab-item">
         <p class="ab-label"><span>*</span>持卡人真实姓名</p>
