@@ -115,7 +115,7 @@
             class="item-bottom font-size-30 font-weight d-f d-f-center"
             @click="$router.push('/user/bank')"
           >
-            <img src="../../assets/imgs/bank-add-icon.png" alt="" />
+            <img src="../../assets/imgs/bank-add-icon.png" alt="添加银行卡图标" />
             <span>添加银行卡</span>
           </div>
         </div>

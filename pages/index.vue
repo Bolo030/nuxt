@@ -15,7 +15,7 @@
           >
             <img
               :src="item.thumb"
-              alt="九九牛网店交易平台，banner图"
+              :alt="item.title"
               @click="event(item)"
             />
           </van-swipe-item>
@@ -26,6 +26,7 @@
             <img
               src="~assets/imgs/trade_icon.png"
               alt="九九牛网店交易平台，交易快报！"
+              title="网店交易快报"
             />
           </div>
           <van-swipe
@@ -58,7 +59,7 @@
           <a href="/zur" title="九九牛网店交易平台，我要卖店">
             <img
               src="~assets/imgs/icon_sellShop.png"
-              alt="九九牛网店交易平台，我要卖点"
+              alt="九九牛网店交易平台，我要卖店"
             />
           </a>
         </div>
@@ -68,34 +69,34 @@
           <div class="entryNav-item d-f-column" @click="$router.push('/tm')">
             <img
               src="~assets/imgs/ic_home_classification_tianmao@2x.png"
-              alt=""
+              alt="天猫网店"
             />
-            天猫店
+            天猫网店
           </div>
           <div class="entryNav-item d-f-column" @click="$router.push('/tb')">
             <img
               src="~assets/imgs/ic_home_classification_taobao@2x.png"
-              alt=""
+              alt="淘宝网店"
             />
-            淘宝店
+            淘宝网店
           </div>
           <div class="entryNav-item d-f-column" @click="$router.push('/pd')">
             <img
               src="~assets/imgs/ic_home_classification_pinduoduo@2x.png"
-              alt=""
+              alt="拼多多店"
             />
             拼多多店
           </div>
           <div class="entryNav-item d-f-column" @click="$router.push('/jd')">
             <img
               src="~assets/imgs/ic_home_classification_jindong@2x.png"
-              alt=""
+              alt="京东网店"
             />
-            京东店
+            京东网店
           </div>
           <div class="entryNav-item d-f-column" @click="$router.push('/qt')">
-            <img src="~assets/imgs/ic_home_classification_qita@2x.png" alt="" />
-            其他
+            <img src="~assets/imgs/ic_home_classification_qita@2x.png" alt="其他网店" />
+            其他网店
           </div>
         </div>
 
@@ -104,30 +105,30 @@
           <div class="brandProtection-item font-size-20 d-f">
             <img
               src="~assets/imgs/ic_home_service_pinpaibaozhang@2x.png"
-              alt=""
+              alt="品牌保障"
             />
             品牌保障
           </div>
           <div class="brandProtection-item font-size-20 d-f">
-            <img src="~assets/imgs/ic_home_service_zijinanquan@2x.png" alt="" />
+            <img src="~assets/imgs/ic_home_service_zijinanquan@2x.png" alt="资金安全" />
             资金安全
           </div>
           <div class="brandProtection-item font-size-20 d-f ">
             <img
               src="~assets/imgs/ic_home_service_jiaoyipeitong@2x.png"
-              alt=""
+              alt="交易陪同"
             />
             交易陪同
           </div>
           <div class="brandProtection-item font-size-20 d-f">
             <img
               src="~assets/imgs/ic_home_service_hetongyiqian@2x.png"
-              alt=""
+              alt="合同易签"
             />
             合同易签
           </div>
           <div class="brandProtection-item font-size-20 d-f">
-            <img src="~assets/imgs/ic_home_service_falvyuanzhu@2x.png" alt="" />
+            <img src="~assets/imgs/ic_home_service_falvyuanzhu@2x.png" alt="法律援助" />
             法律援助
           </div>
         </div>
@@ -138,30 +139,30 @@
             <img src="~assets/imgs/bg_home_settlement_biaoshi@2x.png" alt="" />
             <h2 class="font-size-32 font-weight">网店入驻</h2>
             <span class="font-size-24 font-main-color2"
-              >高效率快速入驻各大平台</span
+              >高效率快速入驻各大网店平台</span
             >
           </div>
           <div class="store-bottom d-f-between d-f">
             <a href="/enter" title="九九网店交易平台，天猫入驻">
               <img
                 src="~assets/imgs/bg_home_settlement_tianmao@2x.png"
-                alt=""
+                alt="天猫网店入驻"
               />
             </a>
             <a href="/enter?p=jd" title="九九网店交易平台，京东入驻">
               <img
                 src="~assets/imgs/bg_home_settlement_jindong@2x.png"
-                alt=""
+                alt="京东网店入驻"
               />
             </a>
             <a href="/enter?p=pd" title="九九网店交易平台，拼多多入驻">
               <img
                 src="~assets/imgs/bg_home_settlement_pinduoduo@2x.png"
-                alt=""
+                alt="拼多多网店入驻"
               />
             </a>
             <a href="/enter?p=qt" title="九九网店交易平台，其他入驻">
-              <img src="~assets/imgs/bg_home_settlement_qita@2x.png" alt="" />
+              <img src="~assets/imgs/bg_home_settlement_qita@2x.png" alt="其他网店入驻" />
             </a>
           </div>
         </div>
@@ -173,7 +174,7 @@
             <img src="~assets/imgs/bg_home_settlement_biaoshi@2x.png" alt="" />
             <h2 class="font-size-32 font-weight">大牌精选</h2>
             <span class="font-size-24 font-main-color2"
-              >近3000家大牌授权店</span
+              >近3000家大牌授权网店</span
             >
           </div>
           <van-swipe
@@ -191,7 +192,7 @@
                   v-for="(v, i) in info.great.slice(index * 8, 8 * (index + 1))"
                   :key="i"
                   :src="v.thumb"
-                  alt="九九牛网店交易平台，大牌精选"
+                  :alt="v.title+'品牌网店 '"
                 />
               </div>
             </van-swipe-item>
@@ -366,7 +367,7 @@ export default {
         { value: "tb", name: "淘宝" },
         { value: "jd", name: "京东" },
         { value: "pdd", name: "拼多多" },
-        { value: "qt", name: "其他" }
+        { value: "qt", name: "其他网店" }
       ],
       pType: "normal",
       list: []

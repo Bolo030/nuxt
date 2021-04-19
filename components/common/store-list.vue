@@ -18,8 +18,10 @@
         <span class="left" :class="{ 'name-active': true }">
           <img
             :src="require('../../assets/imgs/icon_' + item.platform + '.png')"
+            :alt="$utils.getPname(item.platform)+'店铺出售'"
+            
           />
-          <span
+          <h1
             :style="{ 'font-weight': isInfo ? 700 : 500 }"
             v-html="item.title"
             class="font-weight text-wraps"
@@ -34,7 +36,7 @@
       <!-- 价格栏 -->
       <div class="sl-price">
         <div class="sl-price-box">
-          <span class="priceSymbol">店铺售价￥</span>
+          <span class="priceSymbol">网店售价￥</span>
           <span class="price">{{ item.parse_price }}</span>
         </div>
 
@@ -61,7 +63,7 @@
         </div>
       </div>
       <div class="shopList-bottom" v-if="item.main_category.thumb">
-        <img :src="item.main_category.thumb" />
+        <img :src="item.main_category.thumb" :alt="item.main_category.name+'网店'" />
         <div class="right">
           <div class="right-top">
             {{
@@ -73,7 +75,7 @@
                 : "/" + item.parse_trademark_type + "标"
             }}
             {{
-              item.parse_store_type === "" ? "" : "/" + item.parse_store_type
+              item.parse_store_type === "" ? "" : "/" + ($utils.getPname(item.platform)+item.parse_store_type)
             }}
           </div>
           <div class="right-bottom">
@@ -166,7 +168,7 @@ main {
         font-size: 24px;
         font-weight: 400;
       }
-      span {
+      h1 {
         font-size: 30px;
         font-weight: 700;
       }

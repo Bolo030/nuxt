@@ -34,11 +34,15 @@
     <div class="fotter-item">
       <div class="item">
         <div>
-          <img src="~/assets/imgs/icon_phone.png" />
+          <img src="~/assets/imgs/icon_phone.png"
+               alt="电话图标"
+           />
           <text>400-0909-940 / 028-62092550</text>
         </div>
         <div>
-          <img src="~/assets/imgs/icon_address.png" />
+          <img src="~/assets/imgs/icon_address.png"
+               alt="地址图标"
+           />
           <span>四川省成都市武侯区高华横街33号成都A区1栋 1单元1108</span>
         </div>
       </div>

@@ -33,11 +33,11 @@
            <van-swipe-cell  v-for="(item, index) in list" :key="index" :disabled="item.isBind==2">
             <li class="realName-middle-item  d-f position-r" :class="item.isBind==2? 'bg-gradient-color2':'bg-main-color7'" >
                 <div class="position-right position-a1 font-main-color6 font-size-20 d-f" v-if="item.isBind==2">
-                    <img src="../../../assets/imgs/icon-realName1.png" alt="">
+                    <img src="../../../assets/imgs/icon-realName1.png" alt="已实名图标">
                     <span>已绑定为账号实名</span>
                 </div>
                 <div class="middle-item-left">
-                    <img src="../../../assets/imgs/photo-img.png" alt="" style="width: 10.6667vw; height: 10.6667vw; border-radius: 50%;">
+                    <img src="../../../assets/imgs/photo-img.png" alt="手机图标" style="width: 10.6667vw; height: 10.6667vw; border-radius: 50%;">
                 </div>
                 <div class="middle-item-right font-main-color6">
                     <h4 class="font-size-30 font-weight" :class="item.isBind==2? '':'font-main-color4'">{{item.show_user_name}}</h4>

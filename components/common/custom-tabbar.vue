@@ -4,7 +4,10 @@
       <!-- tabbar左边突出部分 -->
       <div class="tabbar-important">
         <a :href="tabPage.important.pagePath" class="tabbar-item">
-          <img :src="tabPage.important.iconPath" />
+          <img 
+            :src="tabPage.important.iconPath"
+            :alt="tabPage.important.alt"
+            :title="tabPage.important.title" />
           <span class="">{{ tabPage.important.text }}</span>
         </a>
       </div>
@@ -19,6 +22,8 @@
         >
           <img
             :src="activeIdx == index ? item.selectedIconPath : item.iconPath"
+            :alt="item.alt"
+            :title="item.title"
           />
           <span>{{ item.text }}</span>
         </a>
@@ -44,27 +49,35 @@ export default {
         important: {
           text: "买店",
           pagePath: "/tm",
-          iconPath: require("../../assets/imgs/tabbar/ic_home_tab_maidian.png")
+          iconPath: require("../../assets/imgs/tabbar/ic_home_tab_maidian.png"),
+          alt:'购买网店',
+          title: '网店购买'
         },
         list: [
           {
-            text: "首页",
+            text: "九九牛",
             pagePath: "/",
             iconPath: require("../../assets/imgs/tabbar/ic_home_tab_home_b.png"),
-            selectedIconPath: require("../../assets/imgs/tabbar/ic_home_tab_home_a.png")
+            selectedIconPath: require("../../assets/imgs/tabbar/ic_home_tab_home_a.png"),
+            alt:'九九牛网店交易平台',
+            title:'九九牛首页'
           },
           {
             text: "卖店",
             pagePath: "/zur",
             iconPath: require("../../assets/imgs/tabbar/ic_home_tab_maidian_b.png"),
-            selectedIconPath: require("../../assets/imgs/tabbar/ic_home_tab_maidian_a.png")
+            selectedIconPath: require("../../assets/imgs/tabbar/ic_home_tab_maidian_a.png"),
+            alt:'出售网店',
+            title:'网店出售'
           },
 
           {
             text: "个人中心",
             pagePath: "/user",
             iconPath: require("../../assets/imgs/tabbar/ic_home_tab_geren_b.png"),
-            selectedIconPath: require("../../assets/imgs/tabbar/ic_home_tab_geren_a.png")
+            selectedIconPath: require("../../assets/imgs/tabbar/ic_home_tab_geren_a.png"),
+            alt:'个人中心',
+            title:'个人中心'
           }
         ]
       }

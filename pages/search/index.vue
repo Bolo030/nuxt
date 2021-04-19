@@ -1,5 +1,6 @@
 <template>
   <div class="search-page">
+    <van-nav-bar title="店铺搜索" left-arrow @click-left="$router.go(-1)" />
     <div class="search-box">
       <div class="search-item">
         <img src="../../assets/imgs/store/search.png" />
