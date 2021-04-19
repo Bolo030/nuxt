@@ -352,7 +352,6 @@ export default {
         })
         .then(res => (res.status === 1 ? res.data.store : []))
     ]);
-    console.log(info, "11111111111111111111");
     return {
       info,
       list
@@ -374,7 +373,7 @@ export default {
   },
   head() {
     return {
-      title: "天猫淘宝网店出售_店铺入驻转让_专业网店交易平台-九九牛",
+      title: "天猫商城购买_天猫淘宝店铺转让_天猫入驻|出售_网店转让平台-九九牛",
       meta: [
         {
           hid: "description",
@@ -386,7 +385,7 @@ export default {
           hid: "keywords",
           name: "keywords",
           content:
-            "网店转让,网店交易，天猫店铺转让,天猫网店转让,网店出售,网店入驻，九九牛"
+            "网店转让,网店交易,天猫店铺转让,天猫网店转让,网店出售,网店入驻,九九牛"
         }
       ]
     };

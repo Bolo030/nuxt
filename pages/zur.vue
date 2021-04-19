@@ -139,6 +139,23 @@ export default {
       }
     };
   },
+    head() {
+    return {
+      title: `网店转让-九九牛`,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: `九九牛是一家集网店交易、入驻、转让等电商综合业务于一体的虚拟资产交易平台，旗下业务覆盖淘宝、天猫、京东、小红书、唯品会等平台，以专业、高效为客户提供最优质的虚拟资产交易服务，为实现共同定义电商新时代的目标不懈努力。丰富行业经验帮您轻松买网店！网店转让交易就上九九牛!`
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content: `网店转让,网店交易，天猫店铺转让,天猫网店转让,网店出售,网店入驻，九九牛`
+        }
+      ]
+    };
+  },
   methods: {
     choose(data) {
       this.formData.platform = data.value;

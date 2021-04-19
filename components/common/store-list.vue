@@ -34,7 +34,7 @@
       <!-- 价格栏 -->
       <div class="sl-price">
         <div class="sl-price-box">
-          <span class="priceSymbol">店铺售价￥</span>
+          <span class="priceSymbol">网店售价￥</span>
           <span class="price">{{ item.parse_price }}</span>
         </div>
 

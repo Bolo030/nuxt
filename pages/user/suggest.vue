@@ -15,6 +15,25 @@ data(){
     content:""
   }
 },
+  head() {
+    return {
+      title: "投诉建议_买卖天猫淘宝网店_九九牛网店交易平台",
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content:
+            "九九牛网店交易平台投诉建议，欢迎您针对我们平台提出宝贵意见，九九牛专注天猫、淘宝、京东、拼多多等平台的网店转让出售、入驻、购买服务，致力为客户提供更优质的服务。"
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content:
+            "投诉建议,九九牛"
+        }
+      ]
+    };
+  },
 methods:{
 onSubmit(){
  this.$api.proposal({content:this.content}).then(res=>{

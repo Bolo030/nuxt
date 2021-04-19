@@ -119,7 +119,7 @@
           </ul>
         </div>
         <!-- 交易流程 -->
-<!--         <div class="trade-process bg-main-color">
+  <!--       <div class="trade-process bg-main-color">
           <div class="trade-process-top d-f d-f-between">
             <span class="font-size-28 font-weight">交易流程</span>
             <div class="swiper-pagination  myswiper-pagination">

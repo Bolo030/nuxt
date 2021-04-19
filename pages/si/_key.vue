@@ -423,7 +423,7 @@
         </div>
       </card>
       <!-- 店铺费用 -->
-      <card title="费用预估">
+      <card title="网店预估费用">
         <div class="qiun-columns qiun-bg-white">
           <div class="qiun-bg-white qiun-title-bar qiun-common-mt"></div>
           <div class="qiun-charts">
@@ -454,7 +454,7 @@
         @changeCall="callPhone()"
       />
       <!-- 交易流程 -->
-      <card title="交易流程">
+      <card title="网店交易流程">
         <div class="trade-process">
           <div v-for="(item, index) in tradeList" :key="index">
             <div class="trade-item">

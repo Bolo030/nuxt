@@ -48,7 +48,7 @@ export default {
         },
         list: [
           {
-            text: "首页",
+            text: "九九牛",
             pagePath: "/",
             iconPath: require("../../assets/imgs/tabbar/ic_home_tab_home_b.png"),
             selectedIconPath: require("../../assets/imgs/tabbar/ic_home_tab_home_a.png")
