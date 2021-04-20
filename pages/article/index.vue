@@ -1,8 +1,9 @@
 <template>
   <div>
-    <header id="header">
+    <van-nav-bar title="咨询攻略" left-arrow @click-left="$router.go(-1)" />
+    <!-- <header id="header">
       <div class="header-content">
-        <a href="/user">
+        <a href="/user" >
           <img
             class="back"
             src="~assets/imgs/store/rectangle.png"
@@ -11,7 +12,7 @@
         </a>
         <span class="title">资讯攻略</span>
       </div>
-    </header>
+    </header> -->
     <main class="article">
       <ul class="nav">
         <li
@@ -185,7 +186,6 @@ export default {
   },
   async asyncData({ app, params, query }) {
     let start = params.id.indexOf("-");
-    console.log(params, "paramsparams");
     let cid = params.id.substring(start + 1);
     let cuurentActive = 0;
     let clientShow = false;

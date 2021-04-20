@@ -6,19 +6,19 @@
           <!-- 步骤 -->
           <div class="tradeMsg space-evenly">
             <div class="tradeMsg-item">
-              <img src="~assets/imgs/store/ic_shop_guarantee_gou.png" />
+              <img src="~assets/imgs/store/ic_shop_guarantee_gou.png" alt="资金安全"/>
               <span>资金安全</span>
             </div>
             <div class="tradeMsg-item">
-              <img src="~assets/imgs/store/ic_shop_guarantee_gou.png" />
+              <img src="~assets/imgs/store/ic_shop_guarantee_gou.png" alt="流程简单" />
               <span>流程简单</span>
             </div>
             <div class="tradeMsg-item">
-              <img src="~assets/imgs/store/ic_shop_guarantee_gou.png" />
+              <img src="~assets/imgs/store/ic_shop_guarantee_gou.png" alt="交易透明"/>
               <span>交易透明</span>
             </div>
             <div class="tradeMsg-item">
-              <img src="~assets/imgs/store/ic_shop_guarantee_gou.png" />
+              <img src="~assets/imgs/store/ic_shop_guarantee_gou.png" alt="专业高效" />
               <span>专业高效</span>
             </div>
           </div>
@@ -29,7 +29,7 @@
               class="storeInfo-item"
               style="background: linear-gradient(90deg, #ff7849 0%, #ff9975 100%);"
             >
-              <img src="~assets/imgs/store/ic_shop_classification_goumai.png" />
+              <img src="~assets/imgs/store/ic_shop_classification_goumai.png" alt="网店购买" />
               <span>网店购买</span>
             </a>
             <a
@@ -37,7 +37,7 @@
               class="storeInfo-item"
               style="background: linear-gradient(90deg, #80d04f 0%, #80d884 100%);"
             >
-              <img src="~assets/imgs/store/ic_shop_classification_chusou.png" />
+              <img src="~assets/imgs/store/ic_shop_classification_chusou.png" alt="网店出售" />
               <span>网店出售</span>
             </a>
             <a
@@ -45,7 +45,7 @@
               class="storeInfo-item"
               style="background: linear-gradient(90deg, #25cacc 0%, #66d9da 100%);"
             >
-              <img src="~assets/imgs/store/ic_shop_classification_gujia.png" />
+              <img src="~assets/imgs/store/ic_shop_classification_gujia.png" alt="网店估价" />
               <span>网店估价</span>
             </a>
             <a
@@ -53,13 +53,16 @@
               class="storeInfo-item"
               style="background: linear-gradient(90deg, #ffb049 0%, #f5b96d 100%);"
             >
-              <img src="~assets/imgs/store/ic_shop_classification_ruzhu.png" />
+              <img src="~assets/imgs/store/ic_shop_classification_ruzhu.png" alt="网店入驻" />
               <span>网店入驻</span>
             </a>
           </div>
           <!-- 服务页banner -->
           <a class="coverImg" href="/activity/rulesDetails">
-            <img src="~assets/imgs/store/bg_shop_fuwurukou.png" />
+            <img 
+              src="~assets/imgs/store/bg_shop_fuwurukou.png"
+              alt="省时购 放心售 4大保障，全方位助力"
+             />
           </a>
         </div>
         <van-sticky>

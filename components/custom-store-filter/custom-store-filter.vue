@@ -26,7 +26,7 @@
       <!-- 筛选栏 -->
       <div class="filters">
         <div class="search-box" @click="gotoSearch">
-          <img src="../../assets/imgs/store/search.png" />
+          <img src="../../assets/imgs/store/search.png" alt="搜索图标" />
           <span class="text-wrap content">{{ search.search || "搜索" }}</span>
           <div
             class="search-clear"
@@ -53,16 +53,19 @@
               v-if="index == 'filter'"
               class="filter"
               src="../../assets/imgs/store/filter.png"
+              alt="筛选图标"
             />
             <img
               v-else-if="index == filterIdx && showSelect"
               class="arrows"
               src="../../assets/imgs/store/filter-top.png"
+              alt="向上图标"
             />
             <img
               v-else
               class="arrows"
               src="../../assets/imgs/store/filter-bottom.png.png"
+              alt="向下图标"
             />
           </div>
         </div>

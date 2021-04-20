@@ -70,6 +70,7 @@
                 :src="
                   '../../static/img/credit_' + storeInfo.creditRate + '.png'
                 "
+                alt="店铺等级图标"
               />
               <img
                 mode="heightFix"
@@ -77,6 +78,7 @@
                 :src="
                   '../../static/img/credit_' + storeInfo.creditRate + '.gif'
                 "
+                alt="店铺等级图标"
               />
             </div>
             <div class="storeMsg-item">
@@ -151,7 +153,7 @@
           </div>
           <!-- 分割区域 -->
           <div class="moreInfo" @click="showMore()" v-if="isShowMore">
-            <span>展示更多信息</span>
+            <span>展示更多店铺信息</span>
             <!-- <img src="../../assets/imgs/ic_shop_details_information_xiala.png" /> -->
           </div>
           <!-- 超出6条隐藏 -->
@@ -398,7 +400,7 @@
             :key="index"
             class="screenshot-item"
           >
-            <img :src="item.thumb" @click="previewImg(screenshotList, index)" />
+            <img :src="item.thumb" @click="previewImg(screenshotList, index)" :alt="storeInfo.title+'截图'+(index+1)" />
           </div>
         </div>
       </card>
@@ -459,7 +461,7 @@
           <div v-for="(item, index) in tradeList" :key="index">
             <div class="trade-item">
               <div>
-                <img :src="item.src" />
+                <img :src="item.src" :alt="item.title" />
               </div>
               <span>{{ item.title }}</span>
             </div>
@@ -468,12 +470,13 @@
                 v-if="index !== tradeList.length - 1"
                 src="../../assets/imgs/ic_shop_details_process_jiantou.png"
                 class="arrow-img"
+                alt="箭头图标"
               />
             </div>
           </div>
         </div>
         <div class="divider">
-          <img src="../../assets/imgs/ic_shop_details_process_zhishitiao.png" />
+          <img src="../../assets/imgs/ic_shop_details_process_zhishitiao.png" alt="" />
         </div>
       </card>
       <!-- 猜你喜欢 -->
@@ -481,10 +484,10 @@
         <div class="guessLikes">
           <div class="left">
             <img src="../../assets/imgs/ic_shop_details_guess_aixing.png" />
-            <span>猜你喜欢</span>
+            <span>{{'更多'+$utils.getPname(storeInfo.platform)+'网店'}}</span>
           </div>
           <div class="right" @click="getRecommend()">
-            <img src="../../assets/imgs/ic_shop_details_guess_huanyipi.png" />
+            <img src="../../assets/imgs/ic_shop_details_guess_huanyipi.png" alt="换一批图标" />
             <span>换一批</span>
           </div>
         </div>
@@ -498,17 +501,18 @@
                 ? require('../../assets/imgs/ic_shop_details_tab_shoucang_b.png')
                 : require('../../assets/imgs/ic_shop_details_tab_shoucang_a.png')
             "
+            alt="收藏图标"
           />
           <span :class="isCollect ? 'active-color' : ''">{{
             isCollect ? "已收藏" : "收藏"
           }}</span>
         </div>
         <div class="collent" @click="$refs.pop.openDialog()">
-          <img src="../../assets/imgs/ic_shop_details_tab_weixin.png" />
+          <img src="../../assets/imgs/ic_shop_details_tab_weixin.png"  alt="客服微信图标"/>
           <span>微信</span>
         </div>
         <div class="collent" @click="callPhone()">
-          <img src="../../assets/imgs/ic_shop_details_tab_dianhua.png" />
+          <img src="../../assets/imgs/ic_shop_details_tab_dianhua.png"  alt="客服电话图标"/>
           <span>电话</span>
         </div>
         <div class="order-bargainirg">
@@ -806,7 +810,7 @@ export default {
       margin-right: 20px;
       display: inline-block;
       border-radius: 32px;
-
+      overflow: hidden;
       img {
         width: 100%;
         height: 100%;

@@ -1,21 +1,23 @@
 <template>
   <div id="rulesDetails-box">
     <div class="back" @click="back">
-      <img src="../../assets/imgs/backBtn_icon.png?v1" />
+      <img src="../../assets/imgs/backBtn_icon.png?v1" alt="返回按钮" />
     </div>
     <block v-for="item in imgList" :key="item.id">
-      <img :src="item.src" class="image" mode="widthFix" />
+      <img :src="item.src" class="image" mode="widthFix" alt="九九牛，网点交易平台规则" />
     </block>
     <div class="footerBtn">
       <img
         src="../../assets/imgs/icon_customer.png?v1"
         mode="widthFix"
         @click="event('customer')"
+        alt="联系客服"
       />
       <img
         src="../../assets/imgs/icon_selectStore.png?v1"
         mode="widthFix"
         @click="event('store')"
+        alt="立即选店"
       />
     </div>
   </div>

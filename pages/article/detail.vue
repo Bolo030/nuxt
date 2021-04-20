@@ -18,12 +18,12 @@
       </div>
     </header>
     <div class="article-info">
-      <h3>{{ articleInfo.title }}</h3>
+      <h1>{{articleInfo.title}}</h1>
       <div class="article-info-sub">
         <span>发表于 {{ articleInfo.created_at }}</span>
         <span>
-          <img class="eye" src="~/assets/imgs/yanjing.png" />
-          {{ articleInfo.browse }}人阅读
+          <img class="eye" src="~/assets/imgs/yanjing.png" alt="阅读量图标"/>
+          {{articleInfo.browse}}人阅读
         </span>
       </div>
       <div class="markdown-body" v-html="articleInfo.content">
@@ -94,7 +94,7 @@ export default {
   box-sizing: border-box;
   font-size: 26px;
 }
-.article-info h3 {
+.article-info h1 {
   font-size: 30px;
   font-weight: 700;
   margin-bottom: 15px;

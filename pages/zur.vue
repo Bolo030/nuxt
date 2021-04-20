@@ -1,6 +1,6 @@
 <template>
   <main>
-    <van-nav-bar title="网店出售" left-arrow @click-left="$router.push('/')" />
+    <van-nav-bar title="出售网店" left-arrow @click-left="$router.push('/')" />
     <div class="buy">
       <div class="buy-hint">
         <span class="red">*</span>
@@ -45,6 +45,8 @@
         </div>
       </custom-dialog>
     </div>
+    <!-- 底部tabbar -->
+    <custom-tabbar :active="1" />
   </main>
 </template>
 

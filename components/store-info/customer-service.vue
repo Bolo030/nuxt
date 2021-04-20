@@ -3,14 +3,16 @@
     <img
       class="bg-img"
       src="../../assets/imgs/store/bg_shop_details_adviser_youce.png"
+      alt="背景图标"
     />
     <div class="serviceLeft">
-      <img :src="customerService.headPortrait" />
+      <img :src="customerService.headPortrait" alt='客服头像' />
       <div class="serviceInfo">
         <span>{{ customerService.nickname }}</span>
         <div class="serviceInfo-item">
           <img
             src="../../assets/imgs/store/ic_shop_details_adviser_baozhang.png"
+            alt="资深网店交易顾问"
           />
           资深网店交易顾问
         </div>
@@ -19,11 +21,13 @@
     <div class="serviceRight">
       <img
         src="../../assets/imgs/store/ic_shop_details_adviser_weixing.png"
+        alt="微信图标"
         @click="event('wx')"
       />
       <img
         src="../../assets/imgs/store/ic_shop_details_adviser_dianhua.png"
         @click="event('call')"
+        alt="电话图标"
      />
 
     </div>
