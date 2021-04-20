@@ -6,7 +6,7 @@
       v-for="(item, index) in storeList"
       :key="index"
     >
-      <div class="shopList-top ">
+      <h1 class="shopList-top ">
         <!--   <div class="left" v-if="item.showName == 2 && item.platform == 'tm'">
           <img :src="require('../../assets/imgs/icon_' + item.platform + '.png')" />
           <img
@@ -25,7 +25,7 @@
             class="font-weight text-wraps"
           />
         </span>
-      </div>
+      </h1>
       <!--    <span
         v-if="item.name || (item.showName == 2 && item.platform == 'tm')"
         class="shopList-center text-wraps"
