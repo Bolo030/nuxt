@@ -141,6 +141,25 @@ export default {
       }
     };
   },
+   head() {
+    return {
+      title: "网店估价_天猫淘宝网店价值评估_九九牛",
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content:
+            "九九牛网店交易平台，为你提供网店价值评估工具。网店出售、网店购买，一键评估，帮助你快速获悉店铺价值！"
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content:
+            "网店估价,网店购买,网店出售,九九牛"
+        }
+      ]
+    };
+  },
   methods: {
     choose(data) {
       this.formData.platform = data.value;

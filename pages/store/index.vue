@@ -112,19 +112,19 @@ import { Toast } from "vant";
 export default {
   head() {
     return {
-      title: "天猫商城入驻_天猫店铺转让出售_天猫网店转让-九九牛",
+      title: `${this.pName}商城入驻_${this.pName}店铺转让出售_${this.pName}网店转让-九九牛`,
       meta: [
         {
           hid: "description",
           name: "description",
           content:
-            "九九牛为你提供天猫网店代运营、店铺转让出售、天猫商城入驻服务，本站包含大量最新天猫店铺资源，买卖天猫商城，就上九九牛网店交易平台！"
+            `九九牛为你提供${this.pName}网店代运营、店铺转让出售、${this.pName}商城入驻服务，本站包含大量最新${this.pName}店铺资源，买卖${this.pName}商城，就上九九牛网店交易平台！`
         },
         {
           hid: "keywords",
           name: "keywords",
           content:
-            "天猫商城入驻,天猫店铺转让,天猫店铺出售,天猫入驻,天猫网店转让，网店转让"
+            `${this.pName}商城入驻,${this.pName}店铺转让,${this.pName}店铺出售,${this.pName}入驻,${this.pName}网店转让，网店转让`
         }
       ]
     };
@@ -168,11 +168,13 @@ export default {
     categoryList.forEach(e => {
       e.selected = false;
     });
+    let pName=app.$utils.getPname(search.platform);
     // Toast.clear()
     return {
       list,
       categoryList,
-      search
+      search,
+      pName
     };
   },
   data() {

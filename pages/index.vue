@@ -265,6 +265,9 @@
       </div>
 
       <store-list :storeList="list" />
+
+      <!-- 咨询攻略 -->
+      <index-consult :consultList ='consult' @tabBtn="tabBtn" />
       <!-- 公司介绍 -->
       <div class="company-profile">
         <div class="bg-box">
@@ -344,19 +347,25 @@
 <script>
 export default {
   async asyncData({ app }) {
-    let [info, list] = await Promise.all([
+    let [info, list,consult] = await Promise.all([
       app.$api.getIndexList().then(res => (res.status === 1 ? res.data : {})),
       app.$api
         .getBoutique({
           platform: "normal",
           limit: 6
         })
-        .then(res => (res.status === 1 ? res.data.store : []))
+        .then(res => (res.status === 1 ? res.data.store : [])),
+      app.$api.articlesInfo({
+          cid: 1,
+          page: 1,
+          per_page: 1,
+          //need_content: 3 == 17
+      }).then(res=>(res.status === 1 ? res.data : {}))
     ]);
-    console.log(info, "11111111111111111111");
     return {
       info,
-      list
+      list,
+      consult
     };
   },
   data() {
@@ -370,12 +379,13 @@ export default {
         { value: "qt", name: "其他网店" }
       ],
       pType: "normal",
-      list: []
+      list: [],
+      cid:1,
     };
   },
   head() {
     return {
-      title: "天猫淘宝网店出售_店铺入驻转让_专业网店交易平台-九九牛",
+      title: "天猫商城购买_天猫淘宝店铺转让_天猫入驻|出售_网店转让平台-九九牛",
       meta: [
         {
           hid: "description",
@@ -387,7 +397,7 @@ export default {
           hid: "keywords",
           name: "keywords",
           content:
-            "网店转让,网店交易，天猫店铺转让,天猫网店转让,网店出售,网店入驻，九九牛"
+            "网店转让,网店交易,天猫店铺转让,天猫网店转让,网店出售,网店入驻,九九牛"
         }
       ]
     };
@@ -413,6 +423,16 @@ export default {
         let data = JSON.parse(val.content);
         this.$router.push(data.href);
       }
+    },
+    async tabBtn(cid){
+      this.cid = cid;
+      let { data: res } = await this.$api.articlesInfo({
+        cid: cid,
+        page: 1,
+        per_page: 10,
+        need_content: cid == 17
+      });
+      this.consult = res;
     }
   },
   mounted() {

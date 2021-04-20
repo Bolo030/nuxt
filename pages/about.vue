@@ -55,6 +55,25 @@ export default {
   data() {
     return {};
   },
+   head() {
+    return {
+      title: "公司介绍_网店交易平台_九九牛官网",
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content:
+            "四川九九牛网店交易平台，全国最大的天猫、淘宝网店购买、转让、出售平台，10000+真实购买资源，网店转让出售，九九牛更安全、更放心！"
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content:
+            "公司介绍,九九牛"
+        }
+      ]
+    };
+  },
   methods: {},
 };
 </script>

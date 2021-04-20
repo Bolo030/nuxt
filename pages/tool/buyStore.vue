@@ -139,6 +139,23 @@ export default {
       }
     };
   },
+  head() {
+    return {
+      title: `网店购买_天猫淘宝商城_网店店铺转让出售-九九牛`,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: `九九牛为你提供天猫、淘宝、京东等平台的网店出售转让服务，平台包含市面上最全网店资源，全行业类目，保证真实有效，购买网店就上九九牛！`
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content: `购买网店,网店转让,网店店铺转让,天猫店铺转让,淘宝店铺出售`
+        }
+      ]
+    };
+  },
   methods: {
     choose(data) {
       this.formData.platform = data.value;

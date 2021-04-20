@@ -20,7 +20,7 @@
     <div class="article-info">
       <h1>{{articleInfo.title}}</h1>
       <div class="article-info-sub">
-        <span>发表于 {{articleInfo.created_at}}</span>
+        <span>发表于 {{ articleInfo.created_at }}</span>
         <span>
           <img class="eye" src="~/assets/imgs/yanjing.png" alt="阅读量图标"/>
           {{articleInfo.browse}}人阅读
@@ -28,14 +28,15 @@
       </div>
       <div class="">
         <no-ssr>
-          <mavon-editor 
-           :subfield = "false"
-           :defaultOpen = "'preview'"
-           :toolbarsFlag = "false"
-           :editable="false"
-           :scrollStyle="true"
-           :ishljs = "true"
-          v-model="articleInfo.content"></mavon-editor>
+          <mavon-editor
+            :subfield="false"
+            :defaultOpen="'preview'"
+            :toolbarsFlag="false"
+            :editable="false"
+            :scrollStyle="true"
+            :ishljs="true"
+            v-model="articleInfo.content"
+          ></mavon-editor>
         </no-ssr>
       </div>
     </div>
@@ -45,15 +46,36 @@
 <script>
 export default {
   async asyncData({ params, app }) {
-    let subIndex = params.id.indexOf('.')
-    let res = await app.$api.articleDetail({ aid: params.id.substring(0,subIndex) });
-    let articleInfo = ''
+    let subIndex = params.id.indexOf(".");
+    let res = await app.$api.articleDetail({
+      aid: params.id.substring(0, subIndex)
+    });
+    let articleInfo = "";
     if (res.status !== 1) {
       return console.log("操作失败");
     } else {
-       articleInfo = res.data;  
+      articleInfo = res.data;
     }
-    return {articleInfo}
+    return { articleInfo };
+  },
+  head() {
+    return {
+      title: `${this.articleInfo.title}-九九牛官网`,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content:
+            `${this.articleInfo.abstract}`
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content:
+            `${this.articleInfo.title}`
+        }
+      ]
+    };
   }
 };
 </script>

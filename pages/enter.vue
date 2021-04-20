@@ -172,7 +172,7 @@
         class="com-width enter-news"
         src="../assets/imgs/store/enter-service.png"
         mode="widthFix"
-        @click="jumpCustomer" 
+        @click="jumpCustomer"
       />
       <!-- 案例 -->
       <div class="enter-case com-width enter-strength">
@@ -209,11 +209,32 @@ export default {
           res.status == 1 ? JSON.parse(res.data.content).consultant : []
         )
     ]);
+    let pName=app.$utils.getPname(platformType);
     // console.log(counselorList, 11111111111, caseList, 2222222222222);
     return {
       platformType,
       counselorList,
-      caseList
+      caseList,
+      pName
+    };
+  },
+  head() {
+    return {
+      title: `网店入驻_${this.pName}商城入驻_${this.pName}网店入驻-九九牛`,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content:
+            `九九牛网店交易平台，提供${this.pName}入驻、${this.pName}商城入驻、网店代入驻。淘宝、天猫、京东、拼多多等平台全覆盖！流程简单，交易安全，专业顾问一对一服务，入驻不成功不收费！`
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content:
+            `网店入驻,${this.pName}入驻,入驻${this.pName},${this.pName}商城入驻`
+        }
+      ]
     };
   },
   data() {
