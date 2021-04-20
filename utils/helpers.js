@@ -196,7 +196,7 @@ export default {
       var short = v.slice(0, 1);
       var idx = v.slice(1);
       var name = typeList.searchShort[short];
-      if (short == "c" || short == "w" || short == "f") {
+      if (short == "c" || short == "w" || short == "f"||short == "s") {
         newSearch[name] = idx;
       } else if (short == "h" || short == "l") {
         newSearch[name] = typeList[name + "List"][idx].value;

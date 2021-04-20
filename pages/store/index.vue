@@ -59,7 +59,7 @@
           </div>
           <!-- 服务页banner -->
           <a class="coverImg" href="/activity/rulesDetails">
-            <img 
+            <img
               src="~assets/imgs/store/bg_shop_fuwurukou.png"
               alt="省时购 放心售 4大保障，全方位助力"
              />
@@ -156,7 +156,7 @@ export default {
       default:
         type = "jdCategory";
     }
-
+      console.log(search,'storesearchsearchsearch')
     let [list, categoryList] = await Promise.all([
       app.$api
         .getStoreList(search)

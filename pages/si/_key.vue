@@ -598,6 +598,25 @@ export default {
       legendList
     };
   },
+  head() {
+    return {
+      title: `${this.storeInfo.title}_${this.storeInfo.parse_platform}店铺购买-九九牛`,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content:
+            `${this.storeInfo.title},九九牛网店交易平台提供网店编号为${this.storeInfo.code}的${this.storeInfo.parse_platform}店铺购买服务。`
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content:
+            `${this.storeInfo.title},${this.storeInfo.parse_platform}店铺购买,${this.storeInfo.parse_platform}商城转让,${this.storeInfo.parse_platform}商城出售`
+        }
+      ]
+    };
+  },
   data() {
     return {
       cWidth: "",

@@ -81,7 +81,7 @@ export default {
   },
    head() {
     return {
-      title: `${this.interviewInfo.title}-九九牛官网`,
+      title: `${this.interviewInfo.title}-九九牛`,
       meta: [
         {
           hid: "description",

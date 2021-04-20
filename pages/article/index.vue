@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar title="咨询攻略" left-arrow @click-left="$router.go(-1)" />
+    <van-nav-bar title="咨询攻略" left-arrow @click-left="$router.push('/')" />
     <!-- <header id="header">
       <div class="header-content">
         <a href="/user" >
@@ -148,31 +148,31 @@ export default {
     console.log(this.cid,'this.cid')
     switch (this.cid) {
       case '1':
-        title = "新闻资讯_网店交易平台-九九牛官网";
+        title = "新闻资讯_网店交易平台-九九牛";
         meta[0].content =
           "九九牛网店交易平台系统公告栏目为你提供九九牛最新企业新闻、企业活动，让你更加了解九九牛，网店交易就上九九牛，大品牌、交易更安全！";
         meta[1].content = "新闻资讯,网店交易平台,九九牛";
         break;
         case '2':
-        title = "行业资讯_网店交易平台-九九牛官网";
+        title = "行业资讯_网店交易平台-九九牛";
         meta[0].content =
           "九九牛网店交易平台，行业资讯栏目为你提供九九牛最新的电商干货以及行业新闻，看清行业趋势，站立电商前沿！天猫入驻、天猫转让、网店代运营、淘宝转让等网店交易业务，就上九九牛！";
         meta[1].content = "行业资讯,网店交易平台,九九牛";
         break;
         case '4':
-        title = "购店攻略_网店交易平台-九九牛官网";
+        title = "购店攻略_网店交易平台-九九牛";
         meta[0].content =
           "九九牛网店交易平台，购店攻略栏目为你提供最新的网店购买转让注意事项以及运营技巧，看清行业趋势，站立电商前沿！天猫入驻、天猫转让、网店代运营、淘宝转让等网店交易业务，就上九九牛！";
         meta[1].content = "购店攻略,网店交易平台,九九牛";
         break;
         case '17':
-        title = "企业公告_网店交易平台-九九牛官网";
+        title = "企业公告_网店交易平台-九九牛";
         meta[0].content =
           "九九牛网店交易平台系统公告栏目为你提供九九牛最新企业新闻、企业活动，让你更加了解九九牛，网店交易就上九九牛，大品牌、交易更安全！";
         meta[1].content = "企业公告,网店交易平台,九九牛";
         break;
          case '25':
-        title = "客户反馈_网店交易平台-九九牛官网";
+        title = "客户反馈_网店交易平台-九九牛";
         meta[0].content =
           "九九牛网店交易平台，客户反馈栏目是针对在九九牛进行网店交易的客户采访，采访内容包含了客户对我们提供服务的最真实反馈，服务到底怎么样，交给客户来回答！";
         meta[1].content = "客户反馈,网店交易平台,九九牛";

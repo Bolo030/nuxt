@@ -60,7 +60,7 @@ export default {
   },
   head() {
     return {
-      title: `${this.articleInfo.title}-九九牛官网`,
+      title: `${this.articleInfo.title}-九九牛`,
       meta: [
         {
           hid: "description",
@@ -70,7 +70,7 @@ export default {
         {
           hid: "keywords",
           name: "keywords",
-          content: `${this.articleInfo.title}`
+          content: `${this.articleInfo.keywords||this.articleInfo.title}`
         }
       ]
     };

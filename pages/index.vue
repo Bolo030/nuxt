@@ -149,19 +149,19 @@
                 alt="天猫网店入驻"
               />
             </a>
-            <a href="/enter?p=jd" title="九九网店交易平台，京东入驻">
+            <a href="/enter/jd" title="九九网店交易平台，京东入驻">
               <img
                 src="~assets/imgs/bg_home_settlement_jindong@2x.png"
                 alt="京东网店入驻"
               />
             </a>
-            <a href="/enter?p=pd" title="九九网店交易平台，拼多多入驻">
+            <a href="/enter/pd" title="九九网店交易平台，拼多多入驻">
               <img
                 src="~assets/imgs/bg_home_settlement_pinduoduo@2x.png"
                 alt="拼多多网店入驻"
               />
             </a>
-            <a href="/enter?p=qt" title="九九网店交易平台，其他入驻">
+            <a href="/enter/qt" title="九九网店交易平台，其他入驻">
               <img src="~assets/imgs/bg_home_settlement_qita@2x.png" alt="其他网店入驻" />
             </a>
           </div>
@@ -265,7 +265,6 @@
       </div>
 
       <store-list :storeList="list" />
-
       <!-- 咨询攻略 -->
       <index-consult :consultList ='consult' @tabBtn="tabBtn" />
       <!-- 公司介绍 -->

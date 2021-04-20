@@ -57,7 +57,7 @@ export default {
   },
    head() {
     return {
-      title: "公司介绍_网店交易平台_九九牛官网",
+      title: "公司介绍_网店交易平台_九九牛",
       meta: [
         {
           hid: "description",

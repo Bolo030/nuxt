@@ -55,7 +55,23 @@
 
 <script>
 export default {
-  head() {},
+ head() {
+    return {
+      title: `店铺搜索_购买网店_九九牛官网`,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: `九九牛网店交易平台，店铺搜索栏目提供网店关键词搜索功能，能帮助您在购买网店时更快捷的找到心仪的店铺。买卖网店就上九九牛，大品牌有保障！`
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content: `店铺搜索,网店搜索,购买网店,九九牛,九九牛官网`
+        }
+      ]
+    };
+  },
   async asyncData({ app, params, query }) {
     let { searchContent, platform } = query;
     let history = [];

@@ -104,6 +104,11 @@ export default {
     extendRoutes(routes, resolve) {
       routes.push(
         {
+          name: "enter",
+          path: "/enter/:p",
+          component: resolve(__dirname, "pages/enter.vue")
+        },
+        {
           name: "article",
           path: "/article/list-:id",
           component: resolve(__dirname, "pages/article/index.vue")
