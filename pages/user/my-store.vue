@@ -32,17 +32,10 @@
                 </li>
                 <li class="middle-desc bg-main-color6 d-f">
                     <img :src="item.store_icon_path"
-                        alt="店铺图标">
-                    <p class="middle-desc-r font-weight font-size-26 text-wraps" v-if="true">
+                        :alt="$utils.getPname(item.platform)+'网店'">
+                    <p class="middle-desc-r font-weight font-size-26 text-wraps">
                         {{item.title}}
                     </p>
-                    <div class="middle-desc-r" v-else>
-                        <h4 class="font-weight font-size-26">哈哈哈旗舰店</h4>
-                        <p class="text-wrap font-size-24 font-main-color2">
-                            华南地区数码旗舰店，3C数码，中文商标，
-                            一般纳税人，店铺干净，无扣分，无贷
-                        </p>
-                    </div>
                 </li>
                 <li class="bottom-price font-main-color">
                    <span class="font-szie-24">售价</span>
@@ -136,17 +129,17 @@ export default {
         this.currentIndex = index;
         this.page = 1;
         this.tabBarMold = statusMold;
-        // this.loading = true;
-        // this.finished = false;
-        
-        this.tabBarDataSwitch(statusMold)
-        
-        
+        document.documentElement.scrollTop = document.body.scrollTop = 0;
+        //this.loading = true;
+        //this.finished = false;  
+        this.tabBarDataSwitch(statusMold);
+
+        console.log(document.documentElement.scrollTop); 
       },
       // tabbar切换调用函数
       async tabBarDataSwitch(statusMold){
-        this.loading = true;
-        document.documentElement.scrollTop = document.body.scrollTop = 0;
+        
+        
         let res = await this.$api.myStoreInfo({
             search_mold: statusMold || 'all',
             page: this.page,

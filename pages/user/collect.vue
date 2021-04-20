@@ -37,7 +37,7 @@
             }}</span>
           </li>
           <li class="middle-desc bg-main-color6 d-f"  >
-            <img :src="item.store_icon_path" alt="店铺图标" />
+            <img :src="item.store_icon_path" :alt="$utils.getPname(item.store.platform)+'网店'" />
             <p
               class="middle-desc-r font-weight font-size-26 text-wraps"
               v-if="item.store.name === ''"
