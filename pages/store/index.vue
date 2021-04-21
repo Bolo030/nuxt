@@ -134,7 +134,7 @@ export default {
         meta[0].content=`九九牛${this.pName}${this.cName}栏目，提供购买、转让${this.pName}${this.cName}网店服务。买卖${this.pName}${this.cName}网店、${this.pName}${this.cName}网店转让、出售就上九九牛，无扣分、动态全红、新老店铺任你挑选！`;
         meta[1].content=`购买${this.pName}${this.cName}店铺,${this.pName}${this.cName}网店转让,${this.pName}${this.cName}网店出售,买卖${this.pName}店铺,九九牛`;
       }else if(this.search.storeType&&this.search.category){
-        title=`购买${this.cName}${this.pName}${this.sName}_天猫代入驻_天猫网店出售转让-九九牛`;
+        title=`购买${this.cName}${this.pName}${this.sName}_${this.pName}代入驻_${this.pName}网店出售转让-九九牛`;
         meta[0].content=`九九牛为您提供专业的${this.cName}${this.pName}${this.sName}买卖服务,这里是汇聚了不同地区、纳税人资格、店铺综合情况、好评率、商标类别的${this.cName}${this.pName}${this.sName}专区，海量${this.cName}${this.pName}店铺出售转让信息就上九九牛！`;
         meta[1].content=`购买${this.cName}${this.pName}${this.sName},${this.pName}代入驻,${this.pName}网店出售,${this.pName}网店转让,九九牛`;
       }else{

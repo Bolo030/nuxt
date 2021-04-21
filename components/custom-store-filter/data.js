@@ -244,7 +244,7 @@ const storeTypeList={
     {name:"旗舰店",value:100,selected:false},
     {name:"专营店",value:101,selected:false},
     {name:"专卖店",value:102,selected:false},
-    {name:"惊喜",value:103,selected:false},
+    {name:"京喜",value:103,selected:false},
     {name:"全球购",value:104,selected:false},
     {name:"自营",value:105,selected:false},
     {name:"优创店",value:106,selected:false},
