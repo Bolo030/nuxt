@@ -1,7 +1,7 @@
 export default {
   env: {
-    baseUrl: "https://api.testing.996110.com/api"
-    // baseUrl: process.env.NODE_ENV=='pro'?'https://api.996110.com/api':'https://api.testing.996110.com/api'
+    // baseUrl: "https://api.testing.996110.com/api"
+    baseUrl: process.env.NODE_ENV=='pro'?'https://api.996110.com/api':'https://api.testing.996110.com/api'
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -26,6 +26,9 @@ export default {
         rel: "stylesheet",
         href: "//at.alicdn.com/t/font_2353350_bdz183nryxm.css"
       }
+    ],
+    script:[
+      {src:'https://dgt.zoosnet.net/JS/LsJS.aspx?siteid=DGT54828764&float=1&lng=cn'}
     ]
   },
 
@@ -39,7 +42,8 @@ export default {
     "~/plugins/api.js",
     "~/plugins/vue-global.js",
     { src: "@/plugins/lib-flexible", ssr: false },
-    { src: "@/plugins/vue-mavon-editor", ssr: false }
+    { src: "@/plugins/vue-mavon-editor", ssr: false },
+    { src: '@/plugins/tongji.js', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
