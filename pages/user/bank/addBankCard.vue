@@ -63,12 +63,18 @@
 
 <script>
 export default {
+  name:"addBank",
   asyncData({ app, store }) {
     let openBank = store.state.auth.openBank;
-    console.log(openBank, "openBank");
     return {
       openBank
     };
+  },
+  activated(){
+    this.openBank = this.$store.state.auth.openBank;
+  },
+  deactivated(){
+
   },
   data() {
     return {
@@ -102,6 +108,7 @@ export default {
     },
     onSubmit() {
       this.formData.bank = this.openBank.code;
+      console.log(  this.formData,'  this.formData')
       if (!this.formData.bank_number) return this.$toast("请输入银行卡号");
       if (!this.formData.bank) return this.$toast("请选择所属银行");
       //if (!this.formData.bank_name)

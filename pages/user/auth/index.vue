@@ -72,7 +72,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="mask-item-in bg-main-color d-f " @click="$router.push('/user/auth/bank?type='+type)">
+                <a class="mask-item-in bg-main-color d-f " :href="'/user/auth/bank?type='+type">
                     <img src="../../../assets/imgs/bank-icon.png" alt="银行卡图标">
                     <div class="right-info d-f d-f-between">
                         <div>
@@ -81,7 +81,7 @@
                         </div>
                         <img src="../../../assets/imgs/icon-entry2.png" alt="">
                     </div>
-                </li>
+                </a>
                 <button class="mask-item-button bg-main-color font-size-30" id="realNameCancel" @click="isShow=false">取消</button>
             </ul>
         </div>

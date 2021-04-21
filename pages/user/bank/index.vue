@@ -28,9 +28,10 @@
         </van-swipe-cell>
       </ul>
       <div class="btn-box">
-        <button @click="$router.push('/user/bank/addBankCard')">
-          <i class="icontianjia iconfont"></i>
-          <span>添加银行卡</span>
+        <button >
+        <a href="/user/bank/addBankCard">
+        <i class="icontianjia iconfont"></i>
+          <span>添加银行卡</span></a>
         </button>
       </div>
     </main>
