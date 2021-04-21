@@ -101,6 +101,7 @@ const searchStatic = {
   taxType: undefined, //认证/证明方式
   category: undefined, //类型--服务类型
   isNew: undefined,
+  storeType:undefined,
   price: {
     low: undefined,
     high: undefined
@@ -111,22 +112,39 @@ const searchStatic = {
 import { Toast } from "vant";
 export default {
   head() {
-    return {
-      title: `${this.pName}商城入驻_${this.pName}店铺转让出售_${this.pName}网店转让-九九牛`,
-      meta: [
+    let title=``;
+    let meta=[
         {
           hid: "description",
           name: "description",
-          content:
-            `九九牛为你提供${this.pName}网店代运营、店铺转让出售、${this.pName}商城入驻服务，本站包含大量最新${this.pName}店铺资源，买卖${this.pName}商城，就上九九牛网店交易平台！`
+          content:""
         },
         {
           hid: "keywords",
           name: "keywords",
-          content:
-            `${this.pName}商城入驻,${this.pName}店铺转让,${this.pName}店铺出售,${this.pName}入驻,${this.pName}网店转让，网店转让`
+          content:""
         }
       ]
+      if(this.search.storeType&&!this.search.category){
+        title=`买卖${this.pName}${this.sName}_${this.pName}${this.sName}铺转让出售_${this.pName}网店转让-九九牛`;
+        meta[1].content=`买卖${this.pName}${this.sName},${this.pName}${this.sName}转让,${this.pName}${this.sName}出售,九九牛`;
+        meta[0].content=`九九牛${this.pName}${this.sName}栏目，提供购买、转让${this.pName}店铺服务。买卖${this.pName}${this.sName}、${this.pName}${this.sName}转让、${this.pName}${this.sName}出售就上九九牛。全类目、无扣分、新老店铺任你挑选！`;
+      }else if(this.search.category&&!this.search.storeType){
+        title=`购买${this.pName}${this.cName}店铺_${this.pName}${this.cName}网店转让出售_买卖${this.pName}店铺-九九牛`;
+        meta[0].content=`九九牛${this.pName}${this.cName}栏目，提供购买、转让${this.pName}${this.cName}网店服务。买卖${this.pName}${this.cName}网店、${this.pName}${this.cName}网店转让、出售就上九九牛，无扣分、动态全红、新老店铺任你挑选！`;
+        meta[1].content=`购买${this.pName}${this.cName}店铺,${this.pName}${this.cName}网店转让,${this.pName}${this.cName}网店出售,买卖${this.pName}店铺,九九牛`;
+      }else if(this.search.storeType&&this.search.category){
+        title=`购买${this.cName}${this.pName}${this.sName}_天猫代入驻_天猫网店出售转让-九九牛`;
+        meta[0].content=`九九牛为您提供专业的${this.cName}${this.pName}${this.sName}买卖服务,这里是汇聚了不同地区、纳税人资格、店铺综合情况、好评率、商标类别的${this.cName}${this.pName}${this.sName}专区，海量${this.cName}${this.pName}店铺出售转让信息就上九九牛！`;
+        meta[1].content=`购买${this.cName}${this.pName}${this.sName},${this.pName}代入驻,${this.pName}网店出售,${this.pName}网店转让,九九牛`;
+      }else{
+        title=`购买${this.pName}网店_${this.pName}店铺转让出售_${this.pName}网店转让平台-九九牛`;
+        meta[0].content=`九九牛是一家专注网店转让的平台，首创0佣金、0差价网店转让体系，为你提供专业的${this.pName}网店转让服务，购买${this.pName}店铺、${this.pName}网店入驻、${this.pName}店铺转让、${this.pName}店铺出售就选九九牛。`;
+        meta[1].content=`购买${this.pName}网店,${this.pName}店铺转让,${this.pName}店铺出售,${this.pName}网店转让,${this.pName}转让平台,九九牛`;
+      }
+    return {
+      title,
+      meta
     };
   },
   async asyncData({ app, params }) {
@@ -169,12 +187,25 @@ export default {
       e.selected = false;
     });
     let pName=app.$utils.getPname(search.platform);
+    let sName="";
+    let cName="";
+    if(search.storeType)
+    sName=app.$utils.getStoreType(search.platform,search.storeType);
+    if(search.category)
+    for(var v of categoryList){
+      if(v.id==search.category){
+        cName=v.name;
+        break;
+      }
+    }
     // Toast.clear()
     return {
       list,
       categoryList,
       search,
-      pName
+      pName,
+      sName,
+      cName,
     };
   },
   data() {

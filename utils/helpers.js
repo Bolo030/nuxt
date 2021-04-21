@@ -19,6 +19,59 @@ export default {
     };
     return platform[val];
   },
+  getStoreType(type,val){
+    const storeTypeList={
+      'tm':[
+        {name:"旗舰店",value:1,selected:false},
+        {name:"专营店",value:2,selected:false},
+        {name:"专卖店",value:3,selected:false},
+        {name:"供销平台",value:4,selected:false},
+        {name:"美妆店",value:5,selected:false},
+      ],
+      "jd":[
+        {name:"旗舰店",value:100,selected:false},
+        {name:"专营店",value:101,selected:false},
+        {name:"专卖店",value:102,selected:false},
+        {name:"惊喜",value:103,selected:false},
+        {name:"全球购",value:104,selected:false},
+        {name:"自营",value:105,selected:false},
+        {name:"优创店",value:106,selected:false},
+        {name:"拼购",value:107,selected:false},
+        {name:"卖场型",value:108,selected:false},
+      ],
+      "tb":[
+        {name:"个人店",value:200,selected:false},
+        {name:"企业店",value:201,selected:false},
+      ],
+      "pd":[
+        {name:"个人店",value:300,selected:false},
+        {name:"企业店",value:301,selected:false},
+        {name:"旗舰店",value:301,selected:false},
+        {name:"专营店",value:301,selected:false},
+        {name:"专卖店",value:301,selected:false},
+      ],
+      "wp":[
+        {name:"旗舰店",value:400,selected:false},
+        {name:"专营店",value:401,selected:false},
+        {name:"专卖店",value:401,selected:false},
+        {name:"自营店",value:401,selected:false},
+      ],
+      "xh":[
+        {name:"旗舰店",value:500,selected:false},
+        {name:"集合店",value:501,selected:false},
+        {name:"专卖店",value:501,selected:false},
+      ],
+      "mg":[
+        {name:"蘑菇街主站",value:600,selected:false},
+        {name:"蘑菇街小程序",value:601,selected:false},
+      ],
+    }
+    for(var v of storeTypeList[type]){
+      if(v.value==val){
+        return v.name
+      }
+    }
+  },
   /**
    * 匹配文本中的url
    * @param {string} str
