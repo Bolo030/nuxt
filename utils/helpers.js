@@ -1,5 +1,22 @@
 import { Toast } from "vant";
 export default {
+  platforms: {
+    tm: "天猫",
+    tb: "淘宝",
+    jd: "京东",
+    wp: "唯品会",
+    xh: "小红书",
+    pd: "拼多多",
+    mg: "蘑菇街",
+    dd: "当当网",
+    bb: "贝贝网",
+    al: "阿里巴巴",
+    sn: "苏宁",
+    yx: "亚马逊",
+    ym: "洋码头",
+    qt: "其他"
+  },
+
   getPname(val) {
     let platform = {
       tm: "天猫",

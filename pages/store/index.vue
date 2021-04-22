@@ -151,7 +151,13 @@ export default {
       script
     };
   },
-  async asyncData({ app, params }) {
+  async asyncData({ app, params, error }) {
+    if (! Object.keys(app.$utils.platforms).includes(params.store)) {
+      return error({
+        message: "页面未找到",
+        statusCode: 404
+      });
+    }
     Toast.loading({
       message: "加载中...",
       forbidClick: true,
@@ -159,7 +165,7 @@ export default {
       duration:500
     });
     let search = { ...searchStatic };
-    search.platform = params.store || "tm";
+    search.platform = params.store;
     console.log(params.id);
     search = params.id
       ? app.$utils.getSearchQuery(params.id, store, search)
