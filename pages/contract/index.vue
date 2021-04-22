@@ -19,7 +19,7 @@
             </li>
             <li class="contract-middle">
                 <div class="store-title d-f">
-                    <img :src="item.store_icon_path"
+                    <img v-if="item.store_icon_path" :src="item.store_icon_path"
                         alt="店铺图标">
                     <h4 class="font-size-30 font-weight">{{item.store_name}}</h4>
                 </div>
@@ -74,7 +74,9 @@ export default {
     if(result.status !== 1) return ;
     contractLists = result.data.data;
     contractLists.forEach(item => {
-      item.store_icon_path = require(`~/assets/imgs/icon_${item.platform}.png`)
+      if (item.platform) {
+        item.store_icon_path = require(`~/assets/imgs/icon_${item.platform}.png`)
+      }
     });
    return {contractLists} 
   },
