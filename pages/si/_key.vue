@@ -401,7 +401,7 @@
             class="screenshot-item"
           >
             <img
-              :src="item.thumb"
+              :src="item"
               @click="previewImg(screenshotList, index)"
               :alt="storeInfo.title + '截图' + (index + 1)"
             />
@@ -568,7 +568,9 @@ export default {
     let customerService = storeInfo.customer_service;
     let storeList = [];
     storeList.push(storeInfo);
-    let screenshotList = storeInfo.thumbs;
+    let screenshotList = storeInfo.thumbs.map(e=>{
+       return e.thumb
+    });
     let shopDynamics = [];
     for (let key in storeInfo) {
       if (
@@ -844,10 +846,9 @@ export default {
     height: 120px;
     width: 750px;
     display: flex;
-    width: 100%;
-    white-space: nowrap;
-    overflow: scroll;
+    overflow-x: scroll;
     .screenshot-item {
+      flex-shrink: 0;
       width: 170px;
       height: 120px;
       background: pink;
