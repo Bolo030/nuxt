@@ -5,7 +5,7 @@ export default {
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "nuxt-jjn-h5",
+    title: "九九牛",
     htmlAttrs: {
       lang: "en"
     },
@@ -16,7 +16,13 @@ export default {
         content:
           "width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
       },
-      { hid: "description", name: "description", content: "" }
+      {
+        hid: "keywords",
+        name: "keywords",
+        content:
+          "天猫转让,天猫店铺转让,天猫店铺购买,网店转让,淘宝网店转让,九九牛"
+      },
+      { hid: "description", name: "description", content: "九九牛网店转让平台，汇聚万家优质网店，为商家提供天猫店铺转让、天猫店铺购买、淘宝店铺转让、网店转让、网店入驻等服务，严格把关每一个步骤，让你省心选，放心买！" }
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
@@ -27,9 +33,9 @@ export default {
         href: "//at.alicdn.com/t/font_2353350_bdz183nryxm.css"
       }
     ],
-    script:[
+  /*   script:[
       {src:'https://dgt.zoosnet.net/JS/LsJS.aspx?siteid=DGT54828764&float=1&lng=cn'}
-    ]
+    ] */
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -66,6 +72,9 @@ export default {
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    babel:{
+      'plugins':process.env.NODE_ENV=='pro'?['transform-remove-console']:[]
+    },
     optimization: {
       runtimeChunk: {
         name: "manifest"

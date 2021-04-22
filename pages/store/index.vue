@@ -125,6 +125,9 @@ export default {
           content:""
         }
       ]
+      let script=[
+      {src:'https://dgt.zoosnet.net/JS/LsJS.aspx?siteid=DGT54828764&float=1&lng=cn'}
+    ]
       if(this.search.storeType&&!this.search.category){
         title=`买卖${this.pName}${this.sName}_${this.pName}${this.sName}铺转让出售_${this.pName}网店转让-九九牛`;
         meta[1].content=`买卖${this.pName}${this.sName},${this.pName}${this.sName}转让,${this.pName}${this.sName}出售,九九牛`;
@@ -144,7 +147,8 @@ export default {
       }
     return {
       title,
-      meta
+      meta,
+      script
     };
   },
   async asyncData({ app, params }) {

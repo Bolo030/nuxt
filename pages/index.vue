@@ -398,7 +398,10 @@ export default {
           content:
             "天猫转让,天猫店铺转让,天猫店铺购买,网店转让,淘宝网店转让,九九牛"
         }
-      ]
+      ],
+       script:[
+      {src:'https://dgt.zoosnet.net/JS/LsJS.aspx?siteid=DGT54828764&float=1&lng=cn'}
+    ]
     };
   },
   methods: {
