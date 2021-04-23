@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar title="资讯攻略" left-arrow @click-left="$router.push('/user')" />
+    <van-nav-bar title="资讯攻略" left-arrow @click-left="$router.go(-1)" />
     <!-- <header id="header">
       <div class="header-content">
         <a href="/user" >
