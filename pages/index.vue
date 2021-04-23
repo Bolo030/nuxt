@@ -191,6 +191,7 @@
                 <img
                   v-for="(v, i) in info.great.slice(index * 8, 8 * (index + 1))"
                   :key="i"
+                  
                   :src="v.thumb"
                   :alt="v.title+'品牌网店 '"
                 />
@@ -578,8 +579,8 @@ main {
 }
 
 .bigSelection .bigSelection-bottom img {
-  width: 22.4vw;
-  height: 22.4vw;
+  width: 160px;
+  height: 160px;
   border-radius: 2.1333vw;
   margin-bottom: 1.3333vw;
 }
@@ -594,7 +595,7 @@ main {
 .bigSelection .bigSelection-bottom .swiper-slide {
   height: 24.8vw;
   img {
-    margin-right: 10px;
+    margin-right: 18px;
   }
   img:nth-child(4n + 4) {
     margin-right: 0;
