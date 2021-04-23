@@ -2,7 +2,7 @@
   <div class="consult-wrapper">
     <div class="consult-box">
       <div class="consult-top">
-        <h2>咨询攻略</h2>
+        <h2>资讯攻略</h2>
         <span @click="$router.push('/article/list-1')">更多></span>
       </div>
       <div class="consult-tab">
