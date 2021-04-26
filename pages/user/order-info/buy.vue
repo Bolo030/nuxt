@@ -52,7 +52,10 @@
               </h4>
             </div>
           </div>
-          <a class="service-right font-main-color font-size-24" :href="'tel:'+info.customer_service.workTel">
+          <a
+            class="service-right font-main-color font-size-24"
+            :href="'tel:' + info.customer_service.workTel"
+          >
             <i class="iconfont icondianhua font-main-color"></i>
             <span class="font-main-color">联系顾问</span>
           </a>
@@ -119,22 +122,28 @@
           </ul>
         </div>
         <!-- 交易流程 -->
-  <!--       <div class="trade-process bg-main-color">
-          <div class="trade-process-top d-f d-f-between">
+        <div class="trade-process bg-main-color">
+          <div class="trade-process-top ">
             <span class="font-size-28 font-weight">交易流程</span>
             <div class="swiper-pagination  myswiper-pagination">
               <van-swipe
                 class="my-swipe"
                 indicator-color="#f4632c"
-                :show-indicators='false'
+                :loop="false"
+                :show-indicators="false" width="150"
               >
-                <van-swipe-item>1</van-swipe-item>
-                <van-swipe-item>2</van-swipe-item>
-
+                <van-swipe-item v-for="(item, index) in stepList" :key="index">
+                  <ul class="trade-process-item " >
+                    <li class="title">{{ item.title }}</li>
+                    <li v-for="(v,i) in item.list" :key="i" >
+                      {{v.record}}
+                    </li>
+                  </ul>
+                </van-swipe-item>
               </van-swipe>
             </div>
           </div>
-        </div> -->
+        </div>
 
         <!-- 底部定位 -->
         <div class="bottom-fixed bg-main-color d-f d-f-between">
@@ -216,6 +225,7 @@ export default {
         }
       }
     }
+    console.log(stepList, "stepList");
     return {
       info,
       key,
@@ -416,6 +426,7 @@ export default {
 
 .trade-process .myswiper-pagination {
   position: static;
+  display: flex;
 }
 
 .trade-process .myswiper-pagination .my-bullet1 {
@@ -474,5 +485,36 @@ export default {
   background: #f4632c;
   margin-left: 2.6667vw;
   border: none;
+}
+.trade-process{
+  .my-swipe{
+    margin-top: 20px;
+  }
+  .van-swipe-item {
+  width: 320px !important;
+}
+.trade-process-item{
+  height: 220px ;
+  width: 290px ;
+  padding-top: 35px;
+  font-size: 20px;
+  line-height: 20px;
+   background-color: #f4f4f4;
+  border-radius: 16px;
+  text-align: center;
+   color: #999999;
+  li+li{
+    margin-top: 20px;
+  }
+  &.active{
+    color: #f4632c;
+    background-color: #ffebe4;
+  }
+}
+.title{
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
 }
 </style>
