@@ -5,7 +5,7 @@
       <span>返回</span>
     </div>
     <div class="aside-list">
-      <div class="aside-item" v-for="(item, index) in list" :key="index">
+      <div class="aside-item" v-for="(item, index) in list" :key="index" v-if="item.childList.length>0">
         <div class="aside-item-title">
           {{ item.title }}
         </div>
@@ -59,6 +59,12 @@ export default {
           childList: store.platformlist,
           type: "platform"
         },
+         {
+          title: "商店类型",
+          childList: store.storeTypeList[search.platform],
+          type: "storeType",
+          short: "s"
+        },
         {
           title: "是否新店",
           childList: store.isNewList,
@@ -96,6 +102,7 @@ export default {
   },
   created() {
     this.search = Object.assign(this.search, this.searchChild);
+    this.list[1].childList=store.storeTypeList[this.search.platform]||[]
     for (var e of this.list) {
       for (var r of e.childList) {
         if (
@@ -118,7 +125,7 @@ export default {
         this.path = this.$utils.createQuery(
           this.$route.params,
           this.list[index].short,
-          index == 3 ? value : 1 + idx,
+          index == 4|| index == 1? value : 1 + idx,
           this.path
         );
         if (this.search[this.list[index].type] == value) {

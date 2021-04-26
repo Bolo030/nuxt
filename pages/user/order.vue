@@ -59,7 +59,7 @@
             <div class="status-footer-l font-main-color">
               <span class="font-size-24">订单总额</span>
               <span class="font-weight font-size-34"
-                >￥{{ item.store.parse_price }}</span
+                >￥{{ item.parse_payable }}</span
               >
             </div>
             <div class="status-footer-r font-size-24">
@@ -163,6 +163,7 @@ export default {
             this.list = [...res.data.data];
           } else {
             this.list.push(...res.data.data);
+            // this.list.concat(res.data.data)
           }
            if (res.data.data.length == 0) {
             this.finished = true;
@@ -241,7 +242,7 @@ export default {
 
 .order-tabbar .tabbar-item {
   position: relative;
-  
+
 }
 .order-tabbar .tabbar-item-active {
   font-weight: 700;

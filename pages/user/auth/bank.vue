@@ -74,6 +74,7 @@
 
 <script>
 export default {
+  name:"realBank",
   asyncData({ app, store,query }) {
     let openBank = store.state.auth.openBank;
     let type=query.type||false
@@ -82,6 +83,9 @@ export default {
       openBank,
       type
     };
+  },
+  activated(){
+    this.openBank = this.$store.state.auth.openBank;
   },
   data() {
     return {

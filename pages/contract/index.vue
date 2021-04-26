@@ -81,7 +81,9 @@ export default {
     if(result.status !== 1) return ;
     contractLists = result.data.data;
     contractLists.forEach(item => {
-      item.store_icon_path = require(`~/assets/imgs/icon_${item.platform}.png`)
+      if (item.platform) {
+        item.store_icon_path = require(`~/assets/imgs/icon_${item.platform}.png`)
+      }
     });
    return {contractLists} 
   },

@@ -26,18 +26,15 @@
           {{articleInfo.browse}}人阅读
         </span>
       </div>
-      <div class="">
-        <no-ssr>
-          <mavon-editor
-            :subfield="false"
-            :defaultOpen="'preview'"
-            :toolbarsFlag="false"
-            :editable="false"
-            :scrollStyle="true"
-            :ishljs="true"
-            v-model="articleInfo.content"
-          ></mavon-editor>
-        </no-ssr>
+      <div class="markdown-body" v-html="articleInfo.content">
+        <mavon-editor
+          :subfield="false"
+          :defaultOpen="'preview'"
+          :toolbarsFlag="false"
+          :editable="false"
+          :scrollStyle="true"
+          :ishljs="true"
+        ></mavon-editor>
       </div>
     </div>
   </div>
@@ -58,21 +55,22 @@ export default {
     }
     return { articleInfo };
   },
+  data() {
+    return {};
+  },
   head() {
     return {
-      title: `${this.articleInfo.title}-九九牛官网`,
+      title: `${this.articleInfo.title}-九九牛`,
       meta: [
         {
           hid: "description",
           name: "description",
-          content:
-            `${this.articleInfo.abstract}`
+          content: `${this.articleInfo.abstract}`
         },
         {
           hid: "keywords",
           name: "keywords",
-          content:
-            `${this.articleInfo.title}`
+          content: `${this.articleInfo.keywords||this.articleInfo.title}`
         }
       ]
     };
@@ -81,6 +79,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.markdown-body {
+  width: 100%;
+  height: 100%;
+  padding: 8px 25px 15px 25px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  background: #fff;
+  border-radius: 15px;
+}
 .article-info {
   padding: 24px;
   box-sizing: border-box;

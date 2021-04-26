@@ -3,19 +3,14 @@
     <van-nav-bar title="店铺详情" left-arrow @click-left="$router.go(-1)" />
 
     <div class="storeInfo-box">
-      <!-- 顾客服务组件 -->
-      <customer-service
-        :customerService="customerService"
-        :platform="storeInfo.platform"
-        @changeWx="$refs.pop.openDialog()"
-        @changeCall="callPhone()"
-      />
+     
       <!-- 店铺信息组件 -->
       <store-list
         isInfo
         :storeList="storeList"
         :isShowList="false"
         :jump="false"
+        :classShow='true'
       ></store-list>
       <!-- 网店编号 -->
       <div class="storeMsg si-copy">
@@ -400,7 +395,11 @@
             :key="index"
             class="screenshot-item"
           >
-            <img :src="item.thumb" @click="previewImg(screenshotList, index)" :alt="storeInfo.title+'截图'+(index+1)" />
+            <img
+              :src="item"
+              @click="previewImg(screenshotList, index)"
+              :alt="storeInfo.title + '截图' + (index + 1)"
+            />
           </div>
         </div>
       </card>
@@ -476,7 +475,10 @@
           </div>
         </div>
         <div class="divider">
-          <img src="../../assets/imgs/ic_shop_details_process_zhishitiao.png" alt="" />
+          <img
+            src="../../assets/imgs/ic_shop_details_process_zhishitiao.png"
+            alt=""
+          />
         </div>
       </card>
       <!-- 猜你喜欢 -->
@@ -484,10 +486,15 @@
         <div class="guessLikes">
           <div class="left">
             <img src="../../assets/imgs/ic_shop_details_guess_aixing.png" />
-            <span>{{'更多'+$utils.getPname(storeInfo.platform)+'网店'}}</span>
+            <span>{{
+              "更多" + $utils.getPname(storeInfo.platform) + "网店"
+            }}</span>
           </div>
           <div class="right" @click="getRecommend()">
-            <img src="../../assets/imgs/ic_shop_details_guess_huanyipi.png" alt="换一批图标" />
+            <img
+              src="../../assets/imgs/ic_shop_details_guess_huanyipi.png"
+              alt="换一批图标"
+            />
             <span>换一批</span>
           </div>
         </div>
@@ -508,11 +515,17 @@
           }}</span>
         </div>
         <div class="collent" @click="$refs.pop.openDialog()">
-          <img src="../../assets/imgs/ic_shop_details_tab_weixin.png"  alt="客服微信图标"/>
+          <img
+            src="../../assets/imgs/ic_shop_details_tab_weixin.png"
+            alt="客服微信图标"
+          />
           <span>微信</span>
         </div>
         <div class="collent" @click="callPhone()">
-          <img src="../../assets/imgs/ic_shop_details_tab_dianhua.png"  alt="客服电话图标"/>
+          <img
+            src="../../assets/imgs/ic_shop_details_tab_dianhua.png"
+            alt="客服电话图标"
+          />
           <span>电话</span>
         </div>
         <div class="order-bargainirg">
@@ -542,12 +555,17 @@ export default {
       app.$api.StoreList(key).then(res => (res.status == 1 ? res.data : []))
     ]);
     if (JSON.stringify(storeInfo) == "{}") {
-     return error({ message: "This page could not be found.", statusCode: 404 });
+      return error({
+        message: "This page could not be found.",
+        statusCode: 404
+      });
     }
     let customerService = storeInfo.customer_service;
     let storeList = [];
     storeList.push(storeInfo);
-    let screenshotList = storeInfo.thumbs;
+    let screenshotList = storeInfo.thumbs.map(e=>{
+       return e.thumb
+    });
     let shopDynamics = [];
     for (let key in storeInfo) {
       if (
@@ -596,6 +614,29 @@ export default {
       recommendList,
       isCollect,
       legendList
+    };
+  },
+  head() {
+    return {
+      title: `${this.storeInfo.title}_${this.storeInfo.parse_platform}店铺购买-九九牛`,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: `${this.storeInfo.title},九九牛网店交易平台提供网店编号为${this.storeInfo.code}的${this.storeInfo.parse_platform}店铺购买服务。`
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content: `${this.storeInfo.title},${this.storeInfo.parse_platform}店铺购买,${this.storeInfo.parse_platform}商城转让,${this.storeInfo.parse_platform}商城出售`
+        }
+      ],
+      script: [
+        {
+          src:
+            "https://dgt.zoosnet.net/JS/LsJS.aspx?siteid=DGT54828764&float=1&lng=cn"
+        }
+      ]
     };
   },
   data() {
@@ -800,10 +841,9 @@ export default {
     height: 120px;
     width: 750px;
     display: flex;
-    width: 100%;
-    white-space: nowrap;
-    overflow: scroll;
+    overflow-x: scroll;
     .screenshot-item {
+      flex-shrink: 0;
       width: 170px;
       height: 120px;
       background: pink;

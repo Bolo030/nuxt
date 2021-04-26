@@ -149,19 +149,19 @@
                 alt="天猫网店入驻"
               />
             </a>
-            <a href="/enter?p=jd" title="九九网店交易平台，京东入驻">
+            <a href="/enter/jd" title="九九网店交易平台，京东入驻">
               <img
                 src="~assets/imgs/bg_home_settlement_jindong@2x.png"
                 alt="京东网店入驻"
               />
             </a>
-            <a href="/enter?p=pd" title="九九网店交易平台，拼多多入驻">
+            <a href="/enter/pd" title="九九网店交易平台，拼多多入驻">
               <img
                 src="~assets/imgs/bg_home_settlement_pinduoduo@2x.png"
                 alt="拼多多网店入驻"
               />
             </a>
-            <a href="/enter?p=qt" title="九九网店交易平台，其他入驻">
+            <a href="/enter/qt" title="九九网店交易平台，其他入驻">
               <img src="~assets/imgs/bg_home_settlement_qita@2x.png" alt="其他网店入驻" />
             </a>
           </div>
@@ -266,7 +266,6 @@
       </div>
 
       <store-list :storeList="list" />
-
       <!-- 咨询攻略 -->
       <index-consult :consultList ='consult' @tabBtn="tabBtn" />
       <!-- 公司介绍 -->
@@ -392,15 +391,18 @@ export default {
           hid: "description",
           name: "description",
           content:
-            "九九牛是一家集网店交易、入驻、转让等电商综合业务于一体的虚拟资产交易平台，旗下业务覆盖淘宝、天猫、京东、小红书、唯品会等平台，以专业、高效为客户提供最优质的虚拟资产交易服务，为实现共同定义电商新时代的目标不懈努力。丰富行业经验帮您轻松买网店！网店转让交易就上九九牛!"
+            "九九牛网店转让平台，汇聚万家优质网店，为商家提供天猫店铺转让、天猫店铺购买、淘宝店铺转让、网店转让、网店入驻等服务，严格把关每一个步骤，让你省心选，放心买！"
         },
         {
           hid: "keywords",
           name: "keywords",
           content:
-            "网店转让,网店交易,天猫店铺转让,天猫网店转让,网店出售,网店入驻,九九牛"
+            "天猫转让,天猫店铺转让,天猫店铺购买,网店转让,淘宝网店转让,九九牛"
         }
-      ]
+      ],
+       script:[
+      {src:'https://dgt.zoosnet.net/JS/LsJS.aspx?siteid=DGT54828764&float=1&lng=cn'}
+    ]
     };
   },
   methods: {

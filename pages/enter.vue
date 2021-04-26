@@ -3,7 +3,7 @@
     <van-nav-bar
       :title="platform[platformType].name"
       left-arrow
-      @click-left="$router.go(-1)"
+      @click-left="$router.push('/')"
     />
     <div class="store-in" :class="platformType">
       <div class="store-banner">
@@ -12,7 +12,7 @@
             v-for="(item, index) in platform"
             v-if="index != platformType"
             :key="index"
-            :href="'/enter?p=' + index"
+            :href="'/enter/' + index"
           >
             <span>{{ item.name }}</span>
             <van-icon name="arrow" color="#fff" size="15" />
@@ -197,8 +197,8 @@
 
 <script>
 export default {
-  async asyncData({ app, query }) {
-    let platformType = query.p || "tm";
+  async asyncData({ app, query,params }) {
+    let platformType = params.p || "tm";
     let [caseList, counselorList] = await Promise.all([
       app.$api
         .getCustomized({ cid: 28, per_page: 3 })

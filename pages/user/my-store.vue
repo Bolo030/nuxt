@@ -11,7 +11,7 @@
     <main class="myStore-box position-r">
         <!-- 头部tabbar切换 -->
         <div class="myStore-tabbar bg-main-color d-f d-f-between font-size-28">
-            <span v-for="(item,index) in tabBar" 
+            <span v-for="(item,index) in tabBar"
             :class="index=== currentIndex? 'tabbar-active':''"
             @click="tabBarSwitch(index,item.search_mold)"
             :key="item.title">{{item.title}}</span>
@@ -23,7 +23,7 @@
           @load="onLoad"
           
         >
-          
+
           <!-- 店铺状态列表 -->
           <div class="store-status-box">
             <ul class="store-list bg-main-color" v-for="(item,index) in storeList" :key="index" @click="jumpInfo(item)">
@@ -46,7 +46,7 @@
             </ul>
           </div>
         </van-list>
-        
+
     </main>
   </div>
 </template>
@@ -143,19 +143,25 @@ export default {
             page: this.page,
             per_page: this.per_page
         });
-        if(res.status !== 1) return //this.$toast(res.message);
-        this.loading = false;
-        if(this.page === 1) {
-          this.storeList =  res.data.data;
-        }else {
+        if(res.status==1){
+           if(this.page == 1) {
+            this.storeList =  res.data.data;
+            }else{
+            if(res.data.data.length == 0){
+            this.finished = true;
+            }else{
+              this.storeList = this.storeList.concat(res.data.data);
+            }
+           this.storeList.forEach(item => {
+          item.store_icon_path = require(`~/assets/imgs/icon_${item.platform}.png`)
+          });
+        }
+        }else{
+           this.finished = true;
+        }
+         setTimeout(() => {
           this.loading = false;
-          this.resStoreList = res.data.data;
-          if(this.resStoreList.length === 0) return this.finished = true;
-          this.storeList = this.storeList.concat(res.data.data);
-        };
-        this.storeList.forEach(item => {
-         item.store_icon_path = require(`~/assets/imgs/icon_${item.platform}.png`)
-        });
+        }, 1000);
       },
       // 监听滚动到底部
       onLoad(){
@@ -172,7 +178,7 @@ export default {
           this.$router.push(`/si/${item.key}`)
         }
         return;
-        
+
       }
 
     }

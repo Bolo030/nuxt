@@ -1,9 +1,17 @@
 <template>
   <div>
-    <Nuxt />
+    <Nuxt keep-alive :keepAliveProps="{include}" />
   </div>
 </template>
-
+  <script>
+  export default {
+    data(){
+      return{
+        include:['addBank','realBank']
+      }
+    },
+  }
+  </script>
 <style>
 html {
   font-family:

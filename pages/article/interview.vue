@@ -49,7 +49,6 @@
     </div>
     <div class="com-box record">
       <h4>回访记录</h4>
-      <!-- 右 -->
       <div v-for="(item,index) in interviewInfo.content.list" :key="index" class="interview-box">
         <div class="record-item record-reverse">
           <img class="avatar" src="~/assets/imgs/counselor-icon.png" alt="九九牛头像" />
@@ -59,7 +58,6 @@
             </div>
           </div>
         </div>
-        <!-- 左-->
         <div class="record-item">
           <img class="avatar" :src="interviewInfo.content.bigThumb" alt="九九牛头像" />
           <div class="record-item-box">
@@ -68,7 +66,7 @@
           </div>
         </div>
       </div>
-      
+
     </div>
   </div>
 </template>
@@ -77,15 +75,26 @@
 export default {
   async asyncData({ params, app }) {
     let subIndex = params.id.indexOf('.')
-    let res = await app.$api.articleDetail({ aid: params.id.substring(0,subIndex) });
-    let interviewInfo = "";
-    if (res.status !== 1) {
-      return console.log("操作失败");
-    } else {
-      interviewInfo = res.data;
-    }
+    let interviewInfo = await app.$api.articleDetail({ aid: params.id.substring(0,subIndex) }).then(res=>res.status==1?res.data:{});
     interviewInfo.content = JSON.parse(interviewInfo.content);
     return { interviewInfo };
+  },
+   head() {
+    return {
+      title: `${this.interviewInfo.title}-九九牛`,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: `${this.interviewInfo.abstract}`
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content: `${this.interviewInfo.title}`
+        }
+      ]
+    };
   }
 };
 </script>

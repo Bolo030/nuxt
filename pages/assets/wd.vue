@@ -131,11 +131,12 @@ export default {
       app.$api.getCapital().then(res => (res.status == 1 ? res.data : {})),
       app.$api.getMyBank().then(res => (res.status == 1 ? res.data.list : []))
     ]);
-    let defaultBank = bankList.filter(e => {
+    let defaultBank = [];
+    defaultBank = bankList.filter(e => {
       return e.isDefault == 2;
     });
     if (defaultBank.length == 0 && bankList.length != 0) {
-      defaultBank = bankList[0];
+      defaultBank[0] = bankList[0];
     }
     return {
       capital,
@@ -176,7 +177,7 @@ export default {
     },
     chooseBank(index) {
       for (var i in this.bankList) {
-        this.bankList[i]["select"] = false;
+        this.bankList[i]["selected"] = false;
       }
       this.$set(this.bankList[index], "selected", true);
       this.defaultBank[0] = this.bankList[index];

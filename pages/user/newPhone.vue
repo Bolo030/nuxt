@@ -110,11 +110,9 @@ export default {
           that.$api.editPhoneTwo(this.formData).then(res => {
             if (res.status == 1) {
               that.$toast.success("更换成功");
-              that.$cookies.set("phone", this.formData.phone, {
-                expires: this.$store.state.auth.cookieMaxExpires,
-                path: "/"
-              });
-              this.$router.go(-2);
+              that.$cookies.remove('token')
+              that.$cookies.remove('phone')
+              that.$router.push('/login')
             } else {
               this.$dialog
                 .alert({
