@@ -154,17 +154,15 @@ export default {
       this.getData(true, true);
     },
     getData(loading = true, remove = false) {
-       this.loading = loading;
+      this.loading = loading;
       let searchType = ["all", "paid", "handover", "completed"];
       this.search.search_type = searchType[this.tab];
       this.$api.myOrders(this.search).then(res => {
         if (res.status === 1) {
           if (remove) {
             this.list = [...res.data.data];
-            console.log('1221212')
           } else {
-            // this.list.push(...res.data.data);
-            this.list.concat(res.data.data)
+            this.list.push(...res.data.data);
           }
            if (res.data.data.length == 0) {
             this.finished = true;

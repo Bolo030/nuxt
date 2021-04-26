@@ -1,5 +1,6 @@
 <template>
-  <main :class="isInfo ? '' : 'pd-22'">
+<div >
+  <main :class="isInfo ? '' : 'pd-22'" v-if="storeList.length!==0">
     <a
       class="shopList"
       :href="isInfo?'javascript:void(0);':`/si/${item.key}`"
@@ -92,7 +93,14 @@
         </div>
       </div>
     </a>
+    
   </main>
+  <!-- 暂无店铺 -->
+  <p v-else class="store-img">
+    <img src="~/assets/imgs/no_store.png" alt="九九网店交易平台，暂无店铺"   >
+    暂无店铺内容
+  </p>
+</div>
 </template>
 
 <script>
@@ -288,4 +296,24 @@ main {
     }
   }
 }
+
+.store-img {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 702px;
+  height: 403px;
+  background: #fff;
+  border-radius: 16px;
+  margin: 0 auto 20px;
+  font-size: 24px;
+  color: #999;
+  img {
+  
+     width: 240px;
+   
+  }
+}
+
 </style>

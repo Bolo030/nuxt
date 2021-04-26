@@ -122,6 +122,7 @@ export default {
       per_page: 15,
       loading: false,
       finished: false,
+      
     };
   },
   methods: {
@@ -162,7 +163,6 @@ export default {
       this.aginRequest(false);
     },
     async aginRequest(options) {
-      console.log(this.page);
       let result = await this.$api.collectStore({ page: options?this.page:1, per_page: this.per_page });
       if (result.status !== 1) return;
       if(!options) {

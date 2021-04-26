@@ -21,6 +21,7 @@
           :finished="finished"
           finished-text="没有更多了"
           @load="onLoad"
+          
         >
           
           <!-- 店铺状态列表 -->
@@ -129,23 +130,20 @@ export default {
         this.currentIndex = index;
         this.page = 1;
         this.tabBarMold = statusMold;
-        document.documentElement.scrollTop = document.body.scrollTop = 0;
-        //this.loading = true;
-        //this.finished = false;  
-        this.tabBarDataSwitch(statusMold);
-
-        console.log(document.documentElement.scrollTop); 
+        this.loading = true;
+        this.finished = false; 
+        this.storeList = [];
+        this.resStoreList = [];
+        this.tabBarDataSwitch(statusMold); 
       },
       // tabbar切换调用函数
       async tabBarDataSwitch(statusMold){
-        
-        
         let res = await this.$api.myStoreInfo({
             search_mold: statusMold || 'all',
             page: this.page,
             per_page: this.per_page
         });
-        if(res.status !== 1) //return this.$toast(res.message);
+        if(res.status !== 1) return //this.$toast(res.message);
         this.loading = false;
         if(this.page === 1) {
           this.storeList =  res.data.data;
@@ -162,10 +160,10 @@ export default {
       // 监听滚动到底部
       onLoad(){
        if(this.resStoreList.length < this.per_page && this.resStoreList.length >0 ) {
-          this.finished = true;
+          this.finished = true;   
        }else {
          this.page++;
-         this.tabBarDataSwitch(this.tabBarMold)
+         this.tabBarDataSwitch(this.tabBarMold);
        }
       },
       // 销售中跳转

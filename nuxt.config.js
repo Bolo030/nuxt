@@ -39,7 +39,8 @@ export default {
     "~/plugins/api.js",
     "~/plugins/vue-global.js",
     { src: "@/plugins/lib-flexible", ssr: false },
-    { src: "@/plugins/vue-mavon-editor", ssr: false }
+    { src: "@/plugins/vue-mavon-editor", ssr: false },
+    { src: '~/plugins/pdf.js', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -96,6 +97,15 @@ export default {
           exclude: /node_modules|folder_name/i //取消vant组件css转成rem
         }
       }
+    },
+    extend(config, ctx) {
+      config.output.globalObject = 'this'
+      config.module.rules.push(
+        {
+          test: /\.pdf$/,
+          loader: 'url-loader'
+        }
+      )
     }
   },
   loading: { color: "#ff5722", height: " 3px" },

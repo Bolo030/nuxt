@@ -11,44 +11,51 @@
     <main class="my-contract">
         <!-- 店铺合同列表区域 -->
         <!-- 签署中状态 -->
-        <ul class="my-contract-list bg-main-color" v-for="item in contractLists" :key="item.id" >
-            <li class="contract-title d-f d-f-between font-main-color6 font-size-26"
-             :class="item.parse_status == '正常'? ' bg-gradient-color3': item.parse_status == '已取消'? 'bg-main-color8':'bg-gradient-color2' ">
-                <span>{{item.name}}</span>
-                <span class="font-weight">{{item.parse_status}}</span>
-            </li>
-            <li class="contract-middle">
-                <div class="store-title d-f">
-                    <img :src="item.store_icon_path"
-                        alt="店铺图标">
-                    <h4 class="font-size-30 font-weight">{{item.store_name}}</h4>
-                </div>
-                <div class="order-number font-size-26 d-f d-f-between">
-                    <div class="order-number-l" v-if="item.storeCode !== ''">
-                        <span>店铺编号：</span>
-                        <span>{{item.storeCode}}</span>
+        <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+        >
+            <ul class="my-contract-list bg-main-color" v-for="item in contractLists" :key="item.id" >
+                <li class="contract-title d-f d-f-between font-main-color6 font-size-26"
+                :class="item.parse_status == '正常'? ' bg-gradient-color3': item.parse_status == '已取消'? 'bg-main-color8':'bg-gradient-color2' ">
+                    <span>{{item.name}}</span>
+                    <span class="font-weight">{{item.parse_status}}</span>
+                </li>
+                <li class="contract-middle">
+                    <div class="store-title d-f">
+                        <img :src="item.store_icon_path"
+                            alt="店铺图标">
+                        <h4 class="font-size-30 font-weight">{{item.store_name}}</h4>
                     </div>
-                    <div class="order-number-l" v-else>
-                        <span>订单编号：</span>
-                        <span>{{item.outTradeNo}}</span>
+                    <div class="order-number font-size-26 d-f d-f-between">
+                        <div class="order-number-l" v-if="item.storeCode !== ''">
+                            <span>店铺编号：</span>
+                            <span>{{item.storeCode}}</span>
+                        </div>
+                        <div class="order-number-l" v-else>
+                            <span>订单编号：</span>
+                            <span>{{item.outTradeNo}}</span>
+                        </div>
+                        <div class="order-number-r font-main-color">
+                            <span @click="jumpOrderInfo(item)">{{item.storeCode !== ''? '查看店铺':'查看订单'}}</span>
+                            <i class="iconfont iconjinru1 font-size-26"></i>
+                        </div>
                     </div>
-                    <div class="order-number-r font-main-color">
-                        <span @click="jumpOrderInfo(item)">{{item.storeCode !== ''? '查看店铺':'查看订单'}}</span>
-                        <i class="iconfont iconjinru1 font-size-26"></i>
+                </li>
+                <li class="contract-bottom d-f d-f-between font-size-24">
+                    <div class="contract-bottom-l font-main-color2">
+                        <span>{{item.begin}}</span>
+                        <!-- <span>16:11</span> -->
                     </div>
-                </div>
-            </li>
-            <li class="contract-bottom d-f d-f-between font-size-24">
-                <div class="contract-bottom-l font-main-color2">
-                    <span>{{item.begin}}</span>
-                    <!-- <span>16:11</span> -->
-                </div>
-                <div class="contract-bottom-r font-main-color4">
-                    <span class="bottom-r-item" @click="lookCantract(item.downpath)">查看合同</span>
-                    <span class="bottom-r-item send-email" @click="sendEmail(item.id,item.status)">发送邮箱</span>
-                </div>
-            </li>
-        </ul>
+                    <div class="contract-bottom-r font-main-color4">
+                        <span class="bottom-r-item" @click="lookCantract(item.downpath)">查看合同</span>
+                        <span class="bottom-r-item send-email" @click="sendEmail(item.id,item.status)">发送邮箱</span>
+                    </div>
+                </li>
+            </ul>
+        </van-list>
     </main>
 
     <van-dialog v-model="showMask" 
@@ -85,16 +92,41 @@ export default {
       contractId:'',
       isShowLoading: false,
       page:1,
-      per_page:15
+      per_page:15,
+      loading:false,
+      finished:false,
+      contractLists:[],
+      newResult:[]
     };
   },
   methods:{
+    // 发送请求
+    async request(){
+            let result = await this.$api.contractList({
+                per_page: this.per_page,
+                page: this.page
+            });
+            this.loading = false;
+            this.newResult = result.data.data;
+            if(this.newResult.length === 0) return this.finished = true;
+            this.contractLists.push(...result.data.data);      
+    } ,
+    onLoad(){
+        if(this.newResult.length < this.per_page && this.newResult > 0) {
+          this.finished = true;  
+        }else {
+          this.page++;
+          this.request()
+          
+        }
+    },
     sendEmail(id,status){
       if(status === 'closed') {
         this.contractId = id;
         this.showMask = true;
       }else {
-        this.$toast('该订单暂无合同')
+        this.$toast('该订单暂无合同');
+        this.request()
       } 
     },
     async onBeforeClose(action, done) {
@@ -119,7 +151,6 @@ export default {
       this.$router.push({path:'/contract/lookContract',query:{downpath:downpath}})
     },
     jumpOrderInfo(item) {
-      console.log(item);
       if(!item.outTradeNo && !item.storeCode) return this.$toast('暂无改订单');
       item.order_key? this.$router.push("/user/order-info/buy?key=" + item.order_key):this.$router.push(`/si/${item.store_key}`); 
     }

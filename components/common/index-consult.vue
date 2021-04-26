@@ -13,7 +13,10 @@
           :href="currenIndex===4?'/article/interview-' + item.id + '.html':'/article/detail-' + item.id + '.html' "
           v-for="item in consultList.data.slice(0,4)" 
           :key="item.id">
-          <li class="font-size-26 text-wrap text-wrap" >{{item.title}}</li>
+          <li class="font-size-26  " >
+            <h2 class="text-wrap">{{item.title}}</h2>
+            <span>{{item.created_at.slice(5,10)}}</span>
+          </li>
         </a>
       </ul>
     </div>
@@ -35,7 +38,6 @@ export default {
         {title:'新闻资讯',cid:1},
         {title:'行业资讯' ,cid:2},
         {title:'交易攻略', cid:4},
-        {title:'系统公告', cid:25},
         {title:'客户采访',cid:17}],
       currenIndex:0,
       cid:1,
@@ -47,7 +49,7 @@ export default {
       this.cid = cid;
       this.$emit('tabBtn',this.cid);
     }
-  }
+  },
 }
 </script>
 
@@ -88,7 +90,10 @@ export default {
       span {
         border: 1px solid #ccc;
         border-radius: 25px;
-        padding: 10px 8px;
+        width: 150px;
+        height: 56px;
+        line-height: 56px;
+        text-align: center;
         font-size: 20px;
         background: #f4f4f4;
         &.active {
@@ -100,7 +105,12 @@ export default {
     }
     .consult-list {
       li {
+        display: flex;
+        justify-content: space-between;
         margin-bottom: 20px;
+        h2 {
+          width: 550px;
+        }
       }
     }
   }
