@@ -1,7 +1,9 @@
 <template>
-  <main :class="isInfo ? '' : 'pd-22'">
+<div >
+  <main :class="isInfo ? '' : 'pd-22'" v-if="storeList.length!==0">
     <a
       class="shopList"
+      :class='{radius:classShow}'
       :href="isInfo?'javascript:void(0);':`/si/${item.key}`"
       v-for="(item, index) in storeList"
       :key="index"
@@ -92,7 +94,14 @@
         </div>
       </div>
     </a>
+    
   </main>
+  <!-- 暂无店铺 -->
+  <p v-else class="store-img">
+    <img src="~/assets/imgs/no_store.png" alt="九九网店交易平台，暂无店铺"   >
+    暂无店铺内容
+  </p>
+</div>
 </template>
 
 <script>
@@ -114,6 +123,10 @@ export default {
     jump: {
       type: Boolean,
       default: true
+    },
+    classShow:{
+      type:Boolean,
+      default:false
     }
   },
   data() {
@@ -288,4 +301,26 @@ main {
     }
   }
 }
+.radius {
+  border-radius: 0;
+}
+.store-img {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 702px;
+  height: 403px;
+  background: #fff;
+  border-radius: 16px;
+  margin: 0 auto 20px;
+  font-size: 24px;
+  color: #999;
+  img {
+  
+     width: 240px;
+   
+  }
+}
+
 </style>

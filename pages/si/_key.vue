@@ -3,19 +3,14 @@
     <van-nav-bar title="店铺详情" left-arrow @click-left="$router.go(-1)" />
 
     <div class="storeInfo-box">
-      <!-- 顾客服务组件 -->
-      <customer-service
-        :customerService="customerService"
-        :platform="storeInfo.platform"
-        @changeWx="$refs.pop.openDialog()"
-        @changeCall="callPhone()"
-      />
+     
       <!-- 店铺信息组件 -->
       <store-list
         isInfo
         :storeList="storeList"
         :isShowList="false"
         :jump="false"
+        :classShow='true'
       ></store-list>
       <!-- 网店编号 -->
       <div class="storeMsg si-copy">
