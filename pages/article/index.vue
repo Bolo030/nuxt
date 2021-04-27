@@ -1,18 +1,6 @@
 <template>
   <div>
     <van-nav-bar title="资讯攻略" left-arrow @click-left="$router.go(-1)" />
-    <!-- <header id="header">
-      <div class="header-content">
-        <a href="/user" >
-          <img
-            class="back"
-            src="~assets/imgs/store/rectangle.png"
-            alt="九九牛返回"
-          />
-        </a>
-        <span class="title">资讯攻略</span>
-      </div>
-    </header> -->
     <main class="article">
       <ul class="nav">
         <li
@@ -115,7 +103,7 @@ export default {
         { title: "新闻资讯", path: "/article/list-1" },
         { title: "行业资讯", path: "/article/list-2" },
         { title: "交易攻略", path: "/article/list-4" },
-        { title: "系统公告", path: "/article/list-25" },
+        // { title: "系统公告", path: "/article/list-25" },
         { title: "客户采访", path: "/article/list-17" }
       ],
       cuurentActive: 0,

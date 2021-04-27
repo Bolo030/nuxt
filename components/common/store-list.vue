@@ -8,7 +8,7 @@
       v-for="(item, index) in storeList"
       :key="index"
     >
-      <h1 class="shopList-top ">
+      <h3 class="shopList-top ">
         <!--   <div class="left" v-if="item.showName == 2 && item.platform == 'tm'">
           <img :src="require('../../assets/imgs/icon_' + item.platform + '.png')" />
           <img
@@ -21,15 +21,15 @@
           <img
             :src="require('../../assets/imgs/icon_' + item.platform + '.png')"
             :alt="$utils.getPname(item.platform)+'店铺出售'"
-            
+
           />
-          <h1
+          <h3
             :style="{ 'font-weight': isInfo ? 700 : 500 }"
             v-html="item.title"
             class="font-weight text-wraps"
           />
         </span>
-      </h1>
+      </h3>
       <!--    <span
         v-if="item.name || (item.showName == 2 && item.platform == 'tm')"
         class="shopList-center text-wraps"
@@ -94,7 +94,7 @@
         </div>
       </div>
     </a>
-    
+
   </main>
   <!-- 暂无店铺 -->
   <p v-else class="store-img">
@@ -181,7 +181,7 @@ main {
         font-size: 24px;
         font-weight: 400;
       }
-      h1 {
+      h3 {
         font-size: 30px;
         font-weight: 700;
       }
@@ -317,9 +317,9 @@ main {
   font-size: 24px;
   color: #999;
   img {
-  
+
      width: 240px;
-   
+
   }
 }
 

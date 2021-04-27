@@ -1,9 +1,10 @@
 <template>
   <div class="container">
-    <van-nav-bar title="店铺详情" left-arrow @click-left="$router.go(-1)" />
-
+    <van-sticky>
+    <van-nav-bar :title="storeInfo.parse_platform+'转让'" left-arrow @click-left="$router.go(-1)" />
+</van-sticky>
     <div class="storeInfo-box">
-     
+
       <!-- 店铺信息组件 -->
       <store-list
         isInfo

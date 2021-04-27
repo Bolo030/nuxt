@@ -130,13 +130,25 @@
                 class="my-swipe"
                 indicator-color="#f4632c"
                 :loop="false"
-                :show-indicators="false" width="150"
+                :show-indicators="false"
+                :width="swipeWidth"
+                :initial-swipe="unfoldIdx"
               >
                 <van-swipe-item v-for="(item, index) in stepList" :key="index">
-                  <ul class="trade-process-item " >
+                  <ul
+                    class="trade-process-item "
+                    :class="{
+                      'active-over': item.nodeStatus == 2,
+                      'active-proceed': item.nodeStatus == 1
+                    }"
+                  >
                     <li class="title">{{ item.title }}</li>
-                    <li v-for="(v,i) in item.list" :key="i" >
-                      {{v.record}}
+                    <li
+                      v-for="(v, i) in item.list"
+                      :key="i"
+                      :class="{ active: v.nodeStatus == 2 }"
+                    >
+                      {{ v.record }}
                     </li>
                   </ul>
                 </van-swipe-item>
@@ -183,34 +195,35 @@ export default {
       confirmStore: {
         title: "确定店铺",
         nodeStatus: 0,
-        unfold: false,
+        unfold: 0,
         list: []
       },
       confirmSell: {
         title: "确认卖店",
         nodeStatus: 0,
-        unfold: false,
+        unfold: 1,
         list: []
       },
       sign: {
         title: "签署三方合同",
         nodeStatus: 0,
-        unfold: false,
+        unfold: 2,
         list: []
       },
       transfer: {
         title: "店铺过户",
         nodeStatus: 0,
-        unfold: false,
+        unfold: 3,
         list: []
       },
       completed: {
         title: "交易完成",
         nodeStatus: 0,
-        unfold: false,
+        unfold: 4,
         list: []
       }
     };
+    let unfoldIdx = 0;
     let info = await app.$api
       .orderInfo(query.key)
       .then(res => (res.status == 1 ? res.data : {}));
@@ -219,17 +232,18 @@ export default {
     for (var f in parse_records) {
       if (parse_records[f].records.length != 0) {
         stepList[f].nodeStatus = parse_records[f].nodeStatus;
-        stepList[f].unfold = parse_records[f].nodeStatus == 1 ? true : false;
+        if (parse_records[f].nodeStatus == 1) unfoldIdx = stepList[f].unfold;
         for (var i in parse_records[f].records) {
           stepList[f].list[i] = parse_records[f].records[i];
         }
       }
     }
-    console.log(stepList, "stepList");
+    console.log(unfoldIdx, "unfoldIdxunfoldIdxunfoldIdx");
     return {
       info,
       key,
-      stepList
+      stepList,
+      unfoldIdx
     };
   },
   data() {
@@ -245,8 +259,12 @@ export default {
         7: "扣罚完成"
       },
       key: "",
-      stepList: {}
+      stepList: {},
+      swipeWidth:0,
     };
+  },
+  mounted() {
+    this.swipeWidth=(320 * document.body.clientWidth) / 750
   },
   methods: {
     oCancel(key) {
@@ -420,7 +438,7 @@ export default {
 
 .trade-process {
   margin-top: 2.6667vw;
-  padding: 5.3333vw 4vw;
+  padding: 5.3333vw 0 5.3333vw 4vw;
   border-radius: 2.1333vw;
 }
 
@@ -486,35 +504,41 @@ export default {
   margin-left: 2.6667vw;
   border: none;
 }
-.trade-process{
-  .my-swipe{
+.trade-process {
+  .my-swipe {
     margin-top: 20px;
   }
   .van-swipe-item {
-  width: 320px !important;
-}
-.trade-process-item{
-  height: 220px ;
-  width: 290px ;
-  padding-top: 35px;
-  font-size: 20px;
-  line-height: 20px;
-   background-color: #f4f4f4;
-  border-radius: 16px;
-  text-align: center;
-   color: #999999;
-  li+li{
-    margin-top: 20px;
+    width: 320px !important;
   }
-  &.active{
-    color: #f4632c;
-    background-color: #ffebe4;
+  .trade-process-item {
+    height: 220px;
+    width: 300px;
+    padding-top: 35px;
+    font-size: 20px;
+    line-height: 20px;
+    background-color: #f4f4f4;
+    border-radius: 16px;
+    text-align: center;
+    color: #999999;
+    li + li {
+      margin-top: 20px;
+    }
+    &.active-over {
+      color: #f4632c;
+      background-color: #ffebe4;
+    }
+    &.active-proceed {
+      background-color: #ffebe4;
+      .active {
+        color: #f4632c;
+      }
+    }
   }
-}
-.title{
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 24px;
-}
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
 }
 </style>

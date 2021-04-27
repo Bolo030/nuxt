@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <header id="header">
       <div class="header-content">
         <a href="javascript:history.go(-1)">
@@ -79,6 +79,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container{
+  height: 100%;
+  background: #fff;
+}
 .markdown-body {
   width: 100%;
   height: 100%;
@@ -88,6 +92,7 @@ export default {
   overflow-x: hidden;
   background: #fff;
   border-radius: 15px;
+  font-size: 28px;
 }
 .article-info {
   padding: 24px;
@@ -95,9 +100,10 @@ export default {
   font-size: 26px;
 }
 .article-info h1 {
-  font-size: 30px;
+  font-size: 36px;
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom:30px;
+  text-align: center;
 }
 .article-info-sub {
   color: #999999;

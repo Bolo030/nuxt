@@ -606,7 +606,7 @@
   width: 100%;
   line-height: 11.7333vw;
   font-size: 4.2667vw;
-  font-weight: 700;
+  /* font-weight: 700; */
   position: fixed;
   background-color: #fff;
   top: 0;

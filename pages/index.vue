@@ -53,13 +53,13 @@
           <a href="/tm" title="九九牛网店交易平台，我要买店">
             <img
               src="~assets/imgs/icon_homeShop.png"
-              alt="九九牛网店交易平台，我要买店"
+              alt="购买网店"
             />
           </a>
           <a href="/zur" title="九九牛网店交易平台，我要卖店">
             <img
               src="~assets/imgs/icon_sellShop.png"
-              alt="九九牛网店交易平台，我要卖店"
+              alt="网店出售"
             />
           </a>
         </div>
@@ -71,28 +71,28 @@
               src="~assets/imgs/ic_home_classification_tianmao@2x.png"
               alt="天猫网店"
             />
-            天猫网店
+            天猫转让
           </div>
           <div class="entryNav-item d-f-column" @click="$router.push('/tb')">
             <img
               src="~assets/imgs/ic_home_classification_taobao@2x.png"
               alt="淘宝网店"
             />
-            淘宝网店
+            淘宝转让
           </div>
           <div class="entryNav-item d-f-column" @click="$router.push('/pd')">
             <img
               src="~assets/imgs/ic_home_classification_pinduoduo@2x.png"
               alt="拼多多店"
             />
-            拼多多店
+            拼多多转让
           </div>
           <div class="entryNav-item d-f-column" @click="$router.push('/jd')">
             <img
               src="~assets/imgs/ic_home_classification_jindong@2x.png"
               alt="京东网店"
             />
-            京东网店
+            京东转让
           </div>
           <div class="entryNav-item d-f-column" @click="$router.push('/qt')">
             <img src="~assets/imgs/ic_home_classification_qita@2x.png" alt="其他网店" />
@@ -191,7 +191,7 @@
                 <img
                   v-for="(v, i) in info.great.slice(index * 8, 8 * (index + 1))"
                   :key="i"
-                  
+
                   :src="v.thumb"
                   :alt="v.title+'品牌网店 '"
                 />
@@ -229,23 +229,23 @@
           <a
             class="vip-left d-block"
             href="/tm"
-            title="九九牛网店交易平台，店铺精选"
+            title="天猫店铺转让"
           >
             <img
               src="~assets/imgs/bg_home_Porcelain_jinxuan@2x.png"
-              alt="九九网店交易平台，天猫精选"
+              alt="天猫店铺转让"
             />
           </a>
           <div class="vip-right d-block">
-            <a href="/ym"
+            <a href="/ym" title="洋码头店铺转让"
               ><img
                 src="~assets/imgs/bg_home_Porcelain_vip@2x.png"
-                alt="九九牛网店交易平台，洋码头精选"
+                alt="洋码头店铺转让"
             /></a>
-            <a href="/yx"
+            <a href="/yx" title="亚马逊店铺转让"
               ><img
                 src="~assets/imgs/bg_home_Porcelain_xiangbao@2x.png"
-                alt="九九牛网店交易平台，亚马逊精选"
+                alt="亚马逊店铺转让"
             /></a>
           </div>
         </div>
