@@ -9,9 +9,9 @@
         <span @click="tabBtn(index,item.cid)" :class="currenIndex === index? 'active': ''" v-for="(item,index) in tabTitle" :key="index" >{{item.title}}</span>
       </div>
       <ul class="consult-list">
-        <a 
-          :href="currenIndex===4?'/article/interview-' + item.id + '.html':'/article/detail-' + item.id + '.html' "
-          v-for="item in consultList.data.slice(0,4)" 
+        <a
+          :href="currenIndex===3?'/article/interview-' + item.id + '.html':'/article/detail-' + item.id + '.html' "
+          v-for="item in consultList.data.slice(0,4)"
           :key="item.id">
           <li class="font-size-26  " >
             <h2 class="text-wrap">{{item.title}}</h2>
