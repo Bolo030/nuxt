@@ -360,7 +360,7 @@ export default {
           page: 1,
           per_page: 1,
           //need_content: 3 == 17
-      }).then(res=>(res.status === 1 ? res.data : {}))
+      }).then(res=>(res.status === 1 ? res.data.list : {}))
     ]);
     return {
       info,
@@ -435,7 +435,7 @@ export default {
         per_page: 10,
         need_content: cid == 17
       });
-      this.consult = res;
+      this.consult = res.list;
     }
   },
   mounted() {

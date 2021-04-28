@@ -11,6 +11,10 @@
           <a :href="item.path">{{ item.title }}</a>
         </li>
       </ul>
+      <ul class="article-tags" v-if="tag" >
+        <span>已选标签：</span>
+        <li>{{tag.name}}</li>
+      </ul>
       <ul class="article-row" v-if="!clientShow">
         <li v-for="item in hotInfo" :key="item.id">
           <a :href="'/article/detail-' + item.id + '.html'">
@@ -177,15 +181,17 @@ export default {
     let cid = params.id.substring(start + 1);
     let cuurentActive = 0;
     let clientShow = false;
+    let tid=query.tid;
     let { data: res } = await app.$api.articlesInfo({
       cid: cid,
       page: 1,
       per_page: 15,
-      need_content: cid == 17
+      need_content: cid == 17,
+      tid:tid
     });
-    let hotInfo = res.data.slice(0, 2);
-    let hotInfoList = res.data.splice(2);
-
+    let hotInfo = res.list.data.slice(0, 2);
+    let hotInfoList = res.list.data.splice(2);
+    let tag=res.tag;
     if (cid == 1) {
       cuurentActive = 0;
     } else if (cid == 2) {
@@ -201,7 +207,7 @@ export default {
         value.content = JSON.parse(value.content);
       });
     }
-    return { hotInfo, hotInfoList, cuurentActive, clientShow, cid };
+    return { hotInfo, hotInfoList, cuurentActive, clientShow, cid,tag };
   },
   created() {},
   methods: {
@@ -212,9 +218,9 @@ export default {
         per_page: this.per_page
       });
       this.loading = false;
-      this.resNewInfo = res.data;
+      this.resNewInfo = res.list.data;
       if (this.resNewInfo.length === 0) return (this.finished = true);
-      this.hotInfoList = this.hotInfoList.concat(res.data);
+      this.hotInfoList = this.hotInfoList.concat(res.list.data);
     },
     onLoad() {
       if (
@@ -259,8 +265,8 @@ export default {
   justify-content: space-between;
   padding: 0 24px;
   box-sizing: border-box;
-  margin-bottom: 20px;
   font-size: 30px;
+  margin-bottom: 20px;
 }
 .article .nav .active {
   color: #f4632c;
@@ -297,7 +303,7 @@ export default {
   -webkit-box-orient: vertical;
 }
 .article .article-list {
-  padding: 24px;
+  padding: 0 24px 24px;
 }
 .article .article-list li a {
   width: 702px;
@@ -415,5 +421,24 @@ export default {
 }
 .article .text-center {
   padding: 10px 0;
+}
+.article-tags{
+min-height: 110px;
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+padding: 0 20px;
+color: #999999;
+margin-top: -10px;
+li{
+	height: 54px;
+  line-height: 54px;
+  padding: 0 20px;
+	background-color: #ffeae2;
+	border-radius: 100px;
+  color: #f4632c;
+  font-size: 20px;
+  margin:15px 15px 10px 0;
+}
 }
 </style>

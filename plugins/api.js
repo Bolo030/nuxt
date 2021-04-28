@@ -76,13 +76,25 @@ export default ({ app: { $request, $axios } }, inject) => {
      * 文章资讯
      */
     articlesInfo(data = {}) {
-      return $request.post("/article/list", data);
+      return $request.get("/article/list", data);
     },
+    /**
+     * 文章翻页
+     */
+    articlesPage(data) {
+      return $request.get("/article/prev-next/" + data);
+    },
+     /**
+     * 好文推荐
+     */
+      articlesRecommend(data) {
+        return $request.get("/article/recommend/" + data);
+      },
     /**
      * 文章详情
      */
     articleDetail(data = {}) {
-      return $request.post("/article/info", data);
+      return $request.get("/article/info", data);
     },
     /**
      * 店铺收藏
@@ -314,10 +326,10 @@ export default ({ app: { $request, $axios } }, inject) => {
       return res;
     },
     /*
-    *是否实名认证
-    */
-    isReal(){
-      return $request.get('/user/real/whether-real')
+     *是否实名认证
+     */
+    isReal() {
+      return $request.get("/user/real/whether-real");
     },
     /*
      *提交充值信息
@@ -416,8 +428,8 @@ export default ({ app: { $request, $axios } }, inject) => {
       return $request.post("/user/real/phone-real", data);
     },
     /* 实名认证删除 */
-    realDel(data){
-      return $request.post('user/real/del',data)
+    realDel(data) {
+      return $request.post("user/real/del", data);
     },
     /*
      *跟换手机号
@@ -426,20 +438,20 @@ export default ({ app: { $request, $axios } }, inject) => {
       return $request.post("/user/change-phone", data);
     },
     /*
-    *投诉建议
-    */
-    proposal(data){
-      return $request.post('/feedback/proposal-simple',data)
+     *投诉建议
+     */
+    proposal(data) {
+      return $request.post("/feedback/proposal-simple", data);
     },
     /*
-    *更换手机号1
-    */
+     *更换手机号1
+     */
     editPhoneOne(data) {
       return $request.post("/user/change-phone-one", data);
     },
     /*
-    *更换手机号2
-    */
+     *更换手机号2
+     */
     editPhoneTwo(data) {
       return $request.post("/user/change-phone-two", data);
     },
@@ -447,7 +459,7 @@ export default ({ app: { $request, $axios } }, inject) => {
      * 登录后修改密码
      */
     loginModfiy(data) {
-      return $request.post('/user/update-password',data)
+      return $request.post("/user/update-password", data);
     }
   });
 };
